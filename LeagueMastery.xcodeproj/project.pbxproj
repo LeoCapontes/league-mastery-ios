@@ -14,6 +14,7 @@
 		B3E6BB132C06D6420046C4E2 /* LeagueMasteryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB122C06D6420046C4E2 /* LeagueMasteryTests.swift */; };
 		B3E6BB1D2C06D6420046C4E2 /* LeagueMasteryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB1C2C06D6420046C4E2 /* LeagueMasteryUITests.swift */; };
 		B3E6BB1F2C06D6420046C4E2 /* LeagueMasteryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB1E2C06D6420046C4E2 /* LeagueMasteryUITestsLaunchTests.swift */; };
+		B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB2C2C06DA480046C4E2 /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		B3E6BB182C06D6420046C4E2 /* LeagueMasteryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeagueMasteryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E6BB1C2C06D6420046C4E2 /* LeagueMasteryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueMasteryUITests.swift; sourceTree = "<group>"; };
 		B3E6BB1E2C06D6420046C4E2 /* LeagueMasteryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueMasteryUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B3E6BB2C2C06DA480046C4E2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		B3E6BB002C06D63F0046C4E2 /* LeagueMastery */ = {
 			isa = PBXGroup;
 			children = (
+				B3E6BB2B2C06D9A50046C4E2 /* ViewModel */,
 				B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */,
 				B3E6BB032C06D63F0046C4E2 /* ContentView.swift */,
 				B3E6BB052C06D6420046C4E2 /* Assets.xcassets */,
@@ -125,6 +128,14 @@
 				B3E6BB1E2C06D6420046C4E2 /* LeagueMasteryUITestsLaunchTests.swift */,
 			);
 			path = LeagueMasteryUITests;
+			sourceTree = "<group>";
+		};
+		B3E6BB2B2C06D9A50046C4E2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B3E6BB2C2C06DA480046C4E2 /* ContentViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +270,7 @@
 			files = (
 				B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */,
 				B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */,
+				B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,15 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var viewModel = ViewModel()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            TextField(
+                "Summoner name",
+                text: $viewModel.sumName)
         }
         .padding()
+        Button(action: viewModel.searchSumm) {
+            Text("Search")
+        }
+        AsyncImage(url: URL(string: viewModel.splashUrl))
     }
+    
+    
 }
 
 #Preview {
