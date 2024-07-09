@@ -11,7 +11,6 @@ import Combine
 extension ContentView {
     @Observable
     class ViewModel{
-        let key = ProcessInfo.processInfo.environment["RIOT_API_KEY"]
         var sumName: String = ""
         var splashUrl: String = ""
         func searchSumm() {
