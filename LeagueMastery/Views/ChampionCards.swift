@@ -15,6 +15,21 @@ struct MasteryCrestImage: View {
     }
 }
 
+struct ChampionImage: View {
+    var championId: Int
+    
+    var body: some View {
+        AsyncImage(url: URL(string: ChampionIdConversions.init().urlsFromChampId[championId] ?? "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg"))
+        { image in image
+                .image?
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipped()
+        }
+        .frame(width: 200, height: 200)
+    }
+}
+
 struct LargeChampionCard: View {
     var masteryLevel: Int
     var championId: Int
@@ -23,14 +38,17 @@ struct LargeChampionCard: View {
         ZStack(){
             HStack{
                 MasteryCrestImage(masteryLevel: masteryLevel)
-                AsyncImage(url: URL(string: ChampionSplashUrls.init().urlsFromChampId[championId] ?? "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg"))
+                ChampionImage(championId: 4)
             }
         }
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+        
     }
 }
 
 #Preview {
-    LargeChampionCard(masteryLevel: 1, championId: 1)
+    LargeChampionCard(masteryLevel: 6, championId: 1)
 }
 
 
