@@ -113,7 +113,23 @@ struct MediumChampionCard: View {
 }
 
 #Preview {
-    LargeChampionCard(masteryLevel: 6, championId: 1)
+    VStack{
+        Spacer()
+        LargeChampionCard(masteryLevel: 9, points: 10000, championId: 3)
+        HStack{
+            MediumChampionCard(masteryLevel: 8, points: 800, championId: 2)
+            MediumChampionCard(masteryLevel: 7, points: 700, championId: 3)
+        }
+        Spacer()
+        Spacer()
+        Spacer()
+        Spacer()
+        Spacer()
+        Spacer()
+    }
+    .padding()
+    .background(Image("background-mastery").resizable().aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/))
+    .ignoresSafeArea()
 }
 
 
