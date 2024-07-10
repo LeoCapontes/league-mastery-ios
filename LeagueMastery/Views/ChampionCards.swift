@@ -11,7 +11,17 @@ import SwiftUI
 struct MasteryCrestImage: View {
     var masteryLevel: Int
     var body: some View {
-        Image(masteryLevel >= 10 ? "masterycrest_level_10_art" : "masterycrest_level_\(masteryLevel)_art")
+        if(masteryLevel >= 4) {
+            Image(masteryLevel >= 10 ? "masterycrest_level_10_art" : "masterycrest_level_\(masteryLevel)_art")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(12)
+        } else {
+            Image("masterycrest_level_0_art")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(12)
+        }
     }
 }
 
