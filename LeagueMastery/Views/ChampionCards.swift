@@ -10,18 +10,26 @@ import SwiftUI
 
 struct MasteryCrestImage: View {
     var masteryLevel: Int
-    var body: some View {
+    var mini: Bool
+    
+    var assetPath: String {
         if(masteryLevel >= 4) {
-            Image(masteryLevel >= 10 ? "masterycrest_level_10_art" : "masterycrest_level_\(masteryLevel)_art")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(12)
+            let path = ((masteryLevel >= 10)
+                        ? "masterycrest_level_10_art"
+                        : "masterycrest_level_\(masteryLevel)_art")
+            
+            return (mini ? path.appending("_mini") : path)
         } else {
-            Image("masterycrest_level_0_art")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(12)
+            let path = "masterycrest_level_0_art"
+            return (mini ? path.appending("mini") : path)
         }
+    }
+    
+    var body: some View {
+        Image(assetPath)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .padding(12)
     }
 }
 
