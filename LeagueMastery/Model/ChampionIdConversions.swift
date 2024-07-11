@@ -8,14 +8,6 @@
 import Foundation
 
 struct ChampionIdConversions {
-    let urlsFromChampId = [
-        1 : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg",
-        2 : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_0.jpg",
-        3 : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_0.jpg",
-        4 : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akshan_0.jpg",
-        5 : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Alistar_0.jpg",
-        6 : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Amumu_0.jpg",
-    ]
     
     let namesFromChampId = [
         1 : "Aatrox",
@@ -23,5 +15,16 @@ struct ChampionIdConversions {
         3 : "Akali",
         4 : "Akshan",
         5 : "Alistar",
+        6 : "Amumu",
+        7 : "Anivia"
     ]
+    
+    func splashFromChampId(_ champId: Int) -> String {
+        return "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/\(namesFromChampId[champId] ?? "Aatrox")_0.jpg"
+    }
+    
+    func portraitFromChampId(_ champId: Int) -> String {
+        return "https://ddragon.leagueoflegends.com/cdn/14.13.1/img/champion/\(namesFromChampId[champId] ?? "Aatrox").png"
+    }
 }
+
