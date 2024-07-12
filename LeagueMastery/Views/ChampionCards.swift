@@ -40,7 +40,7 @@ struct ChampionImage: View {
     var body: some View {
         ZStack{
             AsyncImage(url: URL(
-                    string: ChampionIdConversions().splashFromChampId(
+                    string: splashFromChampId(
                         championId
                     )
                 )
@@ -70,7 +70,7 @@ struct MasteryFrame: View {
                 .frame(height: geometry.size.height * 0.5)
                 .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.7)
                 ZStack {
-                    AsyncImage(url: URL (string: ChampionIdConversions().portraitFromChampId(championId))
+                    AsyncImage(url: URL(string: portraitFromChampId(championId))
                     ) {
                         image in image
                             .image?
@@ -109,7 +109,7 @@ struct LargeChampionCard: View {
             HStack{
                 MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
                 ZStack {
-                    AsyncImage(url: URL (string: ChampionIdConversions().portraitFromChampId(championId))
+                    AsyncImage(url: URL(string: portraitFromChampId(championId))
                     ) {
                         image in image
                             .image?
