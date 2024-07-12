@@ -21,7 +21,7 @@ struct MasteryCrestImage: View {
             return (mini ? path.appending("_mini") : path)
         } else {
             let path = "masterycrest_level_0_art"
-            return (mini ? path.appending("mini") : path)
+            return (mini ? path.appending("_mini") : path)
         }
     }
     
@@ -39,16 +39,62 @@ struct ChampionImage: View {
     
     var body: some View {
         ZStack{
-            AsyncImage(url: URL(string: ChampionIdConversions.init().urlsFromChampId[championId] ?? "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg"))
-            { image in image
+            AsyncImage(url: URL(
+                    string: ChampionIdConversions().splashFromChampId(
+                        championId
+                    )
+                )
+            ) { image in image
                     .image?
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .blur(radius: (blurred ? 10 : 0))
+                    .aspectRatio(contentMode: .fill)
+                    .blur(radius: (blurred ? 12 : 0))
             }
-            .frame(height: .infinity)
-            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8))
+            .frame(width: .infinity)
         }
+    }
+}
+
+struct MasteryFrame: View {
+    var championId: Int
+    var masteryLevel: Int
+    
+    var body: some View {
+        GeometryReader{ geometry in
+            ZStack{
+                VStack{
+                    Image("mastery-banner-3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+                .frame(height: geometry.size.height * 0.5)
+                .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.7)
+                ZStack {
+                    AsyncImage(url: URL (string: ChampionIdConversions().portraitFromChampId(championId))
+                    ) {
+                        image in image
+                            .image?
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                            .scaleEffect(0.8)
+                    }
+                    Image("mastery_framecomplete")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+                .frame(height: geometry.size.height * 0.85)
+                .position(
+                    CGPoint(
+                        x: geometry.size.width * 0.5,
+                        y: geometry.size.height * 0.35)
+                )
+                MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
+                    .frame(height: geometry.size.height * 0.75)
+                    .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.8)
+            }
+        }
+        .padding(EdgeInsets(top: 10, leading: 3, bottom: 6, trailing: 2))
     }
 }
 
@@ -59,12 +105,23 @@ struct LargeChampionCard: View {
     
     var body: some View {
         ZStack(){
+            ChampionImage(championId: championId, blurred: true)
             HStack{
-                ChampionImage(championId: championId, blurred: true)
-            }
-            HStack{
-                MasteryCrestImage(masteryLevel: masteryLevel)
-                ChampionImage(championId: championId, blurred: false)
+                MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
+                ZStack {
+                    AsyncImage(url: URL (string: ChampionIdConversions().portraitFromChampId(championId))
+                    ) {
+                        image in image
+                            .image?
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                            .scaleEffect(0.8)
+                    }
+                    Image("mastery_framecomplete")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
             }
             .frame(width: .infinity, height: .infinity)
             HStack {
@@ -92,26 +149,7 @@ struct MediumChampionCard: View {
     
     var body: some View {
         ZStack(){
-            HStack{
-                MasteryCrestImage(masteryLevel: masteryLevel)
-                ChampionImage(championId: championId, blurred: false)
-            }
-            .frame(width: .infinity, height: .infinity)
-            .padding(12)
-            HStack {
-                Spacer()
-                VStack{
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Text("  Points: \(points)  ")
-                        .background(.ultraThinMaterial)
-                        .clipShape(Capsule())
-                    Spacer()
-                }
-                Spacer()
-            }
+            MasteryFrame(championId: championId, masteryLevel: masteryLevel)
         }
         .frame(width: .infinity ,height: 124)
         .background(.ultraThinMaterial)
@@ -121,22 +159,23 @@ struct MediumChampionCard: View {
 }
 
 #Preview {
-    VStack{
-        Spacer()
-        LargeChampionCard(masteryLevel: 9, points: 10000, championId: 3)
-        HStack{
-            MediumChampionCard(masteryLevel: 8, points: 800, championId: 2)
-            MediumChampionCard(masteryLevel: 7, points: 700, championId: 3)
+    ZStack {
+        VStack{
+            Spacer()
+            LargeChampionCard(masteryLevel: 10, points: 10000, championId: 4)
+            HStack{
+                MediumChampionCard(masteryLevel: 9, points: 1, championId: 1)
+                MediumChampionCard(masteryLevel: 8, points: 2, championId: 2)
+                MediumChampionCard(masteryLevel: 7, points: 3, championId: 3)
+            }
+            Spacer()
         }
-        Spacer()
-        Spacer()
-        Spacer()
-        Spacer()
-        Spacer()
-        Spacer()
+        .padding()
     }
-    .padding()
-    .background(Image("background-mastery").resizable().aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/))
+    .frame(width: .infinity, height:.infinity)
+    .background(
+        Image("background-mastery").resizable().aspectRatio(contentMode: .fill)
+    )
     .ignoresSafeArea()
 }
 
