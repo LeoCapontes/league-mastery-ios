@@ -10,7 +10,11 @@ import Combine
 
 class Settings {
     static let shared = Settings()
-    let key = ProcessInfo.processInfo.environment["RIOT_API_KEY"]
     
-    private init(){}
+    let key: String
+    
+    private init() {
+        let environmentVariables = ProcessInfo.processInfo.environment
+        key = environmentVariables["RIOT_API_KEY"]!
+    }
 }
