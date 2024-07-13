@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 import Combine
 
 extension ContentView {
@@ -16,7 +17,7 @@ extension ContentView {
         var response: [MasteryResponse]?
         
         init() {
-            
+            populateChampions()
         }
         
         func searchSumm() {

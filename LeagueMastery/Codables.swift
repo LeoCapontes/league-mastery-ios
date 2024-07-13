@@ -38,10 +38,10 @@ struct MasteryResponse: Codable {
 
 struct Champions: Codable {
     let data: [String: Champion]
-    
-    struct Champion: Codable {
-        let id: String
-        let key: String
-        let name: String
-    }
+}
+
+struct Champion: Codable {
+    let id: String
+    let key: String
+    let name: String
 }
