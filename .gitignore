@@ -8,7 +8,6 @@
 
 ## User settings
 xcuserdata/
-xcshareddata/xschemes/
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
@@ -100,3 +99,7 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,swift
+
+
+.DS_Store
+xcshareddata/xschemes/
