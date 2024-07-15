@@ -45,3 +45,9 @@ struct Champion: Codable {
     let key: String
     let name: String
 }
+
+struct PuuidResponse: Codable {
+    let puuid: String
+    let gameName: String
+    let tagline: String
+}

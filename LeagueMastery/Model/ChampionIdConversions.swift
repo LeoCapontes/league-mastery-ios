@@ -17,15 +17,6 @@ func portraitFromChampId(_ champId: Int) -> String {
     return "https://ddragon.leagueoflegends.com/cdn/14.13.1/img/champion/\(namesFromChampId[champId] ?? "Aatrox").png"
 }
 
-
-func championsApiCall() async throws -> Champions{
-    let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/14.13.1/data/en_US/champion.json")!
-    print(url.absoluteString)
-    let (data, _) = try await URLSession.shared.data(from: url)
-    let response = try JSONDecoder().decode(Champions.self, from: data)
-    return response
-}
-
 func populateChampions() {
     Task{
         do{

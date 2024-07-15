@@ -12,6 +12,8 @@
 		B36300EA2C3D8E54000E54AA /* ChampionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E82C3D8E54000E54AA /* ChampionCards.swift */; };
 		B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300EB2C3D8E8C000E54AA /* Settings.swift */; };
 		B36301012C41F009000E54AA /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36301002C41F009000E54AA /* Codables.swift */; };
+		B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABC2C43338600194223 /* AccountScreen.swift */; };
+		B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABE2C44C09000194223 /* ApiCalls.swift */; };
 		B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */; };
 		B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB032C06D63F0046C4E2 /* ContentView.swift */; };
 		B3E6BB062C06D6420046C4E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E6BB052C06D6420046C4E2 /* Assets.xcassets */; };
@@ -45,6 +47,8 @@
 		B36300E82C3D8E54000E54AA /* ChampionCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionCards.swift; sourceTree = "<group>"; };
 		B36300EB2C3D8E8C000E54AA /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = LeagueMastery/Settings.swift; sourceTree = SOURCE_ROOT; };
 		B36301002C41F009000E54AA /* Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codables.swift; sourceTree = "<group>"; };
+		B39DBABC2C43338600194223 /* AccountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreen.swift; sourceTree = "<group>"; };
+		B39DBABE2C44C09000194223 /* ApiCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiCalls.swift; sourceTree = "<group>"; };
 		B3E6BAFE2C06D63F0046C4E2 /* LeagueMastery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeagueMastery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueMasteryApp.swift; sourceTree = "<group>"; };
 		B3E6BB032C06D63F0046C4E2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -103,6 +107,14 @@
 			path = LeagueMastery/Views;
 			sourceTree = SOURCE_ROOT;
 		};
+		B39DBABB2C43337000194223 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				B39DBABC2C43338600194223 /* AccountScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		B3E6BAF52C06D63F0046C4E2 = {
 			isa = PBXGroup;
 			children = (
@@ -126,12 +138,14 @@
 		B3E6BB002C06D63F0046C4E2 /* LeagueMastery */ = {
 			isa = PBXGroup;
 			children = (
+				B39DBABB2C43337000194223 /* Screens */,
 				B3E6BB2B2C06D9A50046C4E2 /* ViewModel */,
 				B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */,
 				B3E6BB032C06D63F0046C4E2 /* ContentView.swift */,
 				B3E6BB052C06D6420046C4E2 /* Assets.xcassets */,
 				B3E6BB072C06D6420046C4E2 /* Preview Content */,
 				B36301002C41F009000E54AA /* Codables.swift */,
+				B39DBABE2C44C09000194223 /* ApiCalls.swift */,
 			);
 			path = LeagueMastery;
 			sourceTree = "<group>";
@@ -303,7 +317,9 @@
 			files = (
 				B36300EA2C3D8E54000E54AA /* ChampionCards.swift in Sources */,
 				B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */,
+				B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */,
 				B36300E72C3D8E4A000E54AA /* MockModel.swift in Sources */,
+				B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */,
 				B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */,
 				B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */,
 				B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */,
