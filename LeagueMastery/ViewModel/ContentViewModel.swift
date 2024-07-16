@@ -16,6 +16,7 @@ extension ContentView {
         var splashUrl: String = ""
         var response: [MasteryResponse]?
         var showingScreen = false
+        var selectedRegion: region = .europe
         
         init() {
             populateChampions()
@@ -23,12 +24,15 @@ extension ContentView {
         
         func searchSumm() {
             print("called")
+            guard let splitName = splitGameName(sumName) else {
+                return
+            }
+            print(splitName)
+            
             Task {
                 print("Doing task")
                 do {
                     response = try await masteryApiCall()
-                    var topChamp = splashFromChampId(response![0].championId)
-                    splashUrl = "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/\(sumName)_0.jpg"
                     showingScreen = true
                 }catch{
                     response = nil
@@ -37,5 +41,31 @@ extension ContentView {
             }
         }
         
+        func splitGameName(_ name : String) -> [String]? {
+            let splitName = name.components(separatedBy: "#")
+            if(splitName.count != 2){
+                return nil
+            }
+            return splitName
+        }
+    }
+    
+    enum region: CaseIterable, Identifiable, CustomStringConvertible {
+        case europe
+        case americas
+        case asia
+        
+        var id: Self { self }
+        
+        var description: String {
+            switch self {
+            case .europe:
+                return "Europe"
+            case .americas:
+                return "Americas"
+            case .asia:
+                return "Asia"
+            }
+        }
     }
 }

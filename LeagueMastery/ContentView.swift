@@ -12,18 +12,26 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            TextField(
-                "Summoner name",
-                text: $viewModel.sumName)
+            HStack{
+                TextField(
+                    "Summoner name",
+                    text: $viewModel.sumName
+                )
+                .padding()
+                Picker("Region", selection: $viewModel.selectedRegion){
+                    ForEach(region.allCases){ option in
+                        Text(String(describing: option))
+                    }
+                }
+            }
+            Button(action: viewModel.searchSumm) {
+                Text("Search")
+            }
+            if(viewModel.showingScreen) {
+                AccountScreen(masteryData: viewModel.response!)
+            }
         }
-        .padding()
-        Button(action: viewModel.searchSumm) {
-            Text("Search")
-        }
-        AsyncImage(url: URL(string: viewModel.splashUrl))
     }
-    
-    
 }
 
 #Preview {
