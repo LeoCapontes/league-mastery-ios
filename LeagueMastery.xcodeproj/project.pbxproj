@@ -138,6 +138,8 @@
 		B3E6BB002C06D63F0046C4E2 /* LeagueMastery */ = {
 			isa = PBXGroup;
 			children = (
+				B36300E52C3D8E4A000E54AA /* Model */,
+				B36300E92C3D8E54000E54AA /* Views */,
 				B39DBABB2C43337000194223 /* Screens */,
 				B3E6BB2B2C06D9A50046C4E2 /* ViewModel */,
 				B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */,
@@ -179,8 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				B3E6BB2C2C06DA480046C4E2 /* ContentViewModel.swift */,
-				B36300E92C3D8E54000E54AA /* Views */,
-				B36300E52C3D8E4A000E54AA /* Model */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
