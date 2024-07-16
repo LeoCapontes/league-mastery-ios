@@ -55,6 +55,22 @@ struct ChampionImage: View {
     }
 }
 
+struct ChampionPortrait: View {
+    var championId: Int
+    
+    var body: some View {
+        AsyncImage(url: URL(string: portraitFromChampId(championId))
+        ) {
+            image in image
+                .image?
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                .scaleEffect(0.8)
+        }
+    }
+}
+
 struct MasteryFrame: View {
     var championId: Int
     var masteryLevel: Int
@@ -70,15 +86,7 @@ struct MasteryFrame: View {
                 .frame(height: geometry.size.height * 0.5)
                 .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.7)
                 ZStack {
-                    AsyncImage(url: URL(string: portraitFromChampId(championId))
-                    ) {
-                        image in image
-                            .image?
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                            .scaleEffect(0.8)
-                    }
+                    ChampionPortrait(championId: championId)
                     Image("mastery_framecomplete")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -109,15 +117,7 @@ struct LargeChampionCard: View {
             HStack{
                 MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
                 ZStack {
-                    AsyncImage(url: URL(string: portraitFromChampId(championId))
-                    ) {
-                        image in image
-                            .image?
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                            .scaleEffect(0.8)
-                    }
+                    ChampionPortrait(championId: championId)
                     Image("mastery_framecomplete")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -158,20 +158,59 @@ struct MediumChampionCard: View {
     }
 }
 
+struct ChampionRow: View {
+    var masteryLevel: Int
+    var points: Int
+    var championId: Int
+    var body: some View {
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Text(namesFromChampId[championId]!)
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.leading)
+                        .bold()
+                        .padding()
+                    
+                    MasteryCrestImage(masteryLevel: masteryLevel, mini: true)
+                        .position(
+                            x: geometry.size.width * 0.45,
+                            y: geometry.size.height * 0.6
+                        )
+                        .padding(-6)
+                    
+                    Text("\(points) pts")
+                        .foregroundStyle(.white)
+                        .position(
+                            x: geometry.size.width * 0.7,
+                            y: geometry.size.height * 0.5
+                        )
+                    Image(systemName: "")
+                }
+                .background(.ultraThinMaterial)
+            }
+            .frame(width: .infinity, height: 50)
+        }
+}
+
 #Preview {
     ZStack {
-        VStack{
-            Spacer()
+        ScrollView{
             LargeChampionCard(masteryLevel: 10, points: 10000, championId: 4)
             HStack{
                 MediumChampionCard(masteryLevel: 9, points: 1, championId: 1)
                 MediumChampionCard(masteryLevel: 8, points: 2, championId: 2)
                 MediumChampionCard(masteryLevel: 7, points: 3, championId: 3)
             }
-            Spacer()
+            VStack{
+                ForEach(3..<45) {
+                    ChampionRow(masteryLevel: 7, points: 10, championId: $0)
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
         }
         .padding()
     }
+    
     .frame(width: .infinity, height:.infinity)
     .background(
         Image("background-mastery").resizable().aspectRatio(contentMode: .fill)
