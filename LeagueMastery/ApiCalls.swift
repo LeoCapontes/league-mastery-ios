@@ -20,15 +20,17 @@ func puuidApiCall(
     tag: String,
     region: String
 ) async throws -> PuuidResponse{
-    let url = URL(string: "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/leeoo/EUW?api_key=\(Settings.shared.key)")!
+    let url = URL(string: "https://\(region).api.riotgames.com/riot/account/v1/accounts/by-riot-id/\(gameName)/\(tag)?api_key=\(Settings.shared.key)")!
     print(url.absoluteString)
     let (data, _) = try await URLSession.shared.data(from: url)
     let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
     return response
 }
 
-func masteryApiCall() async throws -> [MasteryResponse]{
-    let url = URL(string: mockTopMasteryRequest(6))!
+func masteryApiCall(
+    puuid: String
+) async throws -> [MasteryResponse]{
+    let url = URL(string: mockTopMasteryRequest(20, puuid))!
     print(url.absoluteString)
     let (data, _) = try await URLSession.shared.data(from: url)
     let response = try JSONDecoder().decode([MasteryResponse].self, from: data)

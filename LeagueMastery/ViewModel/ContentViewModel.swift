@@ -32,7 +32,12 @@ extension ContentView {
             Task {
                 print("Doing task")
                 do {
-                    response = try await masteryApiCall()
+                    let puuidResponse = try await puuidApiCall(
+                        gameName: splitName[0],
+                        tag: splitName[1],
+                        region: selectedRegion.description)
+                    
+                    response = try await masteryApiCall(puuid:puuidResponse.puuid)
                     showingScreen = true
                 }catch{
                     response = nil

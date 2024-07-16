@@ -18,7 +18,7 @@ struct MasteryResponse: Codable {
     let markRequiredForNextLevel: Int
     let tokensEarned: Int
     let championSeasonMilestone: Int
-    let milestoneGrades: [String]
+    let milestoneGrades: [String]?
     let nextSeasonMilestone: NextSeasonMilestone
     
     struct NextSeasonMilestone: Codable {
@@ -49,5 +49,5 @@ struct Champion: Codable {
 struct PuuidResponse: Codable {
     let puuid: String
     let gameName: String
-    let tagline: String
+    let tagLine: String
 }
