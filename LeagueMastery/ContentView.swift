@@ -11,25 +11,37 @@ struct ContentView: View {
     @State private var viewModel = ViewModel()
     
     var body: some View {
-        VStack {
-            HStack{
-                TextField(
-                    "Summoner name",
-                    text: $viewModel.sumName
-                )
-                .padding()
-                Picker("Region", selection: $viewModel.selectedRegion){
-                    ForEach(region.allCases){ option in
-                        Text(String(describing: option))
+        ZStack{
+            Image("background-mastery")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                HStack{
+                    TextField(
+                        "Summoner name",
+                        text: $viewModel.sumName
+                    ).onSubmit {
+                        viewModel.searchSumm()
+                    }
+                    .padding()
+                    
+                    Picker("Region", selection: $viewModel.selectedRegion){
+                        ForEach(region.allCases){ option in
+                            Text(String(describing: option))
+                        }
                     }
                 }
+                Button(action: viewModel.searchSumm) {
+                    Text("Search")
+                }
+                if(viewModel.showingScreen) {
+                    AccountScreen(masteryData: viewModel.response!)
+                }
             }
-            Button(action: viewModel.searchSumm) {
-                Text("Search")
-            }
-            if(viewModel.showingScreen) {
-                AccountScreen(masteryData: viewModel.response!)
-            }
+            .foregroundColor(.white)
+            .background(.ultraThinMaterial)
         }
     }
 }
