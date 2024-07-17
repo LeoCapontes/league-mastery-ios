@@ -71,6 +71,22 @@ struct ChampionPortrait: View {
     }
 }
 
+struct MasteryBanner: View {
+    var masteryLevel: Int
+    
+    var body: some View{
+        Image(
+            (masteryLevel>=10) ?
+              "mastery-banner-3" : (
+                (masteryLevel>=4) ? 
+                "mastery-banner-2" : "mastery-banner-1"
+              )
+        )
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+    }
+}
+
 struct MasteryFrame: View {
     var championId: Int
     var masteryLevel: Int
@@ -79,9 +95,7 @@ struct MasteryFrame: View {
         GeometryReader{ geometry in
             ZStack{
                 VStack{
-                    Image("mastery-banner-3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
+                    MasteryBanner(masteryLevel: masteryLevel)
                 }
                 .frame(height: geometry.size.height * 0.5)
                 .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.7)
