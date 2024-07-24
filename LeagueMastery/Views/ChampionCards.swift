@@ -126,33 +126,32 @@ struct LargeChampionCard: View {
     var championId: Int
     
     var body: some View {
-        ZStack(){
-            ChampionImage(championId: championId, blurred: true)
-            HStack{
-                MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
-                ZStack {
-                    ChampionPortrait(championId: championId)
-                    Image("mastery_framecomplete")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
+        GeometryReader{ geometry in
+            ZStack(){
+                ChampionImage(championId: championId, blurred: true)
+                HStack{
+                    MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
+                    ZStack {
+                        ChampionPortrait(championId: championId)
+                        Image("mastery_framecomplete")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
                 }
+                .frame(width: .infinity, height: .infinity)
+                Text("  Points: \(points)  ")
+                    .background(.ultraThinMaterial)
+                    .clipShape(Capsule())
+                    .position(
+                        x: geometry.size.width * 0.245,
+                        y: geometry.size.height * 0.85
+                    )
+
             }
-            .frame(width: .infinity, height: .infinity)
-            HStack {
-                VStack{
-                    Spacer()
-                    Spacer()
-                    Text("  Points: \(points)  ")
-                        .background(.ultraThinMaterial)
-                        .clipShape(Capsule())
-                }
-                Spacer()
-            }
-            .padding(EdgeInsets(top: 0, leading: 28, bottom: 24, trailing: 0))
         }
         .frame(width: .infinity ,height: 200)
         .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 
@@ -167,7 +166,7 @@ struct MediumChampionCard: View {
         }
         .frame(width: .infinity ,height: 124)
         .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(1)
     }
 }
@@ -177,33 +176,33 @@ struct ChampionRow: View {
     var points: Int
     var championId: Int
     var body: some View {
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    Text(namesFromChampId[championId]!)
-                        .foregroundStyle(.white)
-                        .multilineTextAlignment(.leading)
-                        .bold()
-                        .padding()
-                    
-                    MasteryCrestImage(masteryLevel: masteryLevel, mini: true)
-                        .position(
-                            x: geometry.size.width * 0.45,
-                            y: geometry.size.height * 0.6
-                        )
-                        .padding(-6)
-                    
-                    Text("\(points) pts")
-                        .foregroundStyle(.white)
-                        .position(
-                            x: geometry.size.width * 0.7,
-                            y: geometry.size.height * 0.5
-                        )
-                    Image(systemName: "")
-                }
-                .background(.ultraThinMaterial)
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Text(namesFromChampId[championId]!)
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.leading)
+                    .bold()
+                    .padding()
+                
+                MasteryCrestImage(masteryLevel: masteryLevel, mini: true)
+                    .position(
+                        x: geometry.size.width * 0.45,
+                        y: geometry.size.height * 0.6
+                    )
+                    .padding(-6)
+                
+                Text("\(points) pts")
+                    .foregroundStyle(.white)
+                    .position(
+                        x: geometry.size.width * 0.7,
+                        y: geometry.size.height * 0.5
+                    )
+                Image(systemName: "")
             }
-            .frame(width: .infinity, height: 50)
+            .background(.ultraThinMaterial)
         }
+        .frame(width: .infinity, height: 50)
+    }
 }
 
 #Preview {
@@ -220,7 +219,7 @@ struct ChampionRow: View {
                     ChampionRow(masteryLevel: 7, points: 10, championId: $0)
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
         }
         .padding()
     }
