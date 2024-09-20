@@ -121,25 +121,23 @@ struct MasteryFrame: View {
 }
 
 struct LargeChampionCard: View {
-    var masteryLevel: Int
-    var points: Int
-    var championId: Int
+    var entry: MasteryResponse
     
     var body: some View {
         GeometryReader{ geometry in
             ZStack(){
-                ChampionImage(championId: championId, blurred: true)
+                ChampionImage(championId: entry.championId, blurred: true)
                 HStack{
-                    MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
+                    MasteryCrestImage(masteryLevel: entry.championLevel, mini: false)
                     ZStack {
-                        ChampionPortrait(championId: championId)
+                        ChampionPortrait(championId: entry.championId)
                         Image("mastery_framecomplete")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     }
                 }
                 .frame(width: .infinity, height: .infinity)
-                Text("  Points: \(points)  ")
+                Text("  Points: \(entry.championPoints)  ")
                     .background(.ultraThinMaterial)
                     .clipShape(Capsule())
                     .position(
@@ -156,42 +154,42 @@ struct LargeChampionCard: View {
 }
 
 struct MediumChampionCard: View {
-    var masteryLevel: Int
-    var points: Int
-    var championId: Int
+    var entry: MasteryResponse
     
     var body: some View {
         ZStack(){
-            MasteryFrame(championId: championId, masteryLevel: masteryLevel)
+            MasteryFrame(championId: entry.championId, masteryLevel: entry.championLevel)
         }
         .frame(width: .infinity ,height: 124)
-        .background(.ultraThinMaterial)
+        .background{
+            Color.gray
+                .opacity(0.2)
+        }
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(1)
     }
 }
 
 struct ChampionRow: View {
-    var masteryLevel: Int
-    var points: Int
-    var championId: Int
+    var entry: MasteryResponse
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
-                Text(namesFromChampId[championId]!)
+                Text(namesFromChampId[entry.championId]!)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.leading)
                     .bold()
                     .padding()
                 
-                MasteryCrestImage(masteryLevel: masteryLevel, mini: true)
+                MasteryCrestImage(masteryLevel: entry.championLevel, mini: true)
                     .position(
                         x: geometry.size.width * 0.45,
                         y: geometry.size.height * 0.6
                     )
                     .padding(-6)
                 
-                Text("\(points) pts")
+                Text("\(entry.championPoints) pts")
                     .foregroundStyle(.white)
                     .position(
                         x: geometry.size.width * 0.7,
@@ -199,36 +197,40 @@ struct ChampionRow: View {
                     )
                 Image(systemName: "")
             }
-            .background(.ultraThinMaterial)
+            .background{
+                Color.gray
+                    .opacity(0.2)
+            }
         }
         .frame(width: .infinity, height: 50)
+        .clipped()
     }
 }
 
-#Preview {
-    ZStack {
-        ScrollView{
-            LargeChampionCard(masteryLevel: 10, points: 10000, championId: 4)
-            HStack{
-                MediumChampionCard(masteryLevel: 9, points: 1, championId: 1)
-                MediumChampionCard(masteryLevel: 8, points: 2, championId: 2)
-                MediumChampionCard(masteryLevel: 7, points: 3, championId: 3)
-            }
-            VStack{
-                ForEach(3..<45) {
-                    ChampionRow(masteryLevel: 7, points: 10, championId: $0)
-                }
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-        }
-        .padding()
-    }
-    
-    .frame(width: .infinity, height:.infinity)
-    .background(
-        Image("background-mastery").resizable().aspectRatio(contentMode: .fill)
-    )
-    .ignoresSafeArea()
-}
+//#Preview {
+//    ZStack {
+//        ScrollView{
+//            //LargeChampionCard(masteryLevel: 10, points: 10000, championId: 4)
+//            HStack{
+//                MediumChampionCard(masteryLevel: 9, points: 1, championId: 1)
+//                MediumChampionCard(masteryLevel: 8, points: 2, championId: 2)
+//                MediumChampionCard(masteryLevel: 7, points: 3, championId: 3)
+//            }
+//            VStack{
+//                ForEach(3..<45) {
+//                    ChampionRow(masteryLevel: 7, points: 10, championId: $0)
+//                }
+//            }
+//            .clipShape(RoundedRectangle(cornerRadius: 16))
+//        }
+//        .padding()
+//    }
+//    
+//    .frame(width: .infinity, height:.infinity)
+//    .background(
+//        Image("background-mastery").resizable().aspectRatio(contentMode: .fill)
+//    )
+//    .ignoresSafeArea()
+//}
 
 

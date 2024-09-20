@@ -15,30 +15,21 @@ struct AccountScreen: View{
         ZStack{
             ScrollView(showsIndicators: false) {
                 LazyVStack{
-                    LargeChampionCard(
-                        masteryLevel: masteryData[0].championLevel,
-                        points: masteryData[0].championPoints,
-                        championId: masteryData[0].championId)
+                    LargeChampionCard(entry: masteryData[0])
                     HStack{
                         ForEach(1..<4){ index in
-                            MediumChampionCard(
-                                masteryLevel: masteryData[index].championLevel,
-                                points: masteryData[index].championPoints,
-                                championId: masteryData[index].championId
-                            )
+                            MediumChampionCard(entry: masteryData[index])
                         }
                     }
                     ForEach(4..<masteryData.count){index in
-                        ChampionRow(
-                            masteryLevel: masteryData[index].championLevel,
-                            points: masteryData[index].championPoints,
-                            championId: masteryData[index].championId
-                        )
+                        ChampionRow(entry: masteryData[index])
                     }
                 }
             }
         }
     }
+    
+   
     
 
 }
