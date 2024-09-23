@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MasteryResponse: Codable {
+struct MasteryResponse: Codable, Hashable {
     let puuid: String
     let championId: Int
     let championLevel: Int
@@ -21,14 +21,14 @@ struct MasteryResponse: Codable {
     let milestoneGrades: [String]?
     let nextSeasonMilestone: NextSeasonMilestone
     
-    struct NextSeasonMilestone: Codable {
+    struct NextSeasonMilestone: Codable, Hashable {
         let requireGradeCounts: [String: Int]
         let rewardMarks: Int
         let bonus: Bool
         
         let rewardConfig: RewardConfig?
 
-        struct RewardConfig: Codable {
+        struct RewardConfig: Codable, Hashable {
             let rewardValue: String
             let rewardType: String
             let maximumReward: Int

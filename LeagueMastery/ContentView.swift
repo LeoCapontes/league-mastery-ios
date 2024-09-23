@@ -11,45 +11,48 @@ struct ContentView: View {
     @State private var viewModel = ViewModel()
     
     var body: some View {
-        ZStack{
-            Image("background-mastery")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                HStack{
+        NavigationStack{
+            ZStack{
+                Image("background-mastery")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
                     HStack{
-                        TextField(
-                            "Summoner name",
-                            text: $viewModel.sumName
-                        ).onSubmit {
-                            viewModel.searchSumm()
-                        }
-                        .padding()
-                        
-                        Picker("Region", selection: $viewModel.selectedRegion){
-                            ForEach(region.allCases){ option in
-                                Text(String(describing: option))
+                        HStack{
+                            TextField(
+                                "Summoner name",
+                                text: $viewModel.sumName
+                            ).onSubmit {
+                                viewModel.searchSumm()
+                            }
+                            .padding()
+                            
+                            Picker("Region", selection: $viewModel.selectedRegion){
+                                ForEach(region.allCases){ option in
+                                    Text(String(describing: option))
+                                }
                             }
                         }
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        
+                        Button(action: viewModel.searchSumm) {
+                            Text("Search")
+                        }
                     }
-                    .background(.ultraThinMaterial)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
                     
-                    Button(action: viewModel.searchSumm) {
-                        Text("Search")
+                    if(viewModel.showingScreen) {
+                        AccountScreen(masteryData: viewModel.response!)
+                            .transition(.slide)
                     }
                 }
-                
-                if(viewModel.showingScreen) {
-                    AccountScreen(masteryData: viewModel.response!)
-                        .transition(.slide)
-                }
+                .padding()
+                .foregroundColor(.white)
+                .edgesIgnoringSafeArea(.bottom)
+                .animation(.default, value: viewModel.showingScreen)
             }
-            .padding()
-            .foregroundColor(.white)
-            .edgesIgnoringSafeArea(.bottom)
         }
     }
 }
