@@ -45,11 +45,7 @@ struct AccountScreen: View{
                 }
             }
             .navigationDestination(for: MasteryResponse.self){ entry in
-                VStack{
-                    Text(namesFromChampId[entry.championId]!)
-                        .foregroundStyle(Color.black)
-                }
-                .background(.clear)
+                ChampionScreen(championData: entry)
             }
     }
 

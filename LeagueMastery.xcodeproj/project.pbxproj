@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */; };
 		B36300E62C3D8E4A000E54AA /* ChampionIdConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */; };
 		B36300E72C3D8E4A000E54AA /* MockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E42C3D8E4A000E54AA /* MockModel.swift */; };
 		B36300EA2C3D8E54000E54AA /* ChampionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E82C3D8E54000E54AA /* ChampionCards.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionScreen.swift; sourceTree = "<group>"; };
 		B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionIdConversions.swift; sourceTree = "<group>"; };
 		B36300E42C3D8E4A000E54AA /* MockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockModel.swift; sourceTree = "<group>"; };
 		B36300E82C3D8E54000E54AA /* ChampionCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionCards.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		B39DBABB2C43337000194223 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */,
 				B39DBABC2C43338600194223 /* AccountScreen.swift */,
 			);
 			path = Screens;
@@ -321,6 +324,7 @@
 				B36300E72C3D8E4A000E54AA /* MockModel.swift in Sources */,
 				B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */,
 				B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */,
+				B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */,
 				B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */,
 				B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */,
 				B36301012C41F009000E54AA /* Codables.swift in Sources */,
