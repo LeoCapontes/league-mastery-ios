@@ -207,30 +207,31 @@ struct ChampionRow: View {
     }
 }
 
-//#Preview {
-//    ZStack {
-//        ScrollView{
-//            //LargeChampionCard(masteryLevel: 10, points: 10000, championId: 4)
-//            HStack{
-//                MediumChampionCard(masteryLevel: 9, points: 1, championId: 1)
-//                MediumChampionCard(masteryLevel: 8, points: 2, championId: 2)
-//                MediumChampionCard(masteryLevel: 7, points: 3, championId: 3)
-//            }
-//            VStack{
-//                ForEach(3..<45) {
-//                    ChampionRow(masteryLevel: 7, points: 10, championId: $0)
-//                }
-//            }
-//            .clipShape(RoundedRectangle(cornerRadius: 16))
-//        }
-//        .padding()
-//    }
-//    
-//    .frame(width: .infinity, height:.infinity)
-//    .background(
-//        Image("background-mastery").resizable().aspectRatio(contentMode: .fill)
-//    )
-//    .ignoresSafeArea()
-//}
+#Preview {
+    let mock = mockMasteryResponse
+    ZStack {
+        ScrollView{
+            LargeChampionCard(entry: mock[0])
+            HStack{
+                MediumChampionCard(entry: mock[0])
+                MediumChampionCard(entry: mock[0])
+                MediumChampionCard(entry: mock[0])
+            }
+            VStack{
+                ForEach(3..<45) { index in
+                    ChampionRow(entry: mock[0])
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
+        .padding()
+    }
+    
+    .frame(width: .infinity, height:.infinity)
+    .background(
+        Image("background-mastery").resizable().aspectRatio(contentMode: .fill)
+    )
+    .ignoresSafeArea()
+}
 
 

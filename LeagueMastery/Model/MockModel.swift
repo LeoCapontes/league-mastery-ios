@@ -126,3 +126,13 @@ let mockTopThreeResponse = """
     }
 ]
 """.data(using: .utf8)
+
+var mockMasteryResponse: [MasteryResponse] {
+    do {
+        let response = try JSONDecoder().decode(
+            [MasteryResponse].self, from: mockTopThreeResponse!)
+        return response
+    } catch {
+        return []
+    }
+}
