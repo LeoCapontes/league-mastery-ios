@@ -6,6 +6,16 @@
 //
 
 import SwiftUI
+let gradientMask = LinearGradient(
+    stops: [
+        Gradient.Stop(color: .clear, location: 0),
+        Gradient.Stop(color: .black, location: 0.25),
+        Gradient.Stop(color: .black, location: 0.75),
+        Gradient.Stop(color: .clear, location: 1)
+    ],
+    startPoint: .top,
+    endPoint: .bottom)
+
 struct ChampionScreen: View {
     var championData: MasteryResponse
     
@@ -34,17 +44,40 @@ struct ChampionScreen: View {
     
     var body: some View {
         ZStack{
+            Image("background-mastery")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .edgesIgnoringSafeArea(.all)
             VStack{
+                ChampionImage(championId: championData.championId, blurred: false)
+                    .frame(width: 500)
+                    .mask(gradientMask)
+                Spacer()
+            }
+            VStack{
+                Spacer()
+                MasteryCrestImage(masteryLevel: championData.championLevel, mini: false)
+                    .frame(width: 288)
                 Text(namesFromChampId[championData.championId]!)
+                    .foregroundStyle(.white)
+                    .bold()
+                
                 GradesContainer(requiredGrades: requiredGrades, achievedGrades: achievedGrades)
                 // Temp val checking
-                HStack{
-                    ForEach(0..<achievedGrades.count) {index in
-                        Text(achievedGrades[index])
-                    }
-                }
+//                HStack{
+//                    ForEach(0..<achievedGrades.count) {index in
+//                        Text(achievedGrades[index])
+//                    }
+//                }
+                Spacer()
+                Spacer()
+                Spacer()
             }
+            .padding()
         }
+        .ignoresSafeArea()
+        
     }
 }
 
@@ -72,12 +105,14 @@ struct GradesContainer: View {
     
     var body: some View {
         ZStack{
-            HStack(spacing: 0){
-                ForEach(0..<requiredGrades.count) {index in
-                    GradeBox(
-                        requiredGrade: requiredGrades[index],
-                        achievedGrade: achievedGrades[index]
-                    )
+            VStack{
+                HStack(spacing: 0){
+                    ForEach(0..<requiredGrades.count) {index in
+                        GradeBox(
+                            requiredGrade: requiredGrades[index],
+                            achievedGrade: achievedGrades[index]
+                        )
+                    }
                 }
             }
         }
@@ -101,5 +136,5 @@ func gradeRank(_ grade: String) -> Int {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[0])
+    ChampionScreen(championData: mock[3])
 }

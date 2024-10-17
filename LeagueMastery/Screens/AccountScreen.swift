@@ -25,23 +25,24 @@ struct AccountScreen: View{
     var body: some View {
             ZStack{
                 ScrollView(showsIndicators: false) {
-                    LazyVStack{
-                        NavigationLink(value: selectedSort[0]){
-                            LargeChampionCard(entry: selectedSort[0])
-                        }
-                        HStack{
-                            ForEach(1..<4){ index in
-                                NavigationLink(value: selectedSort[index]){
-                                    MediumChampionCard(entry: selectedSort[index])
-                                }
+                    NavigationLink(value: selectedSort[0]){
+                        LargeChampionCard(entry: selectedSort[0])
+                    }
+                    HStack{
+                        ForEach(1..<4){ index in
+                            NavigationLink(value: selectedSort[index]){
+                                MediumChampionCard(entry: selectedSort[index])
                             }
                         }
+                    }
+                    VStack{
                         ForEach(4..<selectedSort.count){index in
                             NavigationLink(value: selectedSort[index]){
                                 ChampionRow(entry: selectedSort[index])
                             }
                         }
                     }
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
             }
             .navigationDestination(for: MasteryResponse.self){ entry in

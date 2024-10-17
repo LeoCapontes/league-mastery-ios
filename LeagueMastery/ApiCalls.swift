@@ -8,7 +8,8 @@
 import Foundation
 
 func championsApiCall() async throws -> Champions{
-    let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/14.13.1/data/en_US/champion.json")!
+    //TODO get current version through datadragon
+    let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/14.20.1/data/en_US/champion.json")!
     print(url.absoluteString)
     let (data, _) = try await URLSession.shared.data(from: url)
     let response = try JSONDecoder().decode(Champions.self, from: data)
@@ -30,7 +31,7 @@ func puuidApiCall(
 func masteryApiCall(
     puuid: String
 ) async throws -> [MasteryResponse]{
-    let url = URL(string: mockTopMasteryRequest(20, puuid))!
+    let url = URL(string: mockTopMasteryRequest(75, puuid))!
     print(url.absoluteString)
     let (data, _) = try await URLSession.shared.data(from: url)
     let response = try JSONDecoder().decode([MasteryResponse].self, from: data)

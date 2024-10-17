@@ -29,7 +29,6 @@ struct MasteryCrestImage: View {
         Image(assetPath)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .padding(12)
     }
 }
 
@@ -47,8 +46,8 @@ struct ChampionImage: View {
             ) { image in image
                     .image?
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .blur(radius: (blurred ? 12 : 0))
+                    .aspectRatio(contentMode: .fit)
+                    .blur(radius: (blurred ? 10 : 0))
             }
             .frame(width: .infinity)
         }
@@ -127,22 +126,31 @@ struct LargeChampionCard: View {
         GeometryReader{ geometry in
             ZStack(){
                 ChampionImage(championId: entry.championId, blurred: true)
-                HStack{
-                    MasteryCrestImage(masteryLevel: entry.championLevel, mini: false)
-                    ZStack {
-                        ChampionPortrait(championId: entry.championId)
-                        Image("mastery_framecomplete")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
+
+                MasteryCrestImage(masteryLevel: entry.championLevel, mini: false)
+                    .frame(height: geometry.size.height * 0.9)
+                    .position(
+                        x: geometry.size.width * 0.245,
+                        y: geometry.size.height * 0.5)
+                
+                ZStack {
+                    ChampionPortrait(championId: entry.championId)
+                    Image("mastery_framecomplete")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
                 }
-                .frame(width: .infinity, height: .infinity)
+                .frame(height: geometry.size.height*0.9)
+                .position(
+                    x: geometry.size.width * 0.725,
+                    y: geometry.size.height * 0.5
+                )
+                
                 Text("  Points: \(entry.championPoints)  ")
                     .background(.ultraThinMaterial)
                     .clipShape(Capsule())
                     .position(
                         x: geometry.size.width * 0.245,
-                        y: geometry.size.height * 0.85
+                        y: geometry.size.height * 0.8
                     )
 
             }
