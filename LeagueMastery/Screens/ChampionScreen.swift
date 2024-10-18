@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
+import AVKit
 let gradientMask = LinearGradient(
     stops: [
-        Gradient.Stop(color: .clear, location: 0),
-        Gradient.Stop(color: .black, location: 0.25),
-        Gradient.Stop(color: .black, location: 0.75),
+        Gradient.Stop(color: .black, location: 0.66),
         Gradient.Stop(color: .clear, location: 1)
     ],
     startPoint: .top,
@@ -42,6 +41,14 @@ struct ChampionScreen: View {
         }
     }
     
+    var pointsInLevel: Int {
+        return championData.championPointsSinceLastLevel + championData.championPointsUntilNextLevel
+    }
+    
+    var pointsProgress: Int {
+        return championData.championPointsSinceLastLevel
+    }
+    
     var body: some View {
         ZStack{
             Image("background-mastery")
@@ -50,20 +57,33 @@ struct ChampionScreen: View {
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .edgesIgnoringSafeArea(.all)
             VStack{
-                ChampionImage(championId: championData.championId, blurred: false)
+                ChampionImage(
+                    championId: championData.championId, blurred: false)
                     .frame(width: 500)
                     .mask(gradientMask)
                 Spacer()
             }
             VStack{
                 Spacer()
-                MasteryCrestImage(masteryLevel: championData.championLevel, mini: false)
-                    .frame(width: 288)
+                MasteryCrestImage(
+                    masteryLevel: championData.championLevel, mini: false)
+                    .frame(width: 250)
+                    .padding(-44)
+                    .shadow(color: .black, radius: 40)
                 Text(namesFromChampId[championData.championId]!)
                     .foregroundStyle(.white)
                     .bold()
+                    .font(.system(size: 28))
+                Text("Mastery Level \(championData.championLevel)")
+                    .foregroundStyle(.white)
+                    .bold()
+                    .font(.system(size: 18))
+                Text("\(pointsProgress) / \(pointsInLevel)")
+                    .foregroundStyle(.white)
+                GradesContainer(
+                    requiredGrades: requiredGrades,
+                    achievedGrades: achievedGrades)
                 
-                GradesContainer(requiredGrades: requiredGrades, achievedGrades: achievedGrades)
                 // Temp val checking
 //                HStack{
 //                    ForEach(0..<achievedGrades.count) {index in
@@ -95,7 +115,10 @@ struct GradeBox: View {
         .padding(.horizontal, 6)
         .padding(.vertical, 2)
         .background(
-            (gradeRank(achievedGrade) <= gradeRank(requiredGrade)) ? Color.green : Color.clear)
+            (gradeRank(achievedGrade) <= gradeRank(requiredGrade))
+            ? Color.green
+            : Color.clear
+        )
     }
 }
 
@@ -136,5 +159,5 @@ func gradeRank(_ grade: String) -> Int {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[3])
+    ChampionScreen(championData: mock[1])
 }

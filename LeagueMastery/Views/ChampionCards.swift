@@ -47,7 +47,7 @@ struct ChampionImage: View {
                     .image?
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .blur(radius: (blurred ? 10 : 0))
+                    .blur(radius: (blurred ? 8 : 0))
             }
             .frame(width: .infinity)
         }
@@ -111,7 +111,7 @@ struct MasteryFrame: View {
                         y: geometry.size.height * 0.35)
                 )
                 MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
-                    .frame(height: geometry.size.height * 0.75)
+                    .frame(height: geometry.size.height * 0.5)
                     .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.8)
             }
         }
@@ -125,16 +125,21 @@ struct LargeChampionCard: View {
     var body: some View {
         GeometryReader{ geometry in
             ZStack(){
+                // negative padding removes negative space around edges
+                // caused by blurring
                 ChampionImage(championId: entry.championId, blurred: true)
+                    .aspectRatio(contentMode: .fill)
+                    .padding(-8)
 
                 MasteryCrestImage(masteryLevel: entry.championLevel, mini: false)
                     .frame(height: geometry.size.height * 0.9)
                     .position(
-                        x: geometry.size.width * 0.245,
-                        y: geometry.size.height * 0.5)
+                        x: geometry.size.width * 0.25,
+                        y: geometry.size.height * 0.45)
                 
                 ZStack {
                     ChampionPortrait(championId: entry.championId)
+                        .padding(-4)
                     Image("mastery_framecomplete")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -145,11 +150,13 @@ struct LargeChampionCard: View {
                     y: geometry.size.height * 0.5
                 )
                 
-                Text("  Points: \(entry.championPoints)  ")
+                Text("Points: \(entry.championPoints)")
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 2)
                     .background(.ultraThinMaterial)
                     .clipShape(Capsule())
                     .position(
-                        x: geometry.size.width * 0.245,
+                        x: geometry.size.width * 0.25,
                         y: geometry.size.height * 0.8
                     )
 
@@ -191,11 +198,11 @@ struct ChampionRow: View {
                     .padding()
                 
                 MasteryCrestImage(masteryLevel: entry.championLevel, mini: true)
+                    .padding(4)
                     .position(
                         x: geometry.size.width * 0.45,
                         y: geometry.size.height * 0.6
                     )
-                    .padding(-6)
                 
                 Text("\(entry.championPoints) pts")
                     .foregroundStyle(.white)
@@ -221,8 +228,8 @@ struct ChampionRow: View {
         ScrollView{
             LargeChampionCard(entry: mock[0])
             HStack{
-                MediumChampionCard(entry: mock[0])
-                MediumChampionCard(entry: mock[0])
+                MediumChampionCard(entry: mock[1])
+                MediumChampionCard(entry: mock[2])
                 MediumChampionCard(entry: mock[0])
             }
             VStack{
