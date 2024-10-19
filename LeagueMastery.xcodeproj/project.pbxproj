@@ -15,6 +15,16 @@
 		B36301012C41F009000E54AA /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36301002C41F009000E54AA /* Codables.swift */; };
 		B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABC2C43338600194223 /* AccountScreen.swift */; };
 		B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABE2C44C09000194223 /* ApiCalls.swift */; };
+		B3C612672CC43CDE00C19B0C /* 2-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6125E2CC43CDE00C19B0C /* 2-loop.mov */; };
+		B3C612682CC43CDE00C19B0C /* 8-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612642CC43CDE00C19B0C /* 8-loop.mov */; };
+		B3C612692CC43CDE00C19B0C /* 5-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612612CC43CDE00C19B0C /* 5-loop.mov */; };
+		B3C6126A2CC43CDE00C19B0C /* 9-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612652CC43CDE00C19B0C /* 9-loop.mov */; };
+		B3C6126B2CC43CDE00C19B0C /* 1-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6125D2CC43CDE00C19B0C /* 1-loop.mov */; };
+		B3C6126C2CC43CDE00C19B0C /* 10-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612662CC43CDE00C19B0C /* 10-loop.mov */; };
+		B3C6126D2CC43CDE00C19B0C /* 4-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612602CC43CDE00C19B0C /* 4-loop.mov */; };
+		B3C6126E2CC43CDE00C19B0C /* 7-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612632CC43CDE00C19B0C /* 7-loop.mov */; };
+		B3C6126F2CC43CDE00C19B0C /* 6-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612622CC43CDE00C19B0C /* 6-loop.mov */; };
+		B3C612702CC43CDE00C19B0C /* 3-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6125F2CC43CDE00C19B0C /* 3-loop.mov */; };
 		B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */; };
 		B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB032C06D63F0046C4E2 /* ContentView.swift */; };
 		B3E6BB062C06D6420046C4E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E6BB052C06D6420046C4E2 /* Assets.xcassets */; };
@@ -51,6 +61,16 @@
 		B36301002C41F009000E54AA /* Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codables.swift; sourceTree = "<group>"; };
 		B39DBABC2C43338600194223 /* AccountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreen.swift; sourceTree = "<group>"; };
 		B39DBABE2C44C09000194223 /* ApiCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiCalls.swift; sourceTree = "<group>"; };
+		B3C6125D2CC43CDE00C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
+		B3C6125E2CC43CDE00C19B0C /* 2-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "2-loop.mov"; sourceTree = "<group>"; };
+		B3C6125F2CC43CDE00C19B0C /* 3-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "3-loop.mov"; sourceTree = "<group>"; };
+		B3C612602CC43CDE00C19B0C /* 4-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "4-loop.mov"; sourceTree = "<group>"; };
+		B3C612612CC43CDE00C19B0C /* 5-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "5-loop.mov"; sourceTree = "<group>"; };
+		B3C612622CC43CDE00C19B0C /* 6-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "6-loop.mov"; sourceTree = "<group>"; };
+		B3C612632CC43CDE00C19B0C /* 7-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "7-loop.mov"; sourceTree = "<group>"; };
+		B3C612642CC43CDE00C19B0C /* 8-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "8-loop.mov"; sourceTree = "<group>"; };
+		B3C612652CC43CDE00C19B0C /* 9-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "9-loop.mov"; sourceTree = "<group>"; };
+		B3C612662CC43CDE00C19B0C /* 10-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "10-loop.mov"; sourceTree = "<group>"; };
 		B3E6BAFE2C06D63F0046C4E2 /* LeagueMastery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeagueMastery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueMasteryApp.swift; sourceTree = "<group>"; };
 		B3E6BB032C06D63F0046C4E2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -118,6 +138,23 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		B3C6125C2CC4384500C19B0C /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				B3C6125D2CC43CDE00C19B0C /* 1-loop.mov */,
+				B3C6125E2CC43CDE00C19B0C /* 2-loop.mov */,
+				B3C6125F2CC43CDE00C19B0C /* 3-loop.mov */,
+				B3C612602CC43CDE00C19B0C /* 4-loop.mov */,
+				B3C612612CC43CDE00C19B0C /* 5-loop.mov */,
+				B3C612622CC43CDE00C19B0C /* 6-loop.mov */,
+				B3C612632CC43CDE00C19B0C /* 7-loop.mov */,
+				B3C612642CC43CDE00C19B0C /* 8-loop.mov */,
+				B3C612652CC43CDE00C19B0C /* 9-loop.mov */,
+				B3C612662CC43CDE00C19B0C /* 10-loop.mov */,
+			);
+			path = Media;
+			sourceTree = "<group>";
+		};
 		B3E6BAF52C06D63F0046C4E2 = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +178,7 @@
 		B3E6BB002C06D63F0046C4E2 /* LeagueMastery */ = {
 			isa = PBXGroup;
 			children = (
+				B3C6125C2CC4384500C19B0C /* Media */,
 				B36300E52C3D8E4A000E54AA /* Model */,
 				B36300E92C3D8E54000E54AA /* Views */,
 				B39DBABB2C43337000194223 /* Screens */,
@@ -293,6 +331,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3E6BB092C06D6420046C4E2 /* Preview Assets.xcassets in Resources */,
+				B3C612672CC43CDE00C19B0C /* 2-loop.mov in Resources */,
+				B3C612682CC43CDE00C19B0C /* 8-loop.mov in Resources */,
+				B3C612692CC43CDE00C19B0C /* 5-loop.mov in Resources */,
+				B3C6126A2CC43CDE00C19B0C /* 9-loop.mov in Resources */,
+				B3C6126B2CC43CDE00C19B0C /* 1-loop.mov in Resources */,
+				B3C6126C2CC43CDE00C19B0C /* 10-loop.mov in Resources */,
+				B3C6126D2CC43CDE00C19B0C /* 4-loop.mov in Resources */,
+				B3C6126E2CC43CDE00C19B0C /* 7-loop.mov in Resources */,
+				B3C6126F2CC43CDE00C19B0C /* 6-loop.mov in Resources */,
+				B3C612702CC43CDE00C19B0C /* 3-loop.mov in Resources */,
 				B3E6BB062C06D6420046C4E2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
