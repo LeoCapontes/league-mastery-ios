@@ -80,6 +80,8 @@ struct ChampionScreen: View {
                     .font(.system(size: 18))
                 Text("\(pointsProgress) / \(pointsInLevel)")
                     .foregroundStyle(.white)
+                ProgressBar(total: pointsInLevel, progress: pointsProgress)
+                    .frame(width: 200, height: 12)
                 GradesContainer(
                     requiredGrades: requiredGrades,
                     achievedGrades: achievedGrades)
@@ -141,6 +143,32 @@ struct GradesContainer: View {
         }
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 4))
+    }
+}
+
+struct ProgressBar: View {
+    var total: Int
+    var progress: Int
+    
+    var barPercentage: CGFloat {
+        if (progress >= total) {
+            return 1
+        }
+        return (CGFloat(progress) / CGFloat(total))
+    }
+    
+    var body: some View {
+        GeometryReader{ geometry in
+            ZStack(alignment: .leading){
+                Capsule()
+                    .frame(width: geometry.size.width)
+                    .foregroundStyle(.gray)
+                Capsule()
+                    .frame(
+                        width: (geometry.size.width * barPercentage))
+                    .foregroundStyle(.white)
+            }
+        }
     }
 }
 
