@@ -48,7 +48,7 @@ struct ContentView: View {
                             .transition(.slide)
                     }
                 }
-                .padding()
+                .padding(10)
                 .foregroundColor(.white)
                 .edgesIgnoringSafeArea(.bottom)
                 .animation(.default, value: viewModel.showingScreen)

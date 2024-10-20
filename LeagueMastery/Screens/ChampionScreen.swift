@@ -49,6 +49,20 @@ struct ChampionScreen: View {
         return championData.championPointsSinceLastLevel
     }
     
+    var videoUrl: String {
+        let level: Int
+        if championData.championLevel > 10 {
+            level = 10
+        } else {
+            level = championData.championLevel
+        }
+        return "\(level)-loop"
+    }
+    
+    var crestScale: CGFloat {
+        return vidScale(lvl: championData.championLevel)
+    }
+    
     var body: some View {
         ZStack{
             Image("background-mastery")
@@ -65,11 +79,13 @@ struct ChampionScreen: View {
             }
             VStack{
                 Spacer()
-                MasteryCrestImage(
-                    masteryLevel: championData.championLevel, mini: false)
-                    .frame(width: 250)
-                    .padding(-44)
-                    .shadow(color: .black, radius: 40)
+                HStack{
+                    VideoPlayer(url: videoUrl)
+                        .frame(width: 250*crestScale, height: 250*crestScale)
+                        .shadow(color: .black, radius: 40)
+                }
+                .frame(width: 250, height: 250)
+                .padding(-40)
                 Text(namesFromChampId[championData.championId]!)
                     .foregroundStyle(.white)
                     .bold()
@@ -78,7 +94,7 @@ struct ChampionScreen: View {
                     .foregroundStyle(.white)
                     .bold()
                     .font(.system(size: 18))
-                Text("\(pointsProgress) / \(pointsInLevel)")
+                Text("\(pointsProgress) / \(pointsInLevel) pts")
                     .foregroundStyle(.white)
                 ProgressBar(total: pointsInLevel, progress: pointsProgress)
                     .frame(width: 200, height: 12)
