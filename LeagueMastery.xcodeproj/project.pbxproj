@@ -377,6 +377,7 @@
 				B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */,
 				B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */,
 				B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */,
+				B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */,
 				B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */,
 				B36301012C41F009000E54AA /* Codables.swift in Sources */,
 				B36300E62C3D8E4A000E54AA /* ChampionIdConversions.swift in Sources */,
