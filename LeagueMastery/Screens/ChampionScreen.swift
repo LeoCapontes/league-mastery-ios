@@ -79,6 +79,7 @@ struct ChampionScreen: View {
             }
             VStack{
                 Spacer()
+                Spacer()
                 HStack{
                     VideoPlayer(url: videoUrl)
                         .frame(width: 250*crestScale, height: 250*crestScale)
@@ -86,6 +87,13 @@ struct ChampionScreen: View {
                 }
                 .frame(width: 250, height: 250)
                 .padding(-40)
+                
+                MasteryMarks(
+                    requiredMarks: championData.markRequiredForNextLevel,
+                    earnedMarks: championData.tokensEarned)
+                .frame(width:.infinity, height: 40)
+                .padding(.bottom, -6)
+                
                 Text(namesFromChampId[championData.championId]!)
                     .foregroundStyle(.white)
                     .bold()
@@ -108,6 +116,7 @@ struct ChampionScreen: View {
 //                        Text(achievedGrades[index])
 //                    }
 //                }
+                Spacer()
                 Spacer()
                 Spacer()
                 Spacer()
@@ -183,6 +192,34 @@ struct ProgressBar: View {
                     .frame(
                         width: (geometry.size.width * barPercentage))
                     .foregroundStyle(.white)
+            }
+        }
+    }
+}
+
+struct MasteryMarks: View {
+    var requiredMarks: Int
+    var earnedMarks: Int
+    
+    var emptyToShow: Int {
+        var diff = requiredMarks-earnedMarks
+        if diff >= 0 {
+            return diff
+        }
+        return 0
+    }
+    
+    var body: some View {
+        HStack{
+            ForEach(0..<earnedMarks){ mark in
+                Image("mastery-mark")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+            ForEach(0..<emptyToShow){ mark in
+                Image("mastery-mark-empty")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
             }
         }
     }
