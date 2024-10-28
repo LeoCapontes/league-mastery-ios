@@ -29,8 +29,8 @@ struct ContentView: View {
                             }
                             .padding()
                             
-                            Picker("Region", selection: $viewModel.selectedRegion){
-                                ForEach(region.allCases){ option in
+                            Picker("Region", selection: $viewModel.selectedServer){
+                                ForEach(server.allCases){ option in
                                     Text(String(describing: option))
                                 }
                             }

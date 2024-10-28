@@ -29,9 +29,11 @@ func puuidApiCall(
 }
 
 func masteryApiCall(
-    puuid: String
+    puuid: String,
+    selectedServer: server
 ) async throws -> [MasteryResponse]{
-    let url = URL(string: mockTopMasteryRequest(75, puuid))!
+    let serverString = selectedServer.raw
+    let url = URL(string: mockTopMasteryRequest(75, puuid, serverString))!
     print(url.absoluteString)
     let (data, _) = try await URLSession.shared.data(from: url)
     let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
