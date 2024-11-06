@@ -18,37 +18,6 @@ let gradientMask = LinearGradient(
 struct ChampionScreen: View {
     var championData: MasteryResponse
     
-    var requiredGrades: [String] {
-        let gradecounts = championData.nextSeasonMilestone.requireGradeCounts
-        var reqGrades: [String] = []
-        for grade in gradecounts{
-            reqGrades += Array(repeating: grade.key, count: grade.value)
-        }
-        return reqGrades.sorted(by: { gradeRank($0) < gradeRank($1) })
-    }
-    
-    var achievedGrades: [String] {
-        // actual achieved grades will always less or equal to number of
-        // required grades. Fill with impossibly low grades to ensure equal
-        // array sizes.
-        let tempGrades = Array(repeating: "F", count: requiredGrades.count)
-        if var grades = championData.milestoneGrades {
-            grades += Array(
-                repeating: "F", count: (tempGrades.count - grades.count))
-            return grades.sorted(by: { gradeRank($0) < gradeRank($1) })
-        } else {
-            return tempGrades
-        }
-    }
-    
-    var pointsInLevel: Int {
-        return championData.championPointsSinceLastLevel + championData.championPointsUntilNextLevel
-    }
-    
-    var pointsProgress: Int {
-        return championData.championPointsSinceLastLevel
-    }
-    
     var videoUrl: String {
         let level: Int
         if championData.championLevel > 10 {
@@ -102,20 +71,15 @@ struct ChampionScreen: View {
                     .foregroundStyle(.white)
                     .bold()
                     .font(.system(size: 18))
-                Text("\(pointsProgress) / \(pointsInLevel) pts")
+                Text("\(championData.championPointsSinceLastLevel) / \(championData.pointsInLevel) pts")
                     .foregroundStyle(.white)
-                ProgressBar(total: pointsInLevel, progress: pointsProgress)
+                ProgressBar(
+                    total: championData.pointsInLevel,
+                    progress: championData.championPointsSinceLastLevel)
                     .frame(width: 200, height: 12)
                 GradesContainer(
-                    requiredGrades: requiredGrades,
-                    achievedGrades: achievedGrades)
-                
-                // Temp val checking
-//                HStack{
-//                    ForEach(0..<achievedGrades.count) {index in
-//                        Text(achievedGrades[index])
-//                    }
-//                }
+                    requiredGrades: championData.requiredGrades,
+                    achievedGrades: championData.achievedGrades)
                 Spacer()
                 Spacer()
                 Spacer()
@@ -223,19 +187,6 @@ struct MasteryMarks: View {
             }
         }
     }
-}
-
-func gradeRank(_ grade: String) -> Int {
-    let gradeRanks: [String: Int] = [
-        "S+": 0, "S": 1, "S-": 2,
-        "A+": 3, "A": 4, "A-": 5,
-        "B+": 6, "B": 7, "B-": 8,
-        "C+": 9, "C": 10, "C-": 11,
-        "D+": 12, "D": 13, "D-": 14,
-        "F": 15
-    ]
-    
-    return gradeRanks[grade] ?? Int.max
 }
 
 #Preview {
