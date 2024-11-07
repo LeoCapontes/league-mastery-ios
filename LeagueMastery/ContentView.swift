@@ -30,13 +30,19 @@ struct ContentView: View {
                     HStack{
                         HStack{
                             TextField(
-                                "Summoner name",
-                                text: $viewModel.sumName
+                                "",
+                                text: $viewModel.sumName,
+                                prompt: Text("Summoner name")
+                                    .foregroundStyle(Color(
+                                        red: 150/255,
+                                        green: 150/255,
+                                        blue: 150/255
+                                    ))
                             ).onSubmit {
                                 viewModel.searchSumm()
                             }
                             .padding(.horizontal)
-                            .padding(.vertical, 12)
+                            .padding(.vertical, viewModel.showingScreen ? 2: 18)
                             
                             
                             Picker("Region", selection: $viewModel.selectedServer){
@@ -45,7 +51,8 @@ struct ContentView: View {
                                 }
                             }
                         }
-                        .background(.ultraThinMaterial)
+                        .background(Color.gray
+                            .opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         
                         Button(action: viewModel.searchSumm) {
@@ -55,7 +62,7 @@ struct ContentView: View {
                     
                     if(viewModel.showingScreen) {
                         AccountScreen(masteryData: viewModel.response!)
-                            .transition(.slide)
+                            .transition(.scale)
                     }
                 }
                 .padding(10)
