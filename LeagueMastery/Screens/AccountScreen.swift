@@ -30,48 +30,48 @@ struct AccountScreen: View{
     }
     
     var body: some View {
-            ZStack{
-                VStack{
-                    ScrollView(showsIndicators: false) {
-                        NavigationLink(value: selectedSort[0]){
-                            LargeChampionCard(entry: selectedSort[0])
-                        }
-                        HStack{
-                            ForEach(1..<4){ index in
-                                NavigationLink(value: selectedSort[index]){
-                                    MediumChampionCard(entry: selectedSort[index])
-                                }
+        ZStack(alignment: .bottomTrailing){
+            VStack{
+                ScrollView(showsIndicators: false) {
+                    NavigationLink(value: selectedSort[0]){
+                        LargeChampionCard(entry: selectedSort[0])
+                    }
+                    HStack{
+                        ForEach(1..<4){ index in
+                            NavigationLink(value: selectedSort[index]){
+                                MediumChampionCard(entry: selectedSort[index])
                             }
                         }
-                        VStack{
-                            ForEach(4..<selectedSort.count){index in
-                                NavigationLink(value: selectedSort[index]){
-                                    ChampionRow(entry: selectedSort[index])
-                                }
+                    }
+                    VStack(spacing: 2){
+                        ForEach(4..<selectedSort.count){index in
+                            NavigationLink(value: selectedSort[index]){
+                                ChampionRow(entry: selectedSort[index])
                             }
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
-                    Menu {
-                        ForEach(sortOptions, id: \.self){ option in
-                            Button(option, action: {toSortBy = option})
-                        }
-                    } label : {
-                        ZStack{
-                            Circle()
-                                .frame(width: 36)
-                                .foregroundStyle(.ultraThinMaterial)
-                            Image(systemName: "arrow.up.arrow.down")
-                                .foregroundStyle(.white)
-                        }
-                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
             }
-            .navigationDestination(for: MasteryResponse.self){ entry in
-                ChampionScreen(championData: entry)
-            }
-    }
+            Menu {
+                ForEach(sortOptions, id: \.self){ option in
+                    Button(option, action: {toSortBy = option})
+                }
+            } label : {
+                ZStack{
+                    Circle()
+                        .frame(width: 48)
+                        .foregroundStyle(.regularMaterial)
+                    Image(systemName: "arrow.up.arrow.down")
+                        .foregroundStyle(.white)
+                }
+            }.padding()
+        }
+        .navigationDestination(for: MasteryResponse.self){ entry in
+            ChampionScreen(championData: entry)
+        }
 
+    }
 }
 
 #Preview {

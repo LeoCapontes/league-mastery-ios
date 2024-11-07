@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    let gradient = LinearGradient(
+        stops: [
+            Gradient.Stop(color: Color.black.opacity(0.2), location: 0.1),
+            Gradient.Stop(color: .clear, location: 1)
+        ],
+        startPoint: .bottom,
+        endPoint: .top)
+    
     
     @State private var viewModel = ViewModel()
     var body: some View {
@@ -27,7 +35,9 @@ struct ContentView: View {
                             ).onSubmit {
                                 viewModel.searchSumm()
                             }
-                            .padding()
+                            .padding(.horizontal)
+                            .padding(.vertical, 12)
+                            
                             
                             Picker("Region", selection: $viewModel.selectedServer){
                                 ForEach(server.allCases){ option in
@@ -36,7 +46,7 @@ struct ContentView: View {
                             }
                         }
                         .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                         
                         Button(action: viewModel.searchSumm) {
                             Text("Search")
@@ -52,7 +62,17 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .edgesIgnoringSafeArea(.bottom)
                 .animation(.default, value: viewModel.showingScreen)
+                
+                if(viewModel.showingScreen) {
+                    VStack{
+                        Spacer()
+                        Rectangle()
+                            .frame(height: 84)
+                            .foregroundStyle(gradient)
+                    }.allowsHitTesting(false)
+                }
             }
+            .edgesIgnoringSafeArea(.bottom)
         }
     }
 }

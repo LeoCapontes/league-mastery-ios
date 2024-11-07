@@ -201,7 +201,7 @@ struct ChampionRow: View {
                     .padding(4)
                     .position(
                         x: geometry.size.width * 0.45,
-                        y: geometry.size.height * 0.6
+                        y: geometry.size.height * 0.5
                     )
                 
                 Text("\(entry.championPoints) pts")
@@ -217,7 +217,7 @@ struct ChampionRow: View {
                     .opacity(0.2)
             }
         }
-        .frame(width: .infinity, height: 50)
+        .frame(width: .infinity, height: 56)
         .clipped()
     }
 }
@@ -232,7 +232,7 @@ struct ChampionRow: View {
                 MediumChampionCard(entry: mock[2])
                 MediumChampionCard(entry: mock[0])
             }
-            VStack{
+            VStack(spacing: 2){
                 ForEach(3..<45) { index in
                     ChampionRow(entry: mock[0])
                 }
