@@ -52,9 +52,17 @@ struct AccountScreen: View{
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
-                    Picker("Sort by: ", selection: $toSortBy) {
+                    Menu {
                         ForEach(sortOptions, id: \.self){ option in
-                            Text(option)
+                            Button(option, action: {toSortBy = option})
+                        }
+                    } label : {
+                        ZStack{
+                            Circle()
+                                .frame(width: 36)
+                                .foregroundStyle(.ultraThinMaterial)
+                            Image(systemName: "arrow.up.arrow.down")
+                                .foregroundStyle(.white)
                         }
                     }
                 }
@@ -64,4 +72,9 @@ struct AccountScreen: View{
             }
     }
 
+}
+
+#Preview {
+    let mock = mockMasteryResponse
+    AccountScreen(masteryData: mock)
 }

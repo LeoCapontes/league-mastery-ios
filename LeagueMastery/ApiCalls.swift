@@ -9,7 +9,7 @@ import Foundation
 
 func championsApiCall() async throws -> Champions{
     //TODO get current version through datadragon
-    let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/14.20.1/data/en_US/champion.json")!
+    let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/14.22.1/data/en_US/champion.json")!
     print(url.absoluteString)
     let (data, _) = try await URLSession.shared.data(from: url)
     let response = try JSONDecoder().decode(Champions.self, from: data)
