@@ -70,6 +70,7 @@ struct AccountScreen: View{
         .navigationDestination(for: MasteryResponse.self){ entry in
             ChampionScreen(championData: entry)
         }
+        .padding(.horizontal, 10)
 
     }
 }

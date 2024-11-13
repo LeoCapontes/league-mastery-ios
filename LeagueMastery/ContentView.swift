@@ -28,6 +28,17 @@ struct ContentView: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack {
                     HStack{
+                        if(viewModel.showingScreen) {
+                            Button(action: {viewModel.showingScreen = false}){
+                                Image(systemName: "chevron.backward")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width:12)
+                                    .padding(.horizontal)
+                                    .foregroundStyle(.white)
+                            }
+                            .transition(.opacity)
+                       }
                         HStack{
                             TextField(
                                 "",
@@ -59,13 +70,13 @@ struct ContentView: View {
                             Text("Search")
                         }
                     }
+                    .padding(.horizontal, 10)
                     
                     if(viewModel.showingScreen) {
                         AccountScreen(masteryData: viewModel.response!)
-                            .transition(.scale)
+                            .transition(.slide)
                     }
                 }
-                .padding(10)
                 .foregroundColor(.white)
                 .edgesIgnoringSafeArea(.bottom)
                 .animation(.default, value: viewModel.showingScreen)
