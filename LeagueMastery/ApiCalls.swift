@@ -16,16 +16,22 @@ func championsApiCall() async throws -> Champions{
     return response
 }
 
+
+// TODO handle errors more gracefully/granularly
 func puuidApiCall(
     gameName: String,
     tag: String,
     region: String
 ) async throws -> PuuidResponse{
     let url = URL(string: "https://\(region).api.riotgames.com/riot/account/v1/accounts/by-riot-id/\(gameName)/\(tag)?api_key=\(Settings.shared.key)")!
-    print(url.absoluteString)
-    let (data, _) = try await URLSession.shared.data(from: url)
-    let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
-    return response
+    do {
+        print(url.absoluteString)
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
+        return response
+    } catch {
+        throw error
+    }
 }
 
 func masteryApiCall(
@@ -35,7 +41,11 @@ func masteryApiCall(
     let serverString = selectedServer.raw
     let url = URL(string: mockTopMasteryRequest(75, puuid, serverString))!
     print(url.absoluteString)
-    let (data, _) = try await URLSession.shared.data(from: url)
-    let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
-    return response
+    do{
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
+        return response
+    } catch {
+        throw error
+    }
 }
