@@ -50,13 +50,24 @@ struct MasteryResponse: Codable, Hashable {
     
     var achievedGrades: [String] {
         // actual achieved grades will always less or equal to number of
-        // required grades. Fill with impossibly low grades to ensure equal
-        // array sizes.
+        // required grades if below the final milestone level. Fill with
+        // impossibly low grades to ensure equal array sizes.
         let tempGrades = Array(repeating: "F", count: requiredGrades.count)
+        
         if var grades = milestoneGrades {
+            let sortedAchievedGrades = grades.sorted(by: {
+                gradeRank($0) < gradeRank($1)
+            })
+            
+            // Cover final milestone case where all grades are recorded, and
+            // therefore can exceed the number of required grades
+            if (grades.count > requiredGrades.count) {
+                return Array(sortedAchievedGrades[..<requiredGrades.count])
+            }
+            
             grades += Array(
                 repeating: "F", count: (tempGrades.count - grades.count))
-            return grades.sorted(by: { gradeRank($0) < gradeRank($1) })
+            return grades
         } else {
             return tempGrades
         }
