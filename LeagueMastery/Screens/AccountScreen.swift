@@ -44,7 +44,7 @@ struct AccountScreen: View{
                         }
                     }
                     VStack(spacing: 2){
-                        ForEach(4..<selectedSort.count){index in
+                        ForEach(4..<selectedSort.count, id: \.self){index in
                             NavigationLink(value: selectedSort[index]){
                                 ChampionRow(entry: selectedSort[index])
                             }

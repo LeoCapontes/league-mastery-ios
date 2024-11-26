@@ -23,7 +23,7 @@ func puuidApiCall(
     tag: String,
     region: String
 ) async throws -> PuuidResponse{
-    let url = URL(string: "https://\(region).api.riotgames.com/riot/account/v1/accounts/by-riot-id/\(gameName)/\(tag)?api_key=\(Settings.shared.key)")!
+    let url = URL(string: "\(Settings.shared.serverUrl)/account/by-riot-id/\(region)/\(gameName)/\(tag)")!
     do {
         print(url.absoluteString)
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -39,7 +39,7 @@ func masteryApiCall(
     selectedServer: server
 ) async throws -> [MasteryResponse]{
     let serverString = selectedServer.raw
-    let url = URL(string: mockTopMasteryRequest(75, puuid, serverString))!
+    let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
     print(url.absoluteString)
     do{
         let (data, _) = try await URLSession.shared.data(from: url)
