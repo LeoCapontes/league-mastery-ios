@@ -9,13 +9,19 @@ import Foundation
 import SwiftUI
 
 struct AccountScreen: View{
-    var masteryData: [MasteryResponse]
+    let masteryData: [MasteryResponse]
     
-    var sortOptions = ["Score", "Level"]
+    var sortOptions = ["Score", "Level", "Next Chest"]
     @State private var toSortBy = "Score"
     
     var byLevel: [MasteryResponse] {
         return masteryData.sorted{$0.championLevel > $1.championLevel}
+    }
+    
+    // TODO: this is far too slow, look into caching metrics to avoid constant
+    // calling of a computed property.
+    var byGradesToChest: [MasteryResponse] {
+        return masteryData.sorted{$0.gradesToChest > $1.gradesToChest}
     }
     
     var selectedSort: [MasteryResponse] {
@@ -24,6 +30,8 @@ struct AccountScreen: View{
             return masteryData
         case "Level":
             return byLevel
+        case "Next Chest":
+            return byGradesToChest
         default:
             return masteryData
         }

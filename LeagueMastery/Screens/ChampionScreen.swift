@@ -73,6 +73,8 @@ struct ChampionScreen: View {
                     .font(.system(size: 18))
                 Text("\(championData.championPointsSinceLastLevel) / \(championData.pointsInLevel) pts")
                     .foregroundStyle(.white)
+                Text("Milestone: \(championData.championSeasonMilestone)")
+                    .foregroundStyle(.white)
                 ProgressBar(
                     total: championData.pointsInLevel,
                     progress: championData.championPointsSinceLastLevel)

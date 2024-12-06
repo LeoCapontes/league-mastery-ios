@@ -72,6 +72,19 @@ struct MasteryResponse: Codable, Hashable {
             return tempGrades
         }
     }
+
+    // This assumes a chest is rewarded at milestone 2 and 4, which is true
+    // as of November 2024
+    var gradesToChest: Int {
+        // Chests no longer earnable
+        if (championSeasonMilestone>4) { return 999 }
+        
+        let targetMilestone = (championSeasonMilestone < 2) ? 2 : 4
+        let gradesPerMilestone = requiredGrades.count
+        let gradeCount = (gradesPerMilestone*championSeasonMilestone) + achievedGrades.count
+        let requiredGradeCount = gradesPerMilestone*targetMilestone
+        return requiredGradeCount-gradeCount
+    }
 }
 
 struct Champions: Codable {
