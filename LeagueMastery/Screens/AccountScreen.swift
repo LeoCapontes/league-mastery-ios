@@ -10,28 +10,41 @@ import SwiftUI
 
 struct AccountScreen: View{
     let masteryData: [MasteryResponse]
+    let metrics: [MasteryResponseMetrics]
     
-    var sortOptions = ["Score", "Level", "Next Chest"]
+    // two lookup dictionaries that use champion id as a shared key
+    let masteryDictionary: [Int: MasteryResponse]
+    let metricsDictionary: [Int: MasteryResponseMetrics]
+
+    init(masteryData: [MasteryResponse]) {
+        self.masteryData = masteryData
+        self.metrics = GetResponseMetrics(masteryData)
+        self.masteryDictionary = Dictionary(uniqueKeysWithValues: masteryData.map { ($0.championId, $0) })
+        self.metricsDictionary = Dictionary(uniqueKeysWithValues: metrics.map { ($0.championId, $0) })
+    }
+    
+    var sortOptions = ["Score", "Level", "Milestone"]
     @State private var toSortBy = "Score"
     
     var byLevel: [MasteryResponse] {
-        return masteryData.sorted{$0.championLevel > $1.championLevel}
+        return masteryData.sorted{
+            $0.championLevel > $1.championLevel
+        }
     }
     
-    // TODO: this is far too slow, look into caching metrics to avoid constant
-    // calling of a computed property.
-    var byGradesToChest: [MasteryResponse] {
-        return masteryData.sorted{$0.gradesToChest > $1.gradesToChest}
+    var byMilestone: [MasteryResponse] {
+        return masteryData.sorted{
+            $0.championSeasonMilestone > $1.championSeasonMilestone
+        }
     }
-    
     var selectedSort: [MasteryResponse] {
         switch toSortBy{
         case "Score":
             return masteryData
         case "Level":
             return byLevel
-        case "Next Chest":
-            return byGradesToChest
+        case "Milestone":
+            return byMilestone
         default:
             return masteryData
         }
@@ -76,7 +89,12 @@ struct AccountScreen: View{
             }.padding()
         }
         .navigationDestination(for: MasteryResponse.self){ entry in
-            ChampionScreen(championData: entry)
+            if let metric = metricsDictionary[entry.championId] {
+                ChampionScreen(championData: entry, metrics: metric)
+            } else {
+                //TODO: this is a placeholder, handle this gracefully
+                ChampionScreen(championData: entry, metrics: metrics[0])
+            }
         }
         .padding(.horizontal, 10)
 

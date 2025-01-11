@@ -17,6 +17,7 @@ let gradientMask = LinearGradient(
 
 struct ChampionScreen: View {
     var championData: MasteryResponse
+    var metrics: MasteryResponseMetrics
     
     var videoUrl: String {
         let level: Int
@@ -71,17 +72,17 @@ struct ChampionScreen: View {
                     .foregroundStyle(.white)
                     .bold()
                     .font(.system(size: 18))
-                Text("\(championData.championPointsSinceLastLevel) / \(championData.pointsInLevel) pts")
+                Text("\(championData.championPointsSinceLastLevel) / \(metrics.pointsInLevel) pts")
                     .foregroundStyle(.white)
                 Text("Milestone: \(championData.championSeasonMilestone)")
                     .foregroundStyle(.white)
                 ProgressBar(
-                    total: championData.pointsInLevel,
+                    total: metrics.pointsInLevel,
                     progress: championData.championPointsSinceLastLevel)
                     .frame(width: 200, height: 12)
                 GradesContainer(
-                    requiredGrades: championData.requiredGrades,
-                    achievedGrades: championData.achievedGrades)
+                    requiredGrades: metrics.requiredGrades,
+                    achievedGrades: metrics.achievedGrades)
                 Spacer()
                 Spacer()
                 Spacer()
@@ -101,14 +102,14 @@ struct GradeBox: View {
     var body: some View {
         ZStack{
             Text(requiredGrade)
-            if(gradeRank(achievedGrade) <= gradeRank(requiredGrade)) {
+            if(GradeRank(achievedGrade) <= GradeRank(requiredGrade)) {
                 Image(systemName: "checkmark")
             }
         }
         .padding(.horizontal, 6)
         .padding(.vertical, 2)
         .background(
-            (gradeRank(achievedGrade) <= gradeRank(requiredGrade))
+            (GradeRank(achievedGrade) <= GradeRank(requiredGrade))
             ? Color.green
             : Color.clear
         )
@@ -191,7 +192,7 @@ struct MasteryMarks: View {
     }
 }
 
-#Preview {
-    let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[1])
-}
+//#Preview {
+//    let mock = mockMasteryResponse
+//    ChampionScreen(championData: mock[1])
+//}
