@@ -22,43 +22,100 @@ struct MilestoneProgress: View {
     
     var barPercentage: CGFloat {
         if (currentMilestone > 4) {
-            return 4
+            return (CGFloat(4)/CGFloat(progressMarkers))
         }
         return (CGFloat(currentMilestone)/CGFloat(progressMarkers))
     }
     
+    let markerHeight: CGFloat = 20
+    let markerWidth: CGFloat = 45
+    
     var body: some View {
         GeometryReader{ geometry in
-            ZStack(alignment: .top){
+            ZStack(){
+                ForEach(1..<progressMarkers+1) { markerNumber in
+                    Hexagon().foregroundStyle(.gray)
+                        .frame(width: markerWidth, height: markerHeight)
+                        .position(
+                            x: geometry.size.width * (CGFloat(markerNumber) / CGFloat(progressMarkers)),
+                            y: geometry.size.height/2
+                        )
+                }
+                
+                MilestoneBar(
+                    progressMarkers: progressMarkers,
+                    currentMilestone: currentMilestone)
+                .frame(width: geometry.size.width, height: 10)
+                .position(x: geometry.size.width/2, y: geometry.size.height/2)
+                
+                ForEach(1..<progressMarkers+1) { markerNumber in
+                    ProgressMarker(
+                        milestone: markerNumber,
+                        achieved: (markerNumber<=currentMilestone)
+                    )
+                    .frame(width: markerWidth, height: markerHeight)
+                    .position(
+                        x: geometry.size.width * (CGFloat(markerNumber) / CGFloat(progressMarkers)),
+                        y: geometry.size.height/2
+                    )
+                }
+            }
+        }
+    }
+}
+
+struct MilestoneBar: View {
+    var progressMarkers: Int
+    var currentMilestone: Int
+    
+    var barPercentage: CGFloat {
+        if (currentMilestone > 4) {
+            return 4
+        }
+        return (CGFloat(currentMilestone)/CGFloat(progressMarkers))
+    }
+
+    var body: some View {
+        GeometryReader{ geometry in
+            ZStack(alignment:.leading){
                 Capsule()
                     .frame(
                         width: geometry.size.width,
                         height: geometry.size.height)
-                    .foregroundStyle(.gray)
+                                        .foregroundStyle(.gray)
                 Capsule()
                     .frame(
-                        width: geometry.size.width * 0.6,
-                        height: geometry.size.height * barPercentage
+                        width: geometry.size.width * barPercentage
                     )
-                    .padding(2)
+                    .padding(3)
                     .foregroundStyle(.blue)
-                ForEach(1..<progressMarkers+1) { marker in
-                    Circle().position(
-                        x: geometry.size.width * 0.5,
-                        y: geometry.size.height * (CGFloat(marker)/CGFloat(progressMarkers)))
-                }
             }
-            
+        }
+    }
+}
+
+struct ProgressMarker: View {
+    var milestone: Int
+    var achieved: Bool
+    
+    var body: some View {
+        ZStack{
+            if achieved { Hexagon().foregroundStyle(.blue).padding(2) }
+            Text(String(milestone)).foregroundStyle(.white)
         }
     }
 }
 
 #Preview {
     let mock = mockMasteryResponse
-    ScrollView{
-        MilestoneProgress(currentMilestone: 3).frame(width: 10, height: 400)
+    ScrollView(.horizontal){
+        HStack{
+            MilestoneProgress(currentMilestone: 3).frame(width: 500, height: 50)
+                .border(.green)
+                .padding(.horizontal, 30)
+        }
     }
-    .frame(width: 300, height: 200)
+    .frame(width: 400, height: 200)
     .border(.green)
         
 }

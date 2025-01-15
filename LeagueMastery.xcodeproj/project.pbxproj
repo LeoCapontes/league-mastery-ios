@@ -16,6 +16,7 @@
 		B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABC2C43338600194223 /* AccountScreen.swift */; };
 		B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABE2C44C09000194223 /* ApiCalls.swift */; };
 		B39E414F2D32F5810073E406 /* MilestoneProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */; };
+		B39E41522D3358BE0073E406 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E41512D3358BA0073E406 /* Shapes.swift */; };
 		B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C134B62CDB0CFA00456A3B /* Utils.swift */; };
 		B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C612712CC489CA00C19B0C /* VideoPlayer.swift */; };
 		B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128A2CC4915900C19B0C /* 1-loop.mov */; };
@@ -65,6 +66,7 @@
 		B39DBABC2C43338600194223 /* AccountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreen.swift; sourceTree = "<group>"; };
 		B39DBABE2C44C09000194223 /* ApiCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiCalls.swift; sourceTree = "<group>"; };
 		B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneProgress.swift; sourceTree = "<group>"; };
+		B39E41512D3358BA0073E406 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
 		B3C134B62CDB0CFA00456A3B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B3C612712CC489CA00C19B0C /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		B3C6128A2CC4915900C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		B36300E92C3D8E54000E54AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B39E41512D3358BA0073E406 /* Shapes.swift */,
 				B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */,
 				B3C612712CC489CA00C19B0C /* VideoPlayer.swift */,
 				B36300E82C3D8E54000E54AA /* ChampionCards.swift */,
@@ -379,6 +382,7 @@
 			files = (
 				B36300EA2C3D8E54000E54AA /* ChampionCards.swift in Sources */,
 				B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */,
+				B39E41522D3358BE0073E406 /* Shapes.swift in Sources */,
 				B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */,
 				B39E414F2D32F5810073E406 /* MilestoneProgress.swift in Sources */,
 				B36300E72C3D8E4A000E54AA /* MockModel.swift in Sources */,
