@@ -16,13 +16,20 @@ struct VideoPlayer: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> UIView {
+        // Prevents video interrupting any media already playing in the background
+        // credit: https://stackoverflow.com/a/39084300
+        _ = try? AVAudioSession.sharedInstance().setCategory(
+            AVAudioSession.Category.playback,
+            mode: .default,
+            options: .mixWithOthers)
+        
         return PlayerUIView(frame: .zero, vidUrl: url)
     }
 }
 
 class PlayerUIView: UIView {
     private let playerLayer = AVPlayerLayer()
-    private var playerLooper: AVPlayerLooper? // Keep a strong reference
+    private var playerLooper: AVPlayerLooper?
     private var queuePlayer: AVQueuePlayer?
     private let vidUrl: String
 
@@ -38,7 +45,6 @@ class PlayerUIView: UIView {
         playerLayer.player = queuePlayer
         layer.addSublayer(playerLayer)
 
-        // Initialize the player looper
         playerLooper = AVPlayerLooper(player: queuePlayer!, templateItem: playerItem)
         queuePlayer?.play()
     }
