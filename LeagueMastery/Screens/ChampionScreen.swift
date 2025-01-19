@@ -84,8 +84,16 @@ struct ChampionScreen: View {
                     requiredGrades: metrics.requiredGrades,
                     achievedGrades: metrics.achievedGrades)
                 Spacer()
-                Spacer()
-                Spacer()
+                ScrollView(.horizontal){
+                    HStack{
+                        MilestoneProgress(
+                            currentMilestone: championData.championSeasonMilestone
+                        )
+                            .frame(width: 500, height: 50)
+                            .padding(.horizontal, 30)
+                    }
+                }
+                .frame(width: 400, height: 200)
                 Spacer()
             }
             .padding()
@@ -192,7 +200,7 @@ struct MasteryMarks: View {
     }
 }
 
-//#Preview {
-//    let mock = mockMasteryResponse
-//    ChampionScreen(championData: mock[1])
-//}
+#Preview {
+    let mock = mockMasteryResponse
+    ChampionScreen(championData: mock[1], metrics: GetResponseMetrics(mock)[1])
+}
