@@ -83,13 +83,12 @@ struct ChampionScreen: View {
                 GradesContainer(
                     requiredGrades: metrics.requiredGrades,
                     achievedGrades: metrics.achievedGrades)
-                Spacer()
                 ScrollView(.horizontal){
                     HStack{
                         MilestoneProgress(
                             currentMilestone: championData.championSeasonMilestone
                         )
-                            .frame(width: 500, height: 50)
+                            .frame(width: 500, height: 100)
                             .padding(.horizontal, 30)
                     }
                 }

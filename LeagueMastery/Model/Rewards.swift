@@ -16,7 +16,7 @@ struct MilestoneReward {
 
 // Reward config not available in api
 // TODO: move this server side, account for milestones after 4
-let MilestoneRewards: [Int:[MilestoneReward]] = [
+let rewardConfig: [Int:[MilestoneReward]] = [
     1 : [MilestoneReward(reward: .masteryMark, quantity: 1)],
     2 : [MilestoneReward(reward: .masteryMark, quantity: 1)],
     3 : [MilestoneReward(reward: .masteryMark, quantity: 2)],

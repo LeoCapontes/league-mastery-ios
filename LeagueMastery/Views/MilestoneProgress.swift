@@ -14,6 +14,7 @@ import SwiftUI
 // TODO: automate this somehow, move it server-side
 let gradesOneToFour: [String] = ["A-", "A-", "S-", "S-"]
 
+
 struct MilestoneProgress: View {
     // four markers for first four milestones, and one for the final
     // repeating milestone
@@ -54,6 +55,14 @@ struct MilestoneProgress: View {
                         achieved: (markerNumber<=currentMilestone)
                     )
                     .frame(width: markerWidth, height: markerHeight)
+                    .position(
+                        x: geometry.size.width * (CGFloat(markerNumber) / CGFloat(progressMarkers)),
+                        y: geometry.size.height/2
+                    )
+                    VStack{
+                        Spacer()
+                        RewardsContainer(milestoneRewards: rewardConfig[markerNumber] ?? [MilestoneReward(reward: .masteryMark, quantity: 1)])
+                    }
                     .position(
                         x: geometry.size.width * (CGFloat(markerNumber) / CGFloat(progressMarkers)),
                         y: geometry.size.height/2
@@ -106,11 +115,53 @@ struct ProgressMarker: View {
     }
 }
 
+struct RewardsContainer: View {
+    var milestoneRewards: [MilestoneReward]
+    
+    var body: some View {
+        HStack{
+            ForEach(0..<milestoneRewards.count) { index in
+                RewardView(rewards: milestoneRewards[index])
+            }
+        }
+        .padding(4)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+struct RewardView: View {
+    var rewards: MilestoneReward
+    
+    var body: some View {
+        ZStack{
+            RewardImage(reward: rewards.reward)
+        }
+        .frame(width: 25, height: 25)
+    }
+}
+
+struct RewardImage: View {
+    var reward: RewardType
+    
+    var body: some View {
+        switch reward{
+        case .masteryMark :
+            Image("mastery-mark")
+                .resizable()
+        case .crestHighlight :
+            Image("crest-reward-placeholder")
+                .resizable()
+        }
+    }
+    
+}
+
 #Preview {
     let mock = mockMasteryResponse
     ScrollView(.horizontal){
         HStack{
-            MilestoneProgress(currentMilestone: 3).frame(width: 500, height: 50)
+            MilestoneProgress(currentMilestone: 3).frame(width: 700, height: 100)
                 .border(.green)
                 .padding(.horizontal, 30)
         }
