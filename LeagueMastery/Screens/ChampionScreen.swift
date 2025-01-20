@@ -50,10 +50,20 @@ struct ChampionScreen: View {
             VStack{
                 Spacer()
                 Spacer()
-                HStack{
+                ZStack{
                     VideoPlayer(url: videoUrl)
                         .frame(width: 250*crestScale, height: 250*crestScale)
                         .shadow(color: .black, radius: 40)
+                    GeometryReader{ geometry in
+                        if championData.championLevel > 9 {
+                            Text("\(championData.championLevel)")
+                                .bold()
+                                .opacity(0.65)
+                                .position(
+                                    x:geometry.size.width*0.5,
+                                    y:geometry.size.height*0.72)
+                        }
+                    }
                 }
                 .frame(width: 250, height: 250)
                 .padding(-40)
@@ -92,6 +102,7 @@ struct ChampionScreen: View {
                             .padding(.horizontal, 30)
                     }
                 }
+                .scrollIndicators(.hidden)
                 .frame(width: 400, height: 200)
                 Spacer()
             }
