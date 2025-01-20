@@ -33,6 +33,7 @@ extension ContentView {
         
         init() {
             populateChampions()
+            Settings.shared.UpdateGameVersion()
         }
         
         func searchSumm() {

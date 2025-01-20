@@ -14,7 +14,7 @@ func splashFromChampId(_ champId: Int) -> String {
 }
 
 func portraitFromChampId(_ champId: Int) -> String {
-    return "https://ddragon.leagueoflegends.com/cdn/14.13.1/img/champion/\(namesFromChampId[champId] ?? "Aatrox").png"
+    return "https://ddragon.leagueoflegends.com/cdn/\(Settings.shared.lolVersion)/img/champion/\(namesFromChampId[champId] ?? "Aatrox").png"
 }
 
 func populateChampions() {
