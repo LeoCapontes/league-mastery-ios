@@ -20,14 +20,7 @@ struct MilestoneProgress: View {
     // repeating milestone
     let progressMarkers: Int = 5
     var currentMilestone: Int
-    
-    var barPercentage: CGFloat {
-        if (currentMilestone > 4) {
-            return (CGFloat(4)/CGFloat(progressMarkers))
-        }
-        return (CGFloat(currentMilestone)/CGFloat(progressMarkers))
-    }
-    
+        
     let markerHeight: CGFloat = 20
     let markerWidth: CGFloat = 45
     
@@ -84,10 +77,11 @@ struct MilestoneBar: View {
     
     var barPercentage: CGFloat {
         if (currentMilestone > 4) {
-            return 4
+            return (CGFloat(5)/CGFloat(progressMarkers))
         }
         return (CGFloat(currentMilestone)/CGFloat(progressMarkers))
     }
+
 
     var body: some View {
         GeometryReader{ geometry in
