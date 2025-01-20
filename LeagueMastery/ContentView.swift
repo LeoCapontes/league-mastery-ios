@@ -18,6 +18,7 @@ struct ContentView: View {
     
     
     @State private var viewModel = ViewModel()
+    @FocusState private var fieldFocused: Bool
     var body: some View {
         NavigationStack{
             ZStack{
@@ -49,8 +50,9 @@ struct ContentView: View {
                                         green: 150/255,
                                         blue: 150/255
                                     ))
-                            ).onSubmit {
-                                viewModel.searchSumm()
+                            ).focused($fieldFocused)
+                            .onSubmit {
+                                SearchSummoner()
                             }
                             .padding(.horizontal)
                             .padding(.vertical, viewModel.showingScreen ? 2: 18)
@@ -66,7 +68,7 @@ struct ContentView: View {
                             .opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         
-                        Button(action: viewModel.searchSumm) {
+                        Button(action: SearchSummoner) {
                             Text("Search")
                         }
                     }
@@ -93,7 +95,13 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.bottom)
         }
     }
+    
+    func SearchSummoner(){
+        viewModel.searchSumm()
+        fieldFocused = false
+    }
 }
+
 
 #Preview {
     ContentView()
