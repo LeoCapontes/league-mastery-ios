@@ -61,7 +61,12 @@ struct MilestoneProgress: View {
                     )
                     VStack{
                         Spacer()
-                        RewardsContainer(milestoneRewards: rewardConfig[markerNumber] ?? [MilestoneReward(reward: .masteryMark, quantity: 1)])
+                        RewardsContainer(
+                            milestoneRewards:
+                                rewardConfig[markerNumber] ?? [MilestoneReward(
+                                    reward: .masteryMark, quantity: 1)],
+                            completed: (markerNumber <= currentMilestone)
+                        )
                     }
                     .position(
                         x: geometry.size.width * (CGFloat(markerNumber) / CGFloat(progressMarkers)),
@@ -117,11 +122,12 @@ struct ProgressMarker: View {
 
 struct RewardsContainer: View {
     var milestoneRewards: [MilestoneReward]
+    var completed: Bool
     
     var body: some View {
         HStack{
             ForEach(0..<milestoneRewards.count) { index in
-                RewardView(rewards: milestoneRewards[index])
+                RewardView(rewards: milestoneRewards[index], completed: completed)
             }
         }
         .padding(4)
@@ -132,10 +138,12 @@ struct RewardsContainer: View {
 
 struct RewardView: View {
     var rewards: MilestoneReward
+    var completed: Bool
     
     var body: some View {
         ZStack{
             RewardImage(reward: rewards.reward)
+            if completed { Image("reward-completed").resizable().opacity(1)}
         }
         .frame(width: 25, height: 25)
     }
