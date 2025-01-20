@@ -184,16 +184,26 @@ struct MasteryMarks: View {
     }
     
     var body: some View {
-        HStack{
-            ForEach(0..<earnedMarks){ mark in
+        if (earnedMarks > 3 && earnedMarks > requiredMarks) {
+            ZStack(alignment: .bottomTrailing){
                 Image("mastery-mark")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                Text("x\(earnedMarks)").bold()
             }
-            ForEach(0..<emptyToShow){ mark in
-                Image("mastery-mark-empty")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+            
+        } else {
+            HStack{
+                ForEach(0..<earnedMarks){ mark in
+                    Image("mastery-mark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+                ForEach(0..<emptyToShow){ mark in
+                    Image("mastery-mark-empty")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
             }
         }
     }
