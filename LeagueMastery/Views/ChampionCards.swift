@@ -47,7 +47,7 @@ struct ChampionImage: View {
                     .image?
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .blur(radius: (blurred ? 8 : 0))
+                    .blur(radius: (blurred ? 2 : 0))
             }
             .frame(width: .infinity)
         }
@@ -185,6 +185,63 @@ struct MediumChampionCard: View {
     }
 }
 
+struct LargeChampionRow: View {
+    var entry: MasteryResponse
+    
+    
+    let rowSplashMask = LinearGradient(
+        stops: [
+            Gradient.Stop(color: .black, location: 0.1),
+            Gradient.Stop(color: .black.opacity(0.1), location: 0.6),
+            Gradient.Stop(color: .clear, location: 1)
+        ],
+        startPoint: .trailing,
+        endPoint: .leading)
+
+    
+    var body: some View{
+        ZStack{
+            GeometryReader{ geometry in
+                ChampionImage(championId: entry.championId, blurred: false)
+                    .aspectRatio(contentMode: .fill)
+                    .mask(rowSplashMask)
+                    .offset(y: -25)
+                ZStack{
+                    MasteryFrame(
+                        championId: entry.championId,
+                        masteryLevel: entry.championLevel
+                    )
+                    .position(
+                        x:geometry.size.width*0.15,
+                        y:geometry.size.height*0.5
+                    )
+                    VStack(alignment: .leading){
+                        Text("\(namesFromChampId[entry.championId]!)")
+                            .bold()
+                            .font(.title2)
+                        Text("Level \(entry.championLevel)")
+                            .font(.system(size: 14))
+                        Text("\(entry.championPoints) pts")
+                            .font(.system(size: 14))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(width: 150, alignment: .leading)
+                    .position(
+                        x: geometry.size.width*0.5,
+                        y: geometry.size.height*0.5
+                    )
+                }.frame(width:nil)
+            }
+            .background{
+                Color.gray
+                    .opacity(0.2)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .frame(width: nil, height:120)
+        }
+    }
+}
+
 struct ChampionRow: View {
     var entry: MasteryResponse
     
@@ -226,12 +283,15 @@ struct ChampionRow: View {
     let mock = mockMasteryResponse
     ZStack {
         ScrollView{
-            LargeChampionCard(entry: mock[0])
-            HStack{
-                MediumChampionCard(entry: mock[1])
-                MediumChampionCard(entry: mock[2])
-                MediumChampionCard(entry: mock[0])
-            }
+            LargeChampionCard(entry: mock[1])
+//            HStack{
+//                MediumChampionCard(entry: mock[1])
+//                MediumChampionCard(entry: mock[2])
+//                MediumChampionCard(entry: mock[0])
+//            }
+            LargeChampionRow(entry: mock[1])
+            LargeChampionRow(entry: mock[0])
+            LargeChampionRow(entry: mock[2])
             VStack(spacing: 2){
                 ForEach(3..<45) { index in
                     ChampionRow(entry: mock[0])

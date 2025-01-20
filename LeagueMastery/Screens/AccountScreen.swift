@@ -54,18 +54,15 @@ struct AccountScreen: View{
         ZStack(alignment: .bottomTrailing){
             VStack{
                 ScrollView(showsIndicators: false) {
-                    NavigationLink(value: selectedSort[0]){
-                        LargeChampionCard(entry: selectedSort[0])
-                    }
-                    HStack{
-                        ForEach(1..<4){ index in
+                    VStack{
+                        ForEach(0..<3){ index in
                             NavigationLink(value: selectedSort[index]){
-                                MediumChampionCard(entry: selectedSort[index])
+                                LargeChampionRow(entry: selectedSort[index])
                             }
                         }
                     }
                     VStack(spacing: 2){
-                        ForEach(4..<selectedSort.count, id: \.self){index in
+                        ForEach(3..<selectedSort.count, id: \.self){index in
                             NavigationLink(value: selectedSort[index]){
                                 ChampionRow(entry: selectedSort[index])
                             }

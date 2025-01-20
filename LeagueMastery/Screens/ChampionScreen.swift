@@ -15,6 +15,22 @@ let gradientMask = LinearGradient(
     startPoint: .top,
     endPoint: .bottom)
 
+let leftScrollMask = LinearGradient(
+    stops: [
+        Gradient.Stop(color: .black, location: 0.85),
+        Gradient.Stop(color: .clear, location: 1)
+    ],
+    startPoint: .trailing,
+    endPoint: .leading)
+
+let rightScrollMask = LinearGradient(
+    stops: [
+        Gradient.Stop(color: .black, location: 0.85),
+        Gradient.Stop(color: .clear, location: 1)
+    ],
+    startPoint: .leading,
+    endPoint: .trailing)
+
 struct ChampionScreen: View {
     var championData: MasteryResponse
     var metrics: MasteryResponseMetrics
@@ -58,6 +74,7 @@ struct ChampionScreen: View {
                         if championData.championLevel > 9 {
                             Text("\(championData.championLevel)")
                                 .bold()
+                                .foregroundStyle(.black)
                                 .opacity(0.65)
                                 .position(
                                     x:geometry.size.width*0.5,
@@ -74,18 +91,8 @@ struct ChampionScreen: View {
                 .frame(width:.infinity, height: 40)
                 .padding(.bottom, -6)
                 
-                Text(namesFromChampId[championData.championId]!)
-                    .foregroundStyle(.white)
-                    .bold()
-                    .font(.system(size: 28))
-                Text("Mastery Level \(championData.championLevel)")
-                    .foregroundStyle(.white)
-                    .bold()
-                    .font(.system(size: 18))
-                Text("\(championData.championPointsSinceLastLevel) / \(metrics.pointsInLevel) pts")
-                    .foregroundStyle(.white)
-                Text("Milestone: \(championData.championSeasonMilestone)")
-                    .foregroundStyle(.white)
+                InfoContainer(championData: championData, metrics: metrics)
+                
                 ProgressBar(
                     total: metrics.pointsInLevel,
                     progress: championData.championPointsSinceLastLevel)
@@ -94,22 +101,51 @@ struct ChampionScreen: View {
                     requiredGrades: metrics.requiredGrades,
                     achievedGrades: metrics.achievedGrades)
                 ScrollView(.horizontal){
-                    HStack{
-                        MilestoneProgress(
-                            currentMilestone: championData.championSeasonMilestone
-                        )
+                    ZStack{
+                        HStack{
+                            MilestoneProgress(
+                                currentMilestone: championData.championSeasonMilestone
+                            )
                             .frame(width: 500, height: 100)
                             .padding(.horizontal, 30)
+                            .padding(.trailing, 60)
+                            
+                        }
+                        HStack{
+                            Spacer()
+                        }
                     }
                 }
                 .scrollIndicators(.hidden)
                 .frame(width: 400, height: 200)
+                .mask(leftScrollMask)
+                .mask(rightScrollMask)
                 Spacer()
             }
             .padding()
         }
         .ignoresSafeArea()
         
+    }
+}
+
+struct InfoContainer: View {
+    var championData: MasteryResponse
+    var metrics: MasteryResponseMetrics
+    
+    var body: some View{
+        Text(namesFromChampId[championData.championId]!)
+            .foregroundStyle(.white)
+            .bold()
+            .font(.system(size: 28))
+        Text("Mastery Level \(championData.championLevel)")
+            .foregroundStyle(.white)
+            .bold()
+            .font(.system(size: 18))
+        Text("\(championData.championPointsSinceLastLevel) / \(metrics.pointsInLevel) pts")
+            .foregroundStyle(.white)
+//        Text("Milestone: \(championData.championSeasonMilestone)")
+//            .foregroundStyle(.white)
     }
 }
 
