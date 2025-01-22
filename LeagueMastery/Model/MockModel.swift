@@ -25,7 +25,7 @@ let mockTopResponse = """
         "championPointsUntilNextLevel": -47678,
         "markRequiredForNextLevel": 2,
         "tokensEarned": 0,
-        "championSeasonMilestone": 1,
+        "championSeasonMilestone": 4,
         "milestoneGrades": [
           "B-",
           "A-",

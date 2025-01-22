@@ -49,6 +49,10 @@ struct ChampionScreen: View {
         return vidScale(lvl: championData.championLevel)
     }
     
+    var auroraUnlocked: Bool {
+        return (championData.championSeasonMilestone >= 4)
+    }
+    
     var body: some View {
         ZStack{
             Image("background-mastery")
@@ -67,9 +71,16 @@ struct ChampionScreen: View {
                 Spacer()
                 Spacer()
                 ZStack{
+                    if(auroraUnlocked) {
+                        VideoPlayer(url: "crest-aurora-loop")
+                            .padding(-50)
+                            .frame(width: 250, height: 250)
+                            .shadow(color: .black, radius: 40)
+                    }
                     VideoPlayer(url: videoUrl)
                         .frame(width: 250*crestScale, height: 250*crestScale)
-                        .shadow(color: .black, radius: 40)
+                        // shadow effectively removed if aurora is unlocked
+                        .shadow(color: .black, radius: auroraUnlocked ? 0 : 40)
                     GeometryReader{ geometry in
                         if championData.championLevel > 9 {
                             Text("\(championData.championLevel)")
@@ -258,5 +269,5 @@ struct MasteryMarks: View {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[1], metrics: GetResponseMetrics(mock)[1])
+    ChampionScreen(championData: mock[0], metrics: GetResponseMetrics(mock)[0])
 }
