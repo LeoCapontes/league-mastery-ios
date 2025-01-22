@@ -18,6 +18,7 @@
 		B39E414F2D32F5810073E406 /* MilestoneProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */; };
 		B39E41522D3358BE0073E406 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E41512D3358BA0073E406 /* Shapes.swift */; };
 		B39E41542D3D77030073E406 /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E41532D3D76FC0073E406 /* Rewards.swift */; };
+		B3B4F6B82D41616400F5F514 /* crest-aurora-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3B4F6B72D41616400F5F514 /* crest-aurora-loop.mov */; };
 		B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C134B62CDB0CFA00456A3B /* Utils.swift */; };
 		B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C612712CC489CA00C19B0C /* VideoPlayer.swift */; };
 		B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128A2CC4915900C19B0C /* 1-loop.mov */; };
@@ -69,6 +70,7 @@
 		B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneProgress.swift; sourceTree = "<group>"; };
 		B39E41512D3358BA0073E406 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
 		B39E41532D3D76FC0073E406 /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
+		B3B4F6B72D41616400F5F514 /* crest-aurora-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "crest-aurora-loop.mov"; sourceTree = "<group>"; };
 		B3C134B62CDB0CFA00456A3B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B3C612712CC489CA00C19B0C /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		B3C6128A2CC4915900C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				B3C612912CC4915900C19B0C /* 8-loop.mov */,
 				B3C612922CC4915900C19B0C /* 9-loop.mov */,
 				B3C612932CC4915900C19B0C /* 10-loop.mov */,
+				B3B4F6B72D41616400F5F514 /* crest-aurora-loop.mov */,
 			);
 			path = Media;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 			files = (
 				B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */,
 				B3C612952CC4915900C19B0C /* 6-loop.mov in Resources */,
+				B3B4F6B82D41616400F5F514 /* crest-aurora-loop.mov in Resources */,
 				B3C612962CC4915900C19B0C /* 5-loop.mov in Resources */,
 				B3C612972CC4915900C19B0C /* 7-loop.mov in Resources */,
 				B3C612982CC4915900C19B0C /* 10-loop.mov in Resources */,
