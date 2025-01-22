@@ -54,21 +54,21 @@ struct AccountScreen: View{
         ZStack(alignment: .bottomTrailing){
             VStack{
                 ScrollView(showsIndicators: false) {
-                    VStack{
-                        ForEach(0..<3){ index in
+                    LazyVStack{
+                        ForEach(0..<selectedSort.count ,id: \.self){ index in
                             NavigationLink(value: selectedSort[index]){
                                 LargeChampionRow(entry: selectedSort[index])
                             }
                         }
                     }
-                    VStack(spacing: 2){
-                        ForEach(3..<selectedSort.count, id: \.self){index in
-                            NavigationLink(value: selectedSort[index]){
-                                ChampionRow(entry: selectedSort[index])
-                            }
-                        }
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+//                    VStack(spacing: 2){
+//                        ForEach(3..<selectedSort.count, id: \.self){index in
+//                            NavigationLink(value: selectedSort[index]){
+//                                ChampionRow(entry: selectedSort[index])
+//                            }
+//                        }
+//                    }
+//                    .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
             }
             Menu {

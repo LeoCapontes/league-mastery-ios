@@ -237,7 +237,7 @@ struct LargeChampionRow: View {
                     .opacity(0.2)
             }
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .frame(width: nil, height:120)
+            .frame(width: nil, height:100)
         }
     }
 }
