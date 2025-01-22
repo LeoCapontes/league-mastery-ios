@@ -83,6 +83,8 @@ func vidScale(lvl: Int) -> CGFloat {
 
 #Preview {
     ZStack{
+        VideoPlayer(url: "crest-aurora-loop")
+            .frame(width: 250, height: 250)
         VideoPlayer(url: "10-loop")
             .frame(width: 200, height: 200)
         ScrollView{
