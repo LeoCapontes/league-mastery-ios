@@ -38,7 +38,7 @@ struct ChampionImage: View {
     
     var body: some View {
         ZStack{
-            AsyncImage(url: URL(
+            CacheAsyncImage(url: URL(
                     string: splashFromChampId(
                         championId
                     )
@@ -58,7 +58,7 @@ struct ChampionPortrait: View {
     var championId: Int
     
     var body: some View {
-        AsyncImage(url: URL(string: portraitFromChampId(championId))
+        CacheAsyncImage(url: URL(string: portraitFromChampId(championId))
         ) {
             image in image
                 .image?
