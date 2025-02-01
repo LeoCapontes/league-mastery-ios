@@ -23,6 +23,8 @@ struct AccountScreen: View{
         self.metricsDictionary = Dictionary(uniqueKeysWithValues: metrics.map { ($0.championId, $0) })
     }
     
+    @State private var isFavourite = false
+    
     var sortOptions = ["Score", "Level", "Milestone"]
     @State private var toSortBy = "Score"
     
@@ -71,19 +73,32 @@ struct AccountScreen: View{
 //                    .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
             }
-            Menu {
-                ForEach(sortOptions, id: \.self){ option in
-                    Button(option, action: {toSortBy = option})
-                }
-            } label : {
-                ZStack{
-                    Circle()
-                        .frame(width: 48)
-                        .foregroundStyle(.regularMaterial)
-                    Image(systemName: "arrow.up.arrow.down")
-                        .foregroundStyle(.white)
-                }
-            }.padding()
+            HStack{
+                    Button{
+                        isFavourite.toggle()
+                    } label: {
+                        ZStack{
+                            Circle()
+                                .frame(width: 48)
+                                .foregroundStyle(.regularMaterial)
+                            Image(systemName: isFavourite ? "star.fill" : "star")
+                            .foregroundStyle(.white)}
+                    }
+                    .buttonStyle(.plain)
+                Menu {
+                    ForEach(sortOptions, id: \.self){ option in
+                        Button(option, action: {toSortBy = option})
+                    }
+                } label : {
+                    ZStack{
+                        Circle()
+                            .frame(width: 48)
+                            .foregroundStyle(.regularMaterial)
+                        Image(systemName: "arrow.up.arrow.down")
+                            .foregroundStyle(.white)
+                    }
+                }.padding()
+            }
         }
         .navigationDestination(for: MasteryResponse.self){ entry in
             if let metric = metricsDictionary[entry.championId] {
@@ -94,8 +109,8 @@ struct AccountScreen: View{
             }
         }
         .padding(.horizontal, 10)
-
     }
+    
 }
 
 #Preview {
