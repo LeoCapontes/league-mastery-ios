@@ -15,12 +15,15 @@ struct AccountScreen: View{
     // two lookup dictionaries that use champion id as a shared key
     let masteryDictionary: [Int: MasteryResponse]
     let metricsDictionary: [Int: MasteryResponseMetrics]
+    
+    let addFavourite: (String) -> Void
 
-    init(masteryData: [MasteryResponse]) {
+    init(masteryData: [MasteryResponse], addFavourite: @escaping (String) -> Void) {
         self.masteryData = masteryData
         self.metrics = GetResponseMetrics(masteryData)
         self.masteryDictionary = Dictionary(uniqueKeysWithValues: masteryData.map { ($0.championId, $0) })
         self.metricsDictionary = Dictionary(uniqueKeysWithValues: metrics.map { ($0.championId, $0) })
+        self.addFavourite = addFavourite
     }
     
     @State private var isFavourite = false
@@ -76,6 +79,7 @@ struct AccountScreen: View{
             HStack{
                     Button{
                         isFavourite.toggle()
+                        addFavourite(masteryData[0].puuid)
                     } label: {
                         ZStack{
                             Circle()
@@ -112,8 +116,8 @@ struct AccountScreen: View{
     }
     
 }
-
-#Preview {
-    let mock = mockMasteryResponse
-    AccountScreen(masteryData: mock)
-}
+//
+//#Preview {
+//    let mock = mockMasteryResponse
+//    AccountScreen(masteryData: mock)
+//}

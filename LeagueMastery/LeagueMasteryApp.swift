@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct LeagueMasteryApp: App {
+    let defaults = UserDefaults.standard
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewmodel: ContentView.ViewModel.init(userDefaults: defaults))
         }
     }
 }

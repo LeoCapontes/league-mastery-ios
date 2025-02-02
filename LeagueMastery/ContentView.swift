@@ -16,8 +16,12 @@ struct ContentView: View {
         startPoint: .bottom,
         endPoint: .top)
     
+    @State private var viewModel: ViewModel
     
-    @State private var viewModel = ViewModel()
+    init(viewmodel : ViewModel){
+        self.viewModel = viewmodel
+    }
+    
     @FocusState private var fieldFocused: Bool
     var body: some View {
         NavigationStack{
@@ -75,8 +79,11 @@ struct ContentView: View {
                     .padding(.horizontal, 10)
                     
                     if(viewModel.showingScreen) {
-                        AccountScreen(masteryData: viewModel.response!)
+                        AccountScreen(masteryData: viewModel.response!, addFavourite: viewModel.addFavourite)
                             .transition(.slide)
+                    } else {
+                        Text("Favourites")
+                        Text(viewModel.getFavourites()[0])
                     }
                 }
                 .foregroundColor(.white)
@@ -103,6 +110,6 @@ struct ContentView: View {
 }
 
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView(viewmodel: )
+//}

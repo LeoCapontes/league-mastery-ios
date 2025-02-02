@@ -6,12 +6,13 @@
 //
 
 import Foundation
-
 import Combine
 
 extension ContentView {
     @Observable
     class ViewModel{
+        private let userDefaults: UserDefaults
+                
         var sumName: String = ""
         var splashUrl: String = ""
         var response: [MasteryResponse]?
@@ -31,7 +32,8 @@ extension ContentView {
             }
         }
         
-        init() {
+        init(userDefaults: UserDefaults) {
+            self.userDefaults = userDefaults
             populateChampions()
             Settings.shared.UpdateGameVersion()
         }
@@ -67,6 +69,24 @@ extension ContentView {
             }
             return splitName
         }
+        
+        func addFavourite(puuid: String) {
+            var favourites = userDefaults.object(forKey: "Favourites") as? [String] ?? [String]()
+            if (!favourites.contains(puuid)) {
+                favourites.append(puuid)
+                print(favourites)
+                userDefaults.set(favourites, forKey: "Favourites")
+            }
+        }
+        
+        func getFavourites() -> [String] {
+            var favourites = userDefaults.object(forKey: "Favourites") as? [String] ?? [String]()
+            if (favourites.isEmpty) {
+                favourites.append("empty")
+            }
+            return favourites
+        }
+        
     }
 }
 
