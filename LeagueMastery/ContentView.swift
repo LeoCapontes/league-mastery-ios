@@ -82,8 +82,9 @@ struct ContentView: View {
                     .padding(.horizontal, 10)
                     
                     if(!viewModel.showingScreen) {
-                        SearchedUsers(sort: SortDescriptor(\User.name))
-                            .frame(width: nil, height: 300)
+                        VStack(alignment: .leading){
+                            SearchedUsers(sort: SortDescriptor(\User.isFavourite, order: .reverse))
+                        }
                     }
                     
                     if(viewModel.showingScreen) {
