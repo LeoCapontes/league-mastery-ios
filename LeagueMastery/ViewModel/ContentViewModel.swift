@@ -77,8 +77,8 @@ extension ContentView {
             return splitName
         }
         
-        func addUser(puuid: String, name: String, tag: String){
-            let newUser = User(puuid: puuid, name: name, tagline: tag)
+        func addUser(puuid: String, name: String, tag: String, region: String, server: String){
+            let newUser = User(puuid: puuid, name: name, tagline: tag, region: region, server: server)
             modelContext.insert(newUser)
         }
     }

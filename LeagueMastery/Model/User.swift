@@ -16,11 +16,15 @@ class User {
     var tagline: String
     
     var isFavourite: Bool
+    var region: String
+    var server: String
     
-    init(puuid: String, name: String, tagline: String, isFavourite: Bool = false) {
+    init(puuid: String, name: String, tagline: String, isFavourite: Bool = false, region: String, server: String) {
         self.puuid = puuid
         self.name = name
         self.tagline = tagline
         self.isFavourite = isFavourite
+        self.region = region
+        self.server = server
     }
 }
