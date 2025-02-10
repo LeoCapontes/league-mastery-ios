@@ -66,7 +66,7 @@ struct ContentView: View {
                             
                             
                             Picker("Region", selection: $viewModel.selectedServer){
-                                ForEach(server.allCases){ option in
+                                ForEach(Server.allCases){ option in
                                     Text(String(describing: option))
                                 }
                             }
@@ -83,7 +83,7 @@ struct ContentView: View {
                     
                     if(!viewModel.showingScreen) {
                         VStack(alignment: .leading){
-                            SearchedUsers(sort: SortDescriptor(\User.isFavourite, order: .reverse))
+                            SearchedUsers(sort: SortDescriptor(\User.isFavourite, order: .reverse), searchFunc: viewModel.searchSumm(name:tag:region:server:))
                         }
                     }
                     

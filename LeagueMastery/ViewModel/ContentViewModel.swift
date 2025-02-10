@@ -19,9 +19,9 @@ extension ContentView {
         var splashUrl: String = ""
         var response: [MasteryResponse]?
         var showingScreen = false
-        var selectedServer: server = .euw1
+        var selectedServer: Server = .euw1
         
-        var selectedRegion: region {
+        var selectedRegion: Region {
             switch selectedServer {
             case .br1, .la1, .la2, .na1:
                 return .americas
@@ -59,8 +59,26 @@ extension ContentView {
                     
                     // swift data model context tasks should be done in main queue to ensure persistence
                     Task { @MainActor in
-                        addUser(puuid: puuidResponse.puuid, name: splitName[0], tag: splitName[1])
+                        addUser(puuid: puuidResponse.puuid, name: splitName[0], tag: splitName[1], region: selectedRegion.description, server: selectedServer.raw)
                     }
+                    showingScreen = true
+                }catch{
+                    response = nil
+                    print("Error in task \(error)")
+                }
+            }
+        }
+        
+        func searchSumm(name: String, tag: String, region: String, server: String){
+            Task {
+                print("Doing task")
+                do {
+                    let puuidResponse = try await puuidApiCall(
+                        gameName: name,
+                        tag: tag,
+                        region: region.description)
+                    
+                    response = try await masteryApiCall(puuid:puuidResponse.puuid, selectedServer: server)
                     showingScreen = true
                 }catch{
                     response = nil
@@ -84,7 +102,7 @@ extension ContentView {
     }
 }
 
-enum region: CaseIterable, Identifiable, CustomStringConvertible {
+enum Region: CaseIterable, Identifiable, CustomStringConvertible {
     case europe
     case americas
     case asia
@@ -103,7 +121,7 @@ enum region: CaseIterable, Identifiable, CustomStringConvertible {
     }
 }
 
-enum server: CaseIterable, Identifiable, CustomStringConvertible {
+enum Server: CaseIterable, Identifiable, CustomStringConvertible {
     case br1
     case eun1
     case euw1

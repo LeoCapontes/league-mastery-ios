@@ -36,9 +36,25 @@ func puuidApiCall(
 
 func masteryApiCall(
     puuid: String,
-    selectedServer: server
+    selectedServer: Server
 ) async throws -> [MasteryResponse]{
     let serverString = selectedServer.raw
+    let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
+    print(url.absoluteString)
+    do{
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
+        return response
+    } catch {
+        throw error
+    }
+}
+
+func masteryApiCall(
+    puuid: String,
+    selectedServer: String
+) async throws -> [MasteryResponse]{
+    let serverString = selectedServer
     let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
     print(url.absoluteString)
     do{
