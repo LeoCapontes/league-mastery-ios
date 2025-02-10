@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     let gradient = LinearGradient(
@@ -17,8 +18,14 @@ struct ContentView: View {
         endPoint: .top)
     
     
-    @State private var viewModel = ViewModel()
+    @State private var viewModel: ViewModel
     @FocusState private var fieldFocused: Bool
+    
+    init(modelContext: ModelContext) {
+           let viewModel = ViewModel(modelContext: modelContext)
+           _viewModel = State(initialValue: viewModel)
+   }
+    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -103,6 +110,6 @@ struct ContentView: View {
 }
 
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}

@@ -6,12 +6,15 @@
 //
 
 import Foundation
-
+import SwiftData
 import Combine
 
 extension ContentView {
     @Observable
     class ViewModel{
+        var modelContext: ModelContext
+        var users = [User]()
+        
         var sumName: String = ""
         var splashUrl: String = ""
         var response: [MasteryResponse]?
@@ -31,7 +34,8 @@ extension ContentView {
             }
         }
         
-        init() {
+        init(modelContext: ModelContext) {
+            self.modelContext = modelContext
             populateChampions()
             Settings.shared.UpdateGameVersion()
         }
