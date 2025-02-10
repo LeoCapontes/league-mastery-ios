@@ -27,3 +27,11 @@ struct LeagueMasteryApp: App {
         }
     }
 }
+
+// allows for sorting by bool
+extension Bool: Comparable {
+    public static func <(lhs: Self, rhs: Self) -> Bool {
+        !lhs && rhs
+    }
+}
+
