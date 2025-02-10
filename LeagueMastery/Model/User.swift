@@ -11,13 +11,13 @@ import SwiftData
 @Model
 class User {
     // filled by puuid api response
-    var puuid: String
+    @Attribute(.unique) var puuid: String
     var name: String
     var tagline: String
     
     var isFavourite: Bool
     
-    init(puuid: String, name: String, tagline: String, isFavourite: Bool) {
+    init(puuid: String, name: String, tagline: String, isFavourite: Bool = false) {
         self.puuid = puuid
         self.name = name
         self.tagline = tagline
