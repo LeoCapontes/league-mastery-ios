@@ -20,6 +20,7 @@
 		B39E41542D3D77030073E406 /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E41532D3D76FC0073E406 /* Rewards.swift */; };
 		B3B4F6BE2D41641200F5F514 /* crest-aurora-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3B4F6BD2D41641200F5F514 /* crest-aurora-loop.mov */; };
 		B3B4F6C02D42D61B00F5F514 /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B4F6BF2D42D61600F5F514 /* CacheAsyncImage.swift */; };
+		B3BF86242D5A70A400915BE6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF86232D5A70A400915BE6 /* User.swift */; };
 		B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C134B62CDB0CFA00456A3B /* Utils.swift */; };
 		B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C612712CC489CA00C19B0C /* VideoPlayer.swift */; };
 		B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128A2CC4915900C19B0C /* 1-loop.mov */; };
@@ -73,6 +74,7 @@
 		B39E41532D3D76FC0073E406 /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
 		B3B4F6BD2D41641200F5F514 /* crest-aurora-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "crest-aurora-loop.mov"; sourceTree = "<group>"; };
 		B3B4F6BF2D42D61600F5F514 /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
+		B3BF86232D5A70A400915BE6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B3C134B62CDB0CFA00456A3B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B3C612712CC489CA00C19B0C /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		B3C6128A2CC4915900C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */,
 				B36300E42C3D8E4A000E54AA /* MockModel.swift */,
 				B36300EB2C3D8E8C000E54AA /* Settings.swift */,
+				B3BF86232D5A70A400915BE6 /* User.swift */,
 			);
 			name = Model;
 			path = LeagueMastery/Model;
@@ -404,6 +407,7 @@
 				B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */,
 				B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */,
 				B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */,
+				B3BF86242D5A70A400915BE6 /* User.swift in Sources */,
 				B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */,
 				B36301012C41F009000E54AA /* Codables.swift in Sources */,
 				B36300E62C3D8E4A000E54AA /* ChampionIdConversions.swift in Sources */,
