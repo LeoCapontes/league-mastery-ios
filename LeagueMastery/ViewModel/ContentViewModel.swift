@@ -56,6 +56,11 @@ extension ContentView {
                         region: selectedRegion.description)
                     
                     response = try await masteryApiCall(puuid:puuidResponse.puuid, selectedServer: selectedServer)
+                    
+                    // swift data model context tasks should be done in main queue to ensure persistence
+                    Task { @MainActor in
+                        addUser(puuid: puuidResponse.puuid, name: splitName[0], tag: splitName[1])
+                    }
                     showingScreen = true
                 }catch{
                     response = nil
@@ -70,6 +75,11 @@ extension ContentView {
                 return nil
             }
             return splitName
+        }
+        
+        func addUser(puuid: String, name: String, tag: String){
+            let newUser = User(puuid: puuid, name: name, tagline: tag)
+            modelContext.insert(newUser)
         }
     }
 }
