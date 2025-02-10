@@ -81,6 +81,11 @@ struct ContentView: View {
                     }
                     .padding(.horizontal, 10)
                     
+                    if(!viewModel.showingScreen) {
+                        SearchedUsers(sort: SortDescriptor(\User.name))
+                            .frame(width: nil, height: 300)
+                    }
+                    
                     if(viewModel.showingScreen) {
                         AccountScreen(masteryData: viewModel.response!)
                             .transition(.slide)
