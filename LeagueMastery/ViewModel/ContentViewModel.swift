@@ -36,7 +36,6 @@ extension ContentView {
         
         init(modelContext: ModelContext) {
             self.modelContext = modelContext
-            populateChampions()
             Settings.shared.UpdateGameVersion()
         }
         
@@ -71,7 +70,10 @@ extension ContentView {
         
         func searchSumm(name: String, tag: String, region: String, server: String){
             Task {
-                print("Doing task")
+#if DEBUG
+                print("Doing search with params:")
+                print("\(name), \(tag), \(region), \(server)")
+#endif
                 do {
                     let puuidResponse = try await puuidApiCall(
                         gameName: name,

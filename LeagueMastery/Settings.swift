@@ -30,6 +30,7 @@ class Settings {
             do {
                 self.lolVersion = try await versionApiCall()[0]
                 print("Game version updated to \(self.lolVersion)")
+                populateChampions()
             } catch {
                 print("Game version update failed, error: \(error)")
             }
