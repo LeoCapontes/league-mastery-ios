@@ -15,13 +15,24 @@ struct SearchedUsers: View {
     var startSearch: (String, String, String, String) -> Void
     
     var body: some View {
-        ScrollView(){
-            ForEach(users) { user in
-                UserRow(user: user, onRowPress: startSearch)
+        VStack(alignment: .leading, spacing: 4){
+            Text("Previously Searched")
+                .font(.headline)
+                .padding(.leading, 2)
+            ScrollView(){
+                VStack(spacing: 0){
+                    ForEach(users) { user in
+                        UserRow(user: user, onRowPress: startSearch)
+                    }
+                }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color.gray.opacity(0.2))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .frame(maxHeight: 200)
+            .animation(.default, value: users)
         }
-        .scrollContentBackground(.hidden)
-        .frame(maxHeight: 200)
+        .padding()
     }
     
     init(sort: SortDescriptor<User>, searchFunc: @escaping (String, String, String, String) -> Void){
@@ -44,6 +55,8 @@ struct UserRow: View {
                 Image(systemName: user.isFavourite ? "star.fill" : "star")
             }
         }
+        .padding(.horizontal)
+        .padding(.top, 8)
     }
     
     func onPress(){
