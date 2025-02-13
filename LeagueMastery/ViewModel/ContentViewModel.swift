@@ -47,19 +47,28 @@ extension ContentView {
             print(splitName)
             
             Task {
-                print("Doing task")
+                print("Doing summoner search task")
                 do {
                     let puuidResponse = try await puuidApiCall(
                         gameName: splitName[0],
                         tag: splitName[1],
                         region: selectedRegion.description)
                     
-                    response = try await masteryApiCall(puuid:puuidResponse.puuid, selectedServer: selectedServer)
+                    response = try await masteryApiCall(
+                        puuid:puuidResponse.puuid,
+                        selectedServer: selectedServer)
                     
-                    // swift data model context tasks should be done in main queue to ensure persistence
+                    // swift data model context tasks should be done in
+                    // main queue to ensure persistence
                     Task { @MainActor in
-                        addUser(puuid: puuidResponse.puuid, name: splitName[0], tag: splitName[1], region: selectedRegion.description, server: selectedServer.raw)
+                        addUser(
+                            puuid: puuidResponse.puuid,
+                            name: splitName[0],
+                            tag: splitName[1],
+                            region: selectedRegion.description,
+                            server: selectedServer.raw)
                     }
+                    
                     showingScreen = true
                 }catch{
                     response = nil
@@ -80,7 +89,10 @@ extension ContentView {
                         tag: tag,
                         region: region.description)
                     
-                    response = try await masteryApiCall(puuid:puuidResponse.puuid, selectedServer: server)
+                    response = try await masteryApiCall(
+                        puuid:puuidResponse.puuid,
+                        selectedServer: server)
+                    
                     showingScreen = true
                 }catch{
                     response = nil
@@ -97,9 +109,30 @@ extension ContentView {
             return splitName
         }
         
-        func addUser(puuid: String, name: String, tag: String, region: String, server: String){
-            let newUser = User(puuid: puuid, name: name, tagline: tag, region: region, server: server)
+        func addUser(
+            puuid: String,
+            name: String,
+            tag: String,
+            region: String,
+            server: String
+        ){
+            let newUser = User(
+                puuid: puuid,
+                name: name,
+                tagline: tag,
+                region: region,
+                server: server
+            )
+            
             modelContext.insert(newUser)
+        }
+        
+        func deleteAllUsers() {
+            do {
+                try modelContext.delete(model: User.self)
+            } catch {
+                print("Failed to delete users")
+            }
         }
     }
 }

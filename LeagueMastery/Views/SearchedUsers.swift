@@ -13,16 +13,22 @@ struct SearchedUsers: View {
     @Query(sort: [SortDescriptor(\User.isFavourite)]) var users: [User]
     
     var startSearch: (String, String, String, String) -> Void
+    var clearSearches: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4){
-            Text("Previously Searched")
-                .font(.headline)
-                .padding(.leading, 2)
+            HStack{
+                Text("Previously Searched")
+                    .font(.headline)
+                    .padding(.leading, 2)
+                Spacer()
+                DeleteButton(deleteFunc: clearSearches)
+            }
             ScrollView(){
                 VStack(spacing: 0){
                     ForEach(users) { user in
                         UserRow(user: user, onRowPress: startSearch)
+                        Divider()
                     }
                 }
             }
@@ -35,7 +41,12 @@ struct SearchedUsers: View {
         .padding()
     }
     
-    init(sort: SortDescriptor<User>, searchFunc: @escaping (String, String, String, String) -> Void){
+    init(
+        sort: SortDescriptor<User>,
+        searchFunc: @escaping (String, String, String, String) -> Void,
+        clearSearches: @escaping () -> Void
+    ) {
+        self.clearSearches = clearSearches
         self.startSearch = searchFunc
         _users = Query(sort: [sort])
     }
@@ -55,8 +66,8 @@ struct UserRow: View {
                 Image(systemName: user.isFavourite ? "star.fill" : "star")
             }
         }
-        .padding(.horizontal)
-        .padding(.top, 8)
+        .padding(.vertical, 12)
+        .padding(.horizontal, 14)
     }
     
     func onPress(){
@@ -67,6 +78,18 @@ struct UserRow: View {
         user.isFavourite.toggle()
     }
 }
+
+struct DeleteButton: View {
+    var deleteFunc: () -> Void
+    
+    var body: some View {
+        Button(action: deleteFunc){
+            Image(systemName: "trash")
+        }
+        .frame(width: 32, height: 32)
+    }
+}
+
 //
 //#Preview {
 //    SearchedUsers(sort: SortDescriptor(\User.name))

@@ -83,7 +83,11 @@ struct ContentView: View {
                     
                     if(!viewModel.showingScreen) {
                         VStack(alignment: .leading){
-                            SearchedUsers(sort: SortDescriptor(\User.isFavourite, order: .reverse), searchFunc: viewModel.searchSumm(name:tag:region:server:))
+                            SearchedUsers(
+                                sort: SortDescriptor(\User.isFavourite, order: .reverse),
+                                searchFunc: viewModel.searchSumm(name:tag:region:server:),
+                                clearSearches: viewModel.deleteAllUsers
+                            )
                         }
                     }
                     
