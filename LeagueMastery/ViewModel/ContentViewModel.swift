@@ -129,7 +129,10 @@ extension ContentView {
         
         func deleteAllUsers() {
             do {
-                try modelContext.delete(model: User.self)
+                let users = try modelContext.fetch(FetchDescriptor<User>())
+                for user in users {
+                    modelContext.delete(user)
+                }
             } catch {
                 print("Failed to delete users")
             }
