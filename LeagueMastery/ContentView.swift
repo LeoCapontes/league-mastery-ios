@@ -92,7 +92,7 @@ struct ContentView: View {
                     }
                     
                     if(viewModel.showingScreen) {
-                        AccountScreen(masteryData: viewModel.response!)
+                        AccountScreen(masteryData: viewModel.response!, user: viewModel.userToDisplay!)
                             .transition(.slide)
                     }
                 }

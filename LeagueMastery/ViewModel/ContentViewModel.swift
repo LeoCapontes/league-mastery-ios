@@ -14,6 +14,7 @@ extension ContentView {
     class ViewModel{
         var modelContext: ModelContext
         var users = [User]()
+        var userToDisplay: User?
         
         var sumName: String = ""
         var splashUrl: String = ""
@@ -57,16 +58,22 @@ extension ContentView {
                     response = try await masteryApiCall(
                         puuid:puuidResponse.puuid,
                         selectedServer: selectedServer)
+                                        
+                    let searchedUser = User(
+                        puuid: puuidResponse.puuid,
+                        name: splitName[0],
+                        tagline: splitName[1],
+                        region: selectedRegion.description,
+                        server: selectedServer.raw
+                    )
+                    
+                    userToDisplay = searchedUser
                     
                     // swift data model context tasks should be done in
                     // main queue to ensure persistence
+
                     Task { @MainActor in
-                        addUser(
-                            puuid: puuidResponse.puuid,
-                            name: splitName[0],
-                            tag: splitName[1],
-                            region: selectedRegion.description,
-                            server: selectedServer.raw)
+                        addUser(newUser: searchedUser)
                     }
                     
                     showingScreen = true
@@ -92,6 +99,16 @@ extension ContentView {
                     response = try await masteryApiCall(
                         puuid:puuidResponse.puuid,
                         selectedServer: server)
+                    
+                    let searchedUser = User(
+                        puuid: puuidResponse.puuid,
+                        name: name,
+                        tagline: tag,
+                        region: region,
+                        server: server
+                    )
+                    
+                    userToDisplay = searchedUser
                     
                     showingScreen = true
                 }catch{
@@ -127,6 +144,10 @@ extension ContentView {
             modelContext.insert(newUser)
         }
         
+        func addUser(newUser: User){
+            modelContext.insert(newUser)
+        }
+        
         func deleteAllUsers() {
             do {
                 let users = try modelContext.fetch(FetchDescriptor<User>())
@@ -137,6 +158,7 @@ extension ContentView {
                 print("Failed to delete users")
             }
         }
+        
     }
 }
 

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AccountScreen: View{
+    let user: User
     let masteryData: [MasteryResponse]
     let metrics: [MasteryResponseMetrics]
     
@@ -16,11 +17,12 @@ struct AccountScreen: View{
     let masteryDictionary: [Int: MasteryResponse]
     let metricsDictionary: [Int: MasteryResponseMetrics]
 
-    init(masteryData: [MasteryResponse]) {
+    init(masteryData: [MasteryResponse], user: User) {
         self.masteryData = masteryData
         self.metrics = GetResponseMetrics(masteryData)
         self.masteryDictionary = Dictionary(uniqueKeysWithValues: masteryData.map { ($0.championId, $0) })
         self.metricsDictionary = Dictionary(uniqueKeysWithValues: metrics.map { ($0.championId, $0) })
+        self.user = user
     }
     
     @State private var isFavourite = false
@@ -115,5 +117,14 @@ struct AccountScreen: View{
 
 #Preview {
     let mock = mockMasteryResponse
-    AccountScreen(masteryData: mock)
+    AccountScreen(
+        masteryData: mock,
+        user: User(
+            puuid: "d",
+            name: "Hide on Bush",
+            tagline: "#KR1",
+            region: "Korea",
+            server: "Asia"
+        )
+    )
 }
