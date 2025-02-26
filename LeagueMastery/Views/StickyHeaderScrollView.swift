@@ -23,14 +23,21 @@ struct StickyHeaderScrollView<Content:View>: View {
                         Section{
                             content
                         } header: {
-                            HStack{
-                                Text(name)
-                                Text("#\(tag)")
+                            VStack(){
+                                HStack{
+                                    Text(name)
+                                    Text("#\(tag)")
+                                }
+                                if !yOffset {Text("Score: Placeholder")}
                             }
                             .font(.system(size: yOffset ? 16: 24))
-                            .frame(width: geo.size.width, height: headerHeight)
-                            .background(.thinMaterial)
-                            .animation(.smooth, value: yOffset)
+                            .frame(
+                                width: geo.size.width,
+                                height: headerHeight,
+                                alignment: yOffset ? .leading: .center)
+                            .padding(.horizontal)
+                            .background(.ultraThinMaterial.opacity(yOffset ? 1.0: 0.0))
+                            .animation(.default, value: headerHeight)
                         }
                     }
                 }
@@ -38,7 +45,7 @@ struct StickyHeaderScrollView<Content:View>: View {
                     geo.contentOffset.y > headerHeight-10
                 } action: { oldValue, newValue in
                     yOffset = newValue
-                    headerHeight = yOffset ? 36 : 48
+                    headerHeight = yOffset ? 36 : 56
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
