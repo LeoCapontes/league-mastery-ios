@@ -57,22 +57,12 @@ struct AccountScreen: View{
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             VStack{
-                ScrollView(showsIndicators: false) {
-                    LazyVStack{
-                        ForEach(0..<selectedSort.count ,id: \.self){ index in
-                            NavigationLink(value: selectedSort[index]){
-                                LargeChampionRow(entry: selectedSort[index])
-                            }
+                StickyHeaderScrollView(name: user.name, tag: user.tagline){
+                    ForEach(0..<selectedSort.count ,id: \.self){ index in
+                        NavigationLink(value: selectedSort[index]){
+                            LargeChampionRow(entry: selectedSort[index])
                         }
                     }
-//                    VStack(spacing: 2){
-//                        ForEach(3..<selectedSort.count, id: \.self){index in
-//                            NavigationLink(value: selectedSort[index]){
-//                                ChampionRow(entry: selectedSort[index])
-//                            }
-//                        }
-//                    }
-//                    .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
             }
             HStack{
@@ -122,7 +112,7 @@ struct AccountScreen: View{
         user: User(
             puuid: "d",
             name: "Hide on Bush",
-            tagline: "#KR1",
+            tagline: "KR1",
             region: "Korea",
             server: "Asia"
         )

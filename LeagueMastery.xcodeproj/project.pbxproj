@@ -13,6 +13,7 @@
 		B36300EA2C3D8E54000E54AA /* ChampionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E82C3D8E54000E54AA /* ChampionCards.swift */; };
 		B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300EB2C3D8E8C000E54AA /* Settings.swift */; };
 		B36301012C41F009000E54AA /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36301002C41F009000E54AA /* Codables.swift */; };
+		B36341F42D6EB5070060A2C4 /* StickyHeaderScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36341F32D6EB4F70060A2C4 /* StickyHeaderScrollView.swift */; };
 		B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABC2C43338600194223 /* AccountScreen.swift */; };
 		B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABE2C44C09000194223 /* ApiCalls.swift */; };
 		B39E414F2D32F5810073E406 /* MilestoneProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */; };
@@ -68,6 +69,7 @@
 		B36300E82C3D8E54000E54AA /* ChampionCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionCards.swift; sourceTree = "<group>"; };
 		B36300EB2C3D8E8C000E54AA /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = LeagueMastery/Settings.swift; sourceTree = SOURCE_ROOT; };
 		B36301002C41F009000E54AA /* Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codables.swift; sourceTree = "<group>"; };
+		B36341F32D6EB4F70060A2C4 /* StickyHeaderScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderScrollView.swift; sourceTree = "<group>"; };
 		B39DBABC2C43338600194223 /* AccountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreen.swift; sourceTree = "<group>"; };
 		B39DBABE2C44C09000194223 /* ApiCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiCalls.swift; sourceTree = "<group>"; };
 		B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneProgress.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		B36300E92C3D8E54000E54AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B36341F32D6EB4F70060A2C4 /* StickyHeaderScrollView.swift */,
 				B3B4F6BF2D42D61600F5F514 /* CacheAsyncImage.swift */,
 				B39E41512D3358BA0073E406 /* Shapes.swift */,
 				B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */,
@@ -397,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B39E41542D3D77030073E406 /* Rewards.swift in Sources */,
+				B36341F42D6EB5070060A2C4 /* StickyHeaderScrollView.swift in Sources */,
 				B36300EA2C3D8E54000E54AA /* ChampionCards.swift in Sources */,
 				B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */,
 				B3B4F6C02D42D61B00F5F514 /* CacheAsyncImage.swift in Sources */,
