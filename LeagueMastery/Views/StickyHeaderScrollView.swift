@@ -30,21 +30,19 @@ struct StickyHeaderScrollView<Content:View>: View {
                                 .font(.system(size: yOffset ? 16: 24))
                                 .frame(
                                     width: geo.size.width,
-                                    height: headerHeight,
+                                    height: 64,
                                     alignment: yOffset ? .leading: .center)
                                 .padding(.horizontal)
-                                .background(.ultraThinMaterial.opacity(yOffset ? 1.0: 0.0))
-                                .animation(.default, value: headerHeight)
+                                .animation(.default, value: yOffset)
                             }
                         }
                     }
                     .onScrollGeometryChange(for: Bool.self) { geo in
-                        geo.contentOffset.y > headerHeight-10
+                        geo.contentOffset.y > 24
                     } action: { oldValue, newValue in
                         yOffset = newValue
                         headerHeight = yOffset ? 42 : 64
                     }
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
                     
                     // workaround animations being affected by scrolling by
                     // overlaying the text on top of the scroll view rather
@@ -71,8 +69,11 @@ struct StickyHeaderScrollView<Content:View>: View {
                         height: headerHeight,
                         alignment: .leading
                     )
+                    .background(.ultraThinMaterial.opacity(yOffset ? 1.0: 0.0))
+                    .zIndex(yOffset ? 0 : -1)
                     .animation(.default, value: headerHeight)
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
         } else {
             // TODO: Fallback on earlier versions
