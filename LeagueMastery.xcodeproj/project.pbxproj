@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -105,6 +105,10 @@
 		B3E6BB2C2C06DA480046C4E2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B32025442D78E85900E6E06E /* Screenshots */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screenshots; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		B3E6BAFB2C06D63F0046C4E2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -188,6 +192,7 @@
 		B3E6BAF52C06D63F0046C4E2 = {
 			isa = PBXGroup;
 			children = (
+				B32025442D78E85900E6E06E /* Screenshots */,
 				B3E6BB002C06D63F0046C4E2 /* LeagueMastery */,
 				B3E6BB112C06D6420046C4E2 /* LeagueMasteryTests */,
 				B3E6BB1B2C06D6420046C4E2 /* LeagueMasteryUITests */,
