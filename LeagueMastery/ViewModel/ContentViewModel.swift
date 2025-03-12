@@ -17,6 +17,7 @@ extension ContentView {
         var userToDisplay: User?
         
         var sumName: String = ""
+        var sumTag: String = ""
         var splashUrl: String = ""
         var response: [MasteryResponse]?
         var showingScreen = false
@@ -41,18 +42,18 @@ extension ContentView {
         }
         
         func searchSumm() {
-            print("called")
-            guard let splitName = splitGameName(sumName) else {
-                return
-            }
-            print(splitName)
+//            print("called")
+//            guard let splitName = splitGameName(sumName) else {
+//                return
+//            }
+//            print(splitName)
             
             Task {
                 print("Doing summoner search task")
                 do {
                     let puuidResponse = try await puuidApiCall(
-                        gameName: splitName[0],
-                        tag: splitName[1],
+                        gameName: sumName,
+                        tag: sumTag,
                         region: selectedRegion.description)
                     
                     response = try await masteryApiCall(
@@ -61,8 +62,8 @@ extension ContentView {
                                         
                     let searchedUser = User(
                         puuid: puuidResponse.puuid,
-                        name: splitName[0],
-                        tagline: splitName[1],
+                        name: sumName,
+                        tagline: sumTag,
                         region: selectedRegion.description,
                         server: selectedServer.raw
                     )

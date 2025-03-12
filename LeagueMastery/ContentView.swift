@@ -48,16 +48,36 @@ struct ContentView: View {
                             .transition(.opacity)
                        }
                         HStack{
-                            TextField(
-                                "",
-                                text: $viewModel.sumName,
-                                prompt: Text("Summoner name")
-                                    .foregroundStyle(Color(
-                                        red: 150/255,
-                                        green: 150/255,
-                                        blue: 150/255
-                                    ))
-                            ).focused($fieldFocused)
+                            HStack{
+                                TextField(
+                                    "",
+                                    text: $viewModel.sumName,
+                                    prompt: Text("Name")
+                                        .foregroundStyle(Color(
+                                            red: 150/255,
+                                            green: 150/255,
+                                            blue: 150/255
+                                        ))
+                                )
+                                .frame(width: 124)
+//                                .border(.green)
+                                Divider().overlay(Color.white)
+                                Text("#")
+                                TextField(
+                                    "",
+                                    text: $viewModel.sumTag,
+                                    prompt: Text("Tag")
+                                        .foregroundStyle(Color(
+                                            red: 150/255,
+                                            green: 150/255,
+                                            blue: 150/255
+                                        ))
+                                )
+                                .frame(width: 48)
+//                                .border(.green)
+                            }
+                            .frame(height: 32)
+                            .focused($fieldFocused)
                             .onSubmit {
                                 SearchSummoner()
                             }
@@ -70,6 +90,8 @@ struct ContentView: View {
                                     Text(String(describing: option))
                                 }
                             }
+                            .padding(0)
+//                            .border(.green)
                         }
                         .background(Color.gray
                             .opacity(0.2))
