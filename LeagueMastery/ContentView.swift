@@ -133,6 +133,9 @@ struct ContentView: View {
             }
             .edgesIgnoringSafeArea(.bottom)
         }
+        .alert("Something went wrong.", isPresented : $viewModel.showingAlert){
+            Button("OK") {}
+        }
     }
     
     func SearchSummoner(){

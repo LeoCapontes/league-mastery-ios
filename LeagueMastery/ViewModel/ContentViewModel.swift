@@ -23,6 +23,8 @@ extension ContentView {
         var showingScreen = false
         var selectedServer: Server = .euw1
         
+        var showingAlert = false
+        
         var selectedRegion: Region {
             switch selectedServer {
             case .br1, .la1, .la2, .na1:
@@ -81,6 +83,7 @@ extension ContentView {
                 }catch{
                     response = nil
                     print("Error in task \(error)")
+                    showingAlert = true
                 }
             }
         }
