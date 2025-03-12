@@ -120,6 +120,9 @@ struct ContentView: View {
 }
 
 
-//#Preview {
-//    ContentView()
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: User.self, configurations: config)
+    
+    ContentView(modelContext: container.mainContext).modelContainer(container)
+}
