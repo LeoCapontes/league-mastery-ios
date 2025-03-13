@@ -24,6 +24,7 @@ extension ContentView {
         var selectedServer: Server = .euw1
         
         var showingAlert = false
+        var showingProgress = false
         
         var selectedRegion: Region {
             switch selectedServer {
@@ -53,6 +54,7 @@ extension ContentView {
             Task {
                 print("Doing summoner search task")
                 do {
+                    showingProgress = true
                     let puuidResponse = try await puuidApiCall(
                         gameName: sumName,
                         tag: sumTag,
@@ -78,9 +80,10 @@ extension ContentView {
                     Task { @MainActor in
                         addUser(newUser: searchedUser)
                     }
-                    
+                    showingProgress = false
                     showingScreen = true
                 }catch{
+                    showingProgress = false
                     response = nil
                     print("Error in task \(error)")
                     showingAlert = true
@@ -95,6 +98,7 @@ extension ContentView {
                 print("\(name), \(tag), \(region), \(server)")
 #endif
                 do {
+                    showingProgress = true
                     let puuidResponse = try await puuidApiCall(
                         gameName: name,
                         tag: tag,
@@ -113,9 +117,10 @@ extension ContentView {
                     )
                     
                     userToDisplay = searchedUser
-                    
+                    showingProgress = false
                     showingScreen = true
                 }catch{
+                    showingProgress = false
                     response = nil
                     print("Error in task \(error)")
                 }

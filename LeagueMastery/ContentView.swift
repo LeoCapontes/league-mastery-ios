@@ -76,7 +76,7 @@ struct ContentView: View {
                                 .frame(width: 48)
 //                                .border(.green)
                             }
-                            .frame(height: 32)
+                            .frame(height: 24)
                             .focused($fieldFocused)
                             .onSubmit {
                                 SearchSummoner()
@@ -129,6 +129,11 @@ struct ContentView: View {
                             .frame(height: 84)
                             .foregroundStyle(gradient)
                     }.allowsHitTesting(false)
+                }
+                if(viewModel.showingProgress){
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(1.5, anchor: .center)
                 }
             }
             .edgesIgnoringSafeArea(.bottom)
