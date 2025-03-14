@@ -8,7 +8,6 @@
 import Foundation
 
 func championsApiCall() async throws -> Champions{
-    //TODO get current version through datadragon
     let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/\(Settings.shared.lolVersion)/data/en_US/champion.json")!
     print(url.absoluteString)
     let (data, _) = try await URLSession.shared.data(from: url)
@@ -26,12 +25,26 @@ func puuidApiCall(
     let url = URL(string: "\(Settings.shared.serverUrl)/account/by-riot-id/\(region)/\(gameName)/\(tag)")!
     do {
         print(url.absoluteString)
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let (data, httpResponse) = try await URLSession.shared.data(from: url)
         print(data.prettyPrintedJSONString)
-        let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
-        return response
-    } catch {
-        throw error
+        guard let httpResponse = httpResponse as? HTTPURLResponse else{
+            throw URLError(.badServerResponse)
+        }
+        if httpResponse.statusCode == 200 {
+            let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
+            return response
+        } else {
+            print(httpResponse.statusCode)
+            if httpResponse.statusCode == 404 {
+                print("Throwing no data found")
+                throw ApiError.noDataFound
+            }
+            if httpResponse.statusCode == 400 {
+                print("Throwing no key")
+                throw ApiError.noKey
+            }
+            throw ApiError.other("Search failed")
+        }
     }
 }
 
@@ -85,3 +98,8 @@ extension Data {
     }
 }
 
+enum ApiError: Error {
+    case noDataFound
+    case noKey
+    case other(String)
+}
