@@ -77,21 +77,24 @@ struct ChampionScreen: View {
                             .frame(width: 250, height: 250)
                             .shadow(color: .black, radius: 40)
                     }
-                    VideoPlayer(url: videoUrl)
-                        .frame(width: 250*crestScale, height: 250*crestScale)
-                        // shadow effectively removed if aurora is unlocked
-                        .shadow(color: .black, radius: auroraUnlocked ? 0 : 40)
-                    GeometryReader{ geometry in
-                        if championData.championLevel > 9 {
-                            Text("\(championData.championLevel)")
-                                .bold()
-                                .foregroundStyle(.black)
-                                .opacity(0.65)
-                                .position(
-                                    x:geometry.size.width*0.5,
-                                    y:geometry.size.height*0.72)
-                        }
-                    }
+//                    The following is for the old animated mastery crest
+//                    Keeping in case a new animated crest is added
+//                    VideoPlayer(url: videoUrl)
+//                        .frame(width: 250*crestScale, height: 250*crestScale)
+//                        // shadow effectively removed if aurora is unlocked
+//                        .shadow(color: .black, radius: auroraUnlocked ? 0 : 40)
+//                    GeometryReader{ geometry in
+//                        if championData.championLevel > 9 {
+//                            Text("\(championData.championLevel)")
+//                                .bold()
+//                                .foregroundStyle(.black)
+//                                .opacity(0.65)
+//                                .position(
+//                                    x:geometry.size.width*0.5,
+//                                    y:geometry.size.height*0.72)
+//                        }
+//                    }
+                    MasteryCrestImage(masteryLevel: championData.championLevel, mini: false)
                 }
                 .frame(width: 250, height: 250)
                 .padding(-40)

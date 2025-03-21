@@ -13,16 +13,11 @@ struct MasteryCrestImage: View {
     var mini: Bool
     
     var assetPath: String {
-        if(masteryLevel >= 4) {
-            let path = ((masteryLevel >= 10)
-                        ? "masterycrest_level_10_art"
-                        : "masterycrest_level_\(masteryLevel)_art")
-            
-            return (mini ? path.appending("_mini") : path)
-        } else {
-            let path = "masterycrest_level_0_art"
-            return (mini ? path.appending("_mini") : path)
-        }
+        let path = ((masteryLevel >= 10)
+                    ? "mastery-10"
+                    : "mastery-\(masteryLevel)")
+        
+        return (mini ? path.appending("_mini") : path)
     }
     
     var body: some View {
@@ -232,10 +227,10 @@ struct LargeChampionRow: View {
                     )
                 }.frame(width:nil)
             }
-            .background{
-                Color.gray
-                    .opacity(0.2)
-            }
+            .background(
+                .ultraThinMaterial
+                    .opacity(0.5)
+            )
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .frame(width: nil, height:100)
         }
