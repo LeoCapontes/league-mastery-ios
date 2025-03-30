@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct MasteryCrestImage: View {
     var masteryLevel: Int
@@ -33,18 +34,11 @@ struct ChampionImage: View {
     
     var body: some View {
         ZStack{
-            CacheAsyncImage(url: URL(
-                    string: splashFromChampId(
-                        championId
-                    )
-                )
-            ) { image in image
-                    .image?
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .blur(radius: (blurred ? 2 : 0))
-            }
-            .frame(width: .infinity)
+            KFImage(URL(string: splashFromChampId(championId)))
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .blur(radius: (blurred ? 2 : 0))
+                .frame(width: .infinity)
         }
     }
 }
@@ -53,15 +47,11 @@ struct ChampionPortrait: View {
     var championId: Int
     
     var body: some View {
-        CacheAsyncImage(url: URL(string: portraitFromChampId(championId))
-        ) {
-            image in image
-                .image?
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                .scaleEffect(0.8)
-        }
+        KFImage(URL(string: portraitFromChampId(championId)))
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+            .scaleEffect(0.8)
     }
 }
 
