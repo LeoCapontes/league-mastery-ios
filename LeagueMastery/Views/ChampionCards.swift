@@ -173,6 +173,9 @@ struct MediumChampionCard: View {
 struct LargeChampionRow: View {
     var entry: MasteryResponse
     
+    var splashOffset: Offset {
+        return splashOffsets[entry.championId] ?? Offset()
+    }
     
     let rowSplashMask = LinearGradient(
         stops: [
@@ -191,6 +194,7 @@ struct LargeChampionRow: View {
                     .aspectRatio(contentMode: .fill)
                     .mask(rowSplashMask)
                     .offset(y: -25)
+                    .offset(x: splashOffset.x, y: splashOffset.y)
                 ZStack{
                     MasteryFrame(
                         championId: entry.championId,
