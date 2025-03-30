@@ -138,7 +138,7 @@ struct ContentView: View {
             }
             .edgesIgnoringSafeArea(.bottom)
         }
-        .alert("Something went wrong.", isPresented : $viewModel.showingAlert){
+        .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
             Button("OK") {}
         }
     }

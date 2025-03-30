@@ -24,6 +24,7 @@ extension ContentView {
         var selectedServer: Server = .euw1
         
         var showingAlert = false
+        var alertMessage = "Something went wrong"
         var showingProgress = false
         
         var selectedRegion: Region {
@@ -85,6 +86,14 @@ extension ContentView {
                 }catch{
                     showingProgress = false
                     response = nil
+                    switch error {
+                    case ApiError.noDataFound:
+                        alertMessage = "Summoner not found"
+                    case ApiError.noKey:
+                        print("Something wrong with key")
+                    default:
+                        alertMessage = "Something went wrong"
+                    }
                     print("Error in task \(error)")
                     showingAlert = true
                 }
