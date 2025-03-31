@@ -86,53 +86,181 @@ struct Offset {
 // manually set champion splash art offsets here.
 var splashOffsets: [Int:Offset] =
 [14: Offset(15, 0), //Sion
- 800: Offset(), //Mel
- 238: Offset(25, 0), //Zed
- 20: Offset(),
+ 800: Offset(100, 0), //Mel
+ 238: Offset(25, -10), //Zed
+ 20: Offset(30, -40), // Nunu
  240: Offset(),
- 72: Offset(),
- 136: Offset(0, -20), //ASol
- 45: Offset(),
+ 72: Offset(80, -120), // Skarner
+ 136: Offset(70, 0), //ASol
+ 45: Offset(45, -20), //Veiger
  98: Offset(),
- 69: Offset(),
- 157: Offset(),
- 23: Offset(),
- 516: Offset(),
- 412: Offset(40, 0), //Thresh
- 267: Offset(),
- 876: Offset(),
- 233: Offset(), 19: Offset(), 31: Offset(),
- 134: Offset(), 38: Offset(), 7: Offset(), 96: Offset(), 420: Offset(), 41: Offset(),
- 893: Offset(), 51: Offset(), 40: Offset(), 61: Offset(), 875: Offset(), 200: Offset(),
- 26: Offset(), 154: Offset(), 107: Offset(), 57: Offset(), 897: Offset(), 76: Offset(), 245: Offset(),
- 54: Offset(), 163: Offset(), 56: Offset(), 110: Offset(), 62: Offset(), 36: Offset(),
- 29: Offset(), 39: Offset(), 67: Offset(), 133: Offset(), 114: Offset(), 91: Offset(), 33: Offset(),
- 203: Offset(), 518: Offset(), 429: Offset(), 161: Offset(), 104: Offset(), 84: Offset(), 24: Offset(),
- 80: Offset(), 43: Offset(), 105: Offset(), 103: Offset(40, 0), 55: Offset(), 22: Offset(), 48: Offset(),
- 64: Offset(), 32: Offset(), 112: Offset(), 145: Offset(), 102: Offset(), 266: Offset(30, 0), 427: Offset(),
- 147: Offset(), 115: Offset(), 111: Offset(), 59: Offset(), 58: Offset(), 89: Offset(),
- 121: Offset(), 21: Offset(), 164: Offset(), 119: Offset(), 131: Offset(), 166: Offset(),
- 75: Offset(), 360: Offset(), 350: Offset(), 777: Offset(), 126: Offset(), 44: Offset(), 60: Offset(),
- 11: Offset(), 25: Offset(), 497: Offset(), 1: Offset(), 4: Offset(), 8: Offset(),
- 141: Offset(), 555: Offset(), 27: Offset(), 15: Offset(70, 0), 37: Offset(), 888: Offset(), 421: Offset(),
- 234: Offset(), 517: Offset(), 92: Offset(), 18: Offset(), 526: Offset(), 236: Offset(),
- 9: Offset(), 113: Offset(), 35: Offset(), 901: Offset(), 150: Offset(0, -60), 74: Offset(),
- 523: Offset(), 117: Offset(), 106: Offset(), 81: Offset(), 432: Offset(), 30: Offset(),
- 17: Offset(), 235: Offset(), 16: Offset(), 895: Offset(), 2: Offset(), 99: Offset(), 12: Offset(),
- 63: Offset(), 77: Offset(), 3: Offset(), 902: Offset(),
- 799: Offset(), 246: Offset(), 42: Offset(),
- 28: Offset(), 101: Offset(), 10: Offset(), 202: Offset(), 90: Offset(), 268: Offset(), 86: Offset(),
- 950: Offset(), 143: Offset(), 53: Offset(), 50: Offset(), 120: Offset(), 85: Offset(5, -20),
- 142: Offset(), 910: Offset(), 6: Offset(), 5: Offset(), 201: Offset(),
- 79: Offset(60, 0), //Gragas
- 498: Offset(),
- 13: Offset(0, -25), 122: Offset(), 83: Offset(), 127: Offset(), 68: Offset(), 221: Offset(), 222: Offset(),
- 34: Offset(), 223: Offset(), 254: Offset(), 711: Offset(), 78: Offset(), 82: Offset(), 887: Offset()]
+ 69: Offset(30, -40), // Cassiopeia
+ 157: Offset(0, -45),
+ 23: Offset(0, -15), // tryndamere
+ 516: Offset(100, -30), // Ornn
+ 412: Offset(40, -15), //Thresh
+ 267: Offset(0, -20), //Nami
+ 876: Offset(100, -10), // Lillia
+ 233: Offset(50, -30), // Briar
+ 19: Offset(20, -80), // Warwick
+ 31: Offset(50, -35), //Chogath
+ 134: Offset(90, 0), // Syndra
+ 38: Offset(20, 0), // kassadin
+ 7: Offset(25, -5), //leblanc
+ 96: Offset(10, -80), // Kog
+ 420: Offset(40, 0), // Illaoi
+ 41: Offset(0, -15), // Gangplank
+ 893: Offset(70, 0), //Aurora
+ 51: Offset(),
+ 40: Offset(0, -30), // Janna
+ 61: Offset(),
+ 875: Offset(100, 0), // Sett
+ 200: Offset(100, 0), // Belveth
+ 26: Offset(50, -20), // Zilean
+ 154: Offset(30, -90), // Zac
+ 107: Offset(20, -50), // Rengar
+ 57: Offset(30, -40), // Maokai
+ 897: Offset(130, -10), // Ksante
+ 76: Offset(10, -10), // Nidalee
+ 245: Offset(0 ,-15), // Ekko
+ 54: Offset(15, -95), // Malphite
+ 163: Offset(),
+ 56: Offset(20, -60), // nocturne
+ 110: Offset(90, 0), // Varus
+ 62: Offset(30, -20), // monkeyking
+ 36: Offset(80, 0), // Mundo
+ 29: Offset(60, -35), // Twitch
+ 39: Offset(80, 0), // Irelia
+ 67: Offset(),
+ 133: Offset(30, -30), // Quinn
+ 114: Offset(35, 0), //Fiora
+ 91: Offset(20, -30), // Talon
+ 33: Offset(10, -70), // rammus
+ 203: Offset(60, -40), // Kindred
+ 518: Offset(50, -20), // Neeko
+ 429: Offset(20, -10), // Kalista
+ 161: Offset(50, -50), // velkoz
+ 104: Offset(),
+ 84: Offset(90, 0), // Akali
+ 24: Offset(40, -20),
+ 80: Offset(90, -10), // Pantheon
+ 43: Offset(0, -10), // Karma
+ 105: Offset(0, -15), // Fizz
+ 103: Offset(40, -10), // Ahri
+ 55: Offset(30, -50), // katarina
+ 22: Offset(25, -15), //Ashe
+ 48: Offset(40, -20),
+ 64: Offset(50, -10), // Leesin
+ 32: Offset(20, -20),
+ 112: Offset(50, -20), // Viktor
+ 145: Offset(95, 0), // Kaisa
+ 102: Offset(20, 0), // Shyvana
+ 266: Offset(30, -15), // Aatrox
+ 427: Offset(50, -5), // Ivern
+ 147: Offset(110, -10), // Seraphine
+ 115: Offset(0, -50), // Ziggs
+ 111: Offset(),
+ 59: Offset(0, -10), // jarvaniv
+ 58: Offset(50, -10), // Renekton
+ 89: Offset(),
+ 121: Offset(10, -90), // Khazix
+ 21: Offset(0, -40), // Missfortune
+ 164: Offset(),
+ 119: Offset(0, -40), // draven
+ 131: Offset(20, -40), // Diana
+ 166: Offset(30, -70), // akshan
+ 75: Offset(35, -10),// Nasus
+ 360: Offset(50, -5), // samira
+ 350: Offset(100, -10), // Yuumi
+ 777: Offset(60, 0), // Yone
+ 126: Offset(0, -40), // Jayce
+ 44: Offset(),
+ 60: Offset(0, -15), // Elise
+ 11: Offset(0, -30), // masteryi
+ 25: Offset(0, -35), // Morgana
+ 497: Offset(90, 0), // Rakan
+ 1: Offset(0, -35), // Annie
+ 4: Offset(0, -10), // Twistedfate
+ 8: Offset(0, -15), // Vladimir
+ 141: Offset(50, -80),
+ 555: Offset(70, -40), // Pyke
+ 27: Offset(30, -10), // Singed
+ 15: Offset(70, 0),
+ 37: Offset(20, -10), // Sona
+ 888: Offset(50, 0), // Renata
+ 421: Offset(50, -60), // reksai
+ 234: Offset(),
+ 517: Offset(90, -30), // Sylas
+ 92: Offset(0, -10), // Riven
+ 18: Offset(30, -15), // Tristana
+ 526: Offset(50, -5), // rell
+ 236: Offset(10, -60), // Lucian
+ 9: Offset(60, -40),
+ 113: Offset(70, 0), // Sejuani
+ 35: Offset(10, -10), // shaco
+ 901: Offset(95, -20), // Smolder
+ 150: Offset(0, -60),
+ 74: Offset(0, -50), // Heimerdinger
+ 523: Offset(70, 0), // Aphelios
+ 117: Offset(10, -50), // lulu
+ 106: Offset(55, 0), // Volibear
+ 81: Offset(40, -25), // Ezreal
+ 432: Offset(50, -10), // bard
+ 30: Offset(20, 0), // Karthus
+ 17: Offset(75, -10), // Teemo
+ 235: Offset(80, -20), // Senna
+ 16: Offset(50, 0), // Soraka
+ 895: Offset(20, -30), // Nilah
+ 2: Offset(40, -30), // olaf
+ 99: Offset(45, -15), // Lux
+ 12: Offset(50, -50), // Alistar
+ 63: Offset(0, -30), // brand
+ 77: Offset(80, 0), // Udyr
+ 3: Offset(90, 0), // Galio
+ 902: Offset(),
+ 799: Offset(100, 0), // Ambessa
+ 246: Offset(50, -10), // qiyana
+ 42: Offset(30, -25), // Corki
+ 28: Offset(90, 0), // Evelynn
+ 101: Offset(50, 0), // Xerath
+ 10: Offset(5, -20), // Kayle
+ 202: Offset(60, 0), // Jhin
+ 90: Offset(40, 0), // Malzahar
+ 268: Offset(),
+ 86: Offset(0, -30), // Garen
+ 950: Offset(120, -80), // naafiri
+ 143: Offset(0, -30), // zyra
+ 53: Offset(20, -25), // Blitz
+ 50: Offset(20, 0),
+ 120: Offset(50, 0), // Hecarim
+ 85: Offset(5, -20),
+ 142: Offset(50, -10),
+ 910: Offset(70, 0), // Hwei
+ 6: Offset(60, 0), // urgot
+ 5: Offset(50, -10), // xinzhao
+ 201: Offset(0, -20), // Braum
+ 79: Offset(60, -10), //Gragas
+ 498: Offset(50, -30), // Xayah
+ 13: Offset(0, -35), // ryze
+ 122: Offset(60, 0), // Darius
+ 83: Offset(30, 0),
+ 127: Offset(25, -15), // Lissandra
+ 68: Offset(10, -20), // Rumvle
+ 221: Offset(70, -20), // Zeri
+ 222: Offset(30, -15), // Jinx
+ 34: Offset(60, -30), // Anivia
+ 223: Offset(10, -40), // Tahm
+ 254: Offset(20, -30), // vi
+ 711: Offset(40, -30), // Vex
+ 78: Offset(45, -10), // Poppy
+ 82: Offset(120, 0), // Mordekaiser
+ 887: Offset(80, -5) // Gwen
+]
 
 
 #Preview {
     let mock = mockMasteryResponse
-    let id = 8
+    let id = 80
     LargeChampionRow(entry: mock[id-1])
     LargeChampionRow(entry: mock[id])
     LargeChampionRow(entry: mock[id+1])
