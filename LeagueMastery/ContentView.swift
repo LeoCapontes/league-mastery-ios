@@ -29,11 +29,15 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
             ZStack{
-                Image("background-mastery")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(minWidth: 0, maxWidth: .infinity)
+                Rectangle()
                     .edgesIgnoringSafeArea(.all)
+                    .foregroundStyle(Color("BGColor"))
+// Old background
+//                Image("background-mastery")
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fill)
+//                    .frame(minWidth: 0, maxWidth: .infinity)
+//                    .edgesIgnoringSafeArea(.all)
                 VStack {
                     HStack{
                         if(viewModel.showingScreen) {

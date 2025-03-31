@@ -106,6 +106,7 @@ struct AccountScreen: View{
 }
 
 #Preview {
+    
     let mock = mockMasteryResponse
     AccountScreen(
         masteryData: mock,
