@@ -27,7 +27,7 @@ struct MilestoneProgress: View {
     var body: some View {
         GeometryReader{ geometry in
             ZStack(){
-                ForEach(1..<progressMarkers+1) { markerNumber in
+                ForEach(1..<progressMarkers+1, id: \.self) { markerNumber in
                     Hexagon().foregroundStyle(.gray)
                         .frame(width: markerWidth, height: markerHeight)
                         .position(
@@ -42,10 +42,10 @@ struct MilestoneProgress: View {
                 .frame(width: geometry.size.width, height: 10)
                 .position(x: geometry.size.width/2, y: geometry.size.height/2)
                 
-                ForEach(1..<progressMarkers+1) { markerNumber in
+                ForEach(1..<progressMarkers+1, id : \.self) { markerNumber in
                     ProgressMarker(
-                        milestone: markerNumber,
-                        achieved: (markerNumber<=currentMilestone)
+                        milestone: getMilestoneNumber(markerNumber),
+                        achieved: (getMilestoneNumber(markerNumber)<=currentMilestone)
                     )
                     .frame(width: markerWidth, height: markerHeight)
                     .position(
@@ -56,9 +56,9 @@ struct MilestoneProgress: View {
                         Spacer()
                         RewardsContainer(
                             milestoneRewards:
-                                rewardConfig[markerNumber] ?? [MilestoneReward(
+                                rewardConfig[getMilestoneNumber(markerNumber)] ?? [MilestoneReward(
                                     reward: .masteryMark, quantity: 1)],
-                            completed: (markerNumber <= currentMilestone)
+                            completed: (getMilestoneNumber(markerNumber) <= currentMilestone)
                         )
                     }
                     .position(
@@ -66,8 +66,30 @@ struct MilestoneProgress: View {
                         y: geometry.size.height/2
                     )
                 }
+                
+                // Milestone repeat indicator
+                if(currentMilestone > 4){
+                    ZStack{
+                        Hexagon().foregroundStyle(.blue).padding(2)
+                            .frame(width: markerWidth * 1.1, height: markerHeight * 1.1)
+                        Image(systemName: "repeat")
+                            .foregroundStyle(.white)
+                    }
+                    .position(
+                        x: geometry.size.width * (3.5 / CGFloat(progressMarkers)),
+                        y: geometry.size.height/2
+                    )
+                }
             }
         }
+    }
+    
+    func getMilestoneNumber(_ markerPosition: Int) -> Int{
+        if (markerPosition < 4) {return markerPosition}
+        if (currentMilestone < 5) {return markerPosition}
+        if (markerPosition == 4) {return currentMilestone}
+        if (markerPosition == 5) {return currentMilestone+1}
+        return 0
     }
 }
 
@@ -77,7 +99,7 @@ struct MilestoneBar: View {
     
     var barPercentage: CGFloat {
         if (currentMilestone > 4) {
-            return (CGFloat(5)/CGFloat(progressMarkers))
+            return (CGFloat(4)/CGFloat(progressMarkers))
         }
         return (CGFloat(currentMilestone)/CGFloat(progressMarkers))
     }
@@ -120,7 +142,7 @@ struct RewardsContainer: View {
     
     var body: some View {
         HStack{
-            ForEach(0..<milestoneRewards.count) { index in
+            ForEach(0..<milestoneRewards.count, id:\.self) { index in
                 RewardView(rewards: milestoneRewards[index], completed: completed)
             }
         }
@@ -163,7 +185,7 @@ struct RewardImage: View {
     let mock = mockMasteryResponse
     ScrollView(.horizontal){
         HStack{
-            MilestoneProgress(currentMilestone: 3).frame(width: 700, height: 100)
+            MilestoneProgress(currentMilestone: 7).frame(width: 700, height: 100)
                 .border(.green)
                 .padding(.horizontal, 30)
         }
