@@ -15,6 +15,16 @@ let gradientMask = LinearGradient(
     startPoint: .top,
     endPoint: .bottom)
 
+let radialGradientMask = RadialGradient(
+    stops: [
+        Gradient.Stop(color: .black, location: 0.66),
+        Gradient.Stop(color: .clear, location: 1)
+    ],
+    center: .top,
+    startRadius: 150,
+    endRadius: 375
+)
+
 let leftScrollMask = LinearGradient(
     stops: [
         Gradient.Stop(color: .black, location: 0.85),
@@ -35,6 +45,9 @@ struct ChampionScreen: View {
     var championData: MasteryResponse
     var metrics: MasteryResponseMetrics
     
+    @State var bgColor: Color = Color("BGColor")
+    @State var champImage: ChampionImage? = nil
+    
     var videoUrl: String {
         let level: Int
         if championData.championLevel > 10 {
@@ -53,21 +66,34 @@ struct ChampionScreen: View {
         return (championData.championSeasonMilestone >= 4)
     }
     
+    
+    
     var body: some View {
         ZStack{
-            Image("background-mastery")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(minWidth: 0, maxWidth: .infinity)
+            Rectangle()
                 .edgesIgnoringSafeArea(.all)
+                .foregroundStyle(Color(
+                    red: bgColor.components()[0] * 0.25,
+                    green: bgColor.components()[1] * 0.25,
+                    blue: bgColor.components()[2] * 0.25
+                ))
+
+//            Old Background Image
+//            Image("background-mastery")
+//                .resizable()
+//                .aspectRatio(contentMode: .fill)
+//                .frame(minWidth: 0, maxWidth: .infinity)
+//                .edgesIgnoringSafeArea(.all)
             VStack{
                 ChampionImage(
-                    championId: championData.championId, blurred: false)
-                    .frame(width: 500)
+                    championId: championData.championId, averageColor: $bgColor, withAvgColor: true)
+                    .frame(width: 550)
                     .mask(gradientMask)
+                    .mask(radialGradientMask)
                 Spacer()
             }
             VStack{
+                Spacer()
                 Spacer()
                 Spacer()
                 ZStack{
@@ -96,7 +122,7 @@ struct ChampionScreen: View {
 //                    }
                     MasteryCrestImage(masteryLevel: championData.championLevel, mini: false)
                 }
-                .frame(width: 250, height: 250)
+                .frame(width: 300, height: 300)
                 .padding(-40)
                 
                 MasteryMarks(
@@ -131,15 +157,19 @@ struct ChampionScreen: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-                .frame(width: 400, height: 200)
+                .frame(width: 400, height: 150)
                 .mask(leftScrollMask)
                 .mask(rightScrollMask)
+                Spacer()
                 Spacer()
             }
             .padding()
         }
         .ignoresSafeArea()
-        
+//        .onAppear{
+//            bgColor = ChampionImage(championId: championData.championId, blurred: false).averageColor
+//            print("Set color to: ", bgColor)
+//        }
     }
 }
 
@@ -272,5 +302,5 @@ struct MasteryMarks: View {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[0], metrics: GetResponseMetrics(mock)[0])
+    ChampionScreen(championData: mock[40], metrics: GetResponseMetrics(mock)[1])
 }

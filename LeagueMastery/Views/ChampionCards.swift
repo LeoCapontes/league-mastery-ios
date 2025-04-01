@@ -31,10 +31,53 @@ struct MasteryCrestImage: View {
 struct ChampionImage: View {
     var championId: Int
     var blurred: Bool
+    var withAvgColor: Bool
+    @Binding var averageColor: Color
     
+    init(championId: Int, averageColor: Binding<Color> = .constant(.clear), withAvgColor: Bool) {
+        self.championId = championId
+        self.blurred = false
+        self._averageColor = averageColor
+        self.withAvgColor = withAvgColor
+    }
+    
+    init(championId: Int, averageColor: Binding<Color> = .constant(.clear)) {
+        self.championId = championId
+        self.blurred = false
+        self._averageColor = averageColor
+        self.withAvgColor = false
+    }
+
     var body: some View {
         ZStack{
+            if(withAvgColor){
+                KFImage(URL(string: loadingScreenFromChampId(championId)))
+                    .onSuccess { result in
+                        let uiImage = result.image
+                        if let avgUIColor = uiImage.dominantColor() {
+                            averageColor = Color(avgUIColor)
+                        } else {
+                            print("failed")
+                        }
+                    }
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .blur(radius: (blurred ? 2 : 0))
+                    .frame(width: 1, height: 1)
+            }
+            
             KFImage(URL(string: splashFromChampId(championId)))
+                .onSuccess { result in
+                    if(withAvgColor){
+                        let uiImage = result.image
+                        if let avgUIColor = uiImage.averageColor() {
+                            //averageColor = Color(avgUIColor)
+                            print(averageColor)
+                        } else {
+                            print("failed")
+                        }
+                    }
+                }
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .blur(radius: (blurred ? 2 : 0))
@@ -112,7 +155,7 @@ struct LargeChampionCard: View {
             ZStack(){
                 // negative padding removes negative space around edges
                 // caused by blurring
-                ChampionImage(championId: entry.championId, blurred: true)
+                ChampionImage(championId: entry.championId)
                     .aspectRatio(contentMode: .fill)
                     .padding(-8)
 
@@ -172,7 +215,6 @@ struct MediumChampionCard: View {
 
 struct LargeChampionRow: View {
     var entry: MasteryResponse
-    
     var splashOffset: Offset {
         return splashOffsets[entry.championId] ?? Offset()
     }
@@ -180,7 +222,7 @@ struct LargeChampionRow: View {
     let rowSplashMask = LinearGradient(
         stops: [
             Gradient.Stop(color: .black, location: 0.1),
-            Gradient.Stop(color: .black.opacity(0.1), location: 0.6),
+            Gradient.Stop(color: .black.opacity(0.3), location: 0.8),
             Gradient.Stop(color: .clear, location: 1)
         ],
         startPoint: .trailing,
@@ -190,11 +232,12 @@ struct LargeChampionRow: View {
     var body: some View{
         ZStack{
             GeometryReader{ geometry in
-                ChampionImage(championId: entry.championId, blurred: false)
-                    .aspectRatio(contentMode: .fill)
-                    .mask(rowSplashMask)
-                    .offset(y: -25)
-                    .offset(x: splashOffset.x, y: splashOffset.y)
+                ZStack{
+                    ChampionImage(championId: entry.championId)
+                        .aspectRatio(contentMode: .fill)
+                        .mask(rowSplashMask)
+                        .offset(x: splashOffset.x, y: splashOffset.y)
+                }
                 ZStack{
                     MasteryFrame(
                         championId: entry.championId,

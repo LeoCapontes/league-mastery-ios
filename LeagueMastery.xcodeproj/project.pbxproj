@@ -25,6 +25,7 @@
 		B3BF86282D5A84C900915BE6 /* SearchedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF86272D5A84C900915BE6 /* SearchedUsers.swift */; };
 		B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C134B62CDB0CFA00456A3B /* Utils.swift */; };
 		B3C400F22D98C34300A8A21E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B3C400F12D98C34300A8A21E /* Kingfisher */; };
+		B3C400F42D999AF000A8A21E /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */; };
 		B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C612712CC489CA00C19B0C /* VideoPlayer.swift */; };
 		B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128A2CC4915900C19B0C /* 1-loop.mov */; };
 		B3C612952CC4915900C19B0C /* 6-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128F2CC4915900C19B0C /* 6-loop.mov */; };
@@ -81,6 +82,7 @@
 		B3BF86232D5A70A400915BE6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B3BF86272D5A84C900915BE6 /* SearchedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUsers.swift; sourceTree = "<group>"; };
 		B3C134B62CDB0CFA00456A3B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		B3C612712CC489CA00C19B0C /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		B3C6128A2CC4915900C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
 		B3C6128B2CC4915900C19B0C /* 2-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "2-loop.mov"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 		B3E6BB002C06D63F0046C4E2 /* LeagueMastery */ = {
 			isa = PBXGroup;
 			children = (
+				B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */,
 				B3CAC74B2CF55D4900465361 /* Info.plist */,
 				B3C134B62CDB0CFA00456A3B /* Utils.swift */,
 				B3C612892CC4910C00C19B0C /* Media */,
@@ -429,6 +432,7 @@
 				B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */,
 				B3BF86282D5A84C900915BE6 /* SearchedUsers.swift in Sources */,
 				B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */,
+				B3C400F42D999AF000A8A21E /* ImageExtensions.swift in Sources */,
 				B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */,
 				B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */,
 				B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */,

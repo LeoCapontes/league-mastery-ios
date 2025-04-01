@@ -18,6 +18,10 @@ func portraitFromChampId(_ champId: Int) -> String {
     return "https://ddragon.leagueoflegends.com/cdn/\(Settings.shared.lolVersion)/img/champion/\(namesFromChampId[champId] ?? "Aatrox").png"
 }
 
+func loadingScreenFromChampId(_ champId: Int) -> String {
+    return "https://ddragon.leagueoflegends.com/cdn/img/champion/loading/\(namesFromChampId[champId] ?? "Aatrox")_0.jpg"
+}
+
 func populateChampions() {
     Task{
         do{
