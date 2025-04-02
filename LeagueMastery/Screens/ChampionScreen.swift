@@ -7,6 +7,8 @@
 
 import SwiftUI
 import AVKit
+import Variablur
+
 let gradientMask = LinearGradient(
     stops: [
         Gradient.Stop(color: .black, location: 0.66),
@@ -14,6 +16,18 @@ let gradientMask = LinearGradient(
     ],
     startPoint: .top,
     endPoint: .bottom)
+
+
+func avgGradient(_ color: Color) -> LinearGradient{
+    return LinearGradient(
+        stops: [
+            Gradient.Stop(color: .clear, location: 0.3),
+            Gradient.Stop(color: color, location: 1)
+        ],
+        startPoint: .top,
+        endPoint: .bottom
+    )
+}
 
 let radialGradientMask = RadialGradient(
     stops: [
@@ -84,13 +98,36 @@ struct ChampionScreen: View {
 //                .aspectRatio(contentMode: .fill)
 //                .frame(minWidth: 0, maxWidth: .infinity)
 //                .edgesIgnoringSafeArea(.all)
-            VStack{
+            VStack(spacing: 0){
                 ChampionImage(
                     championId: championData.championId, averageColor: $bgColor, withAvgColor: true)
                     .frame(width: 550)
+                ChampionImage(
+                    championId: championData.championId, averageColor: $bgColor, withAvgColor: true)
+                    .frame(width: 550)
+                    .scaleEffect(x: 1, y: -1)
                     .mask(gradientMask)
                     .mask(radialGradientMask)
                 Spacer()
+            }
+            .drawingGroup()
+            .overlay(avgGradient(Color(
+                red: bgColor.components()[0] * 0.25,
+                green: bgColor.components()[1] * 0.25,
+                blue: bgColor.components()[2] * 0.25
+            )))
+            .variableBlur(radius: 180) { geometryProxy, context in
+                // add a blur to the mask to smooth out where the variable blur begins
+                context.addFilter(.blur(radius: 50))
+                
+                context.fill(
+                    Path(CGRect(origin: .zero, size: geometryProxy.size)),
+                    with: .linearGradient(
+                        .init(colors: [.clear, .white]),
+                        startPoint: .init(x: 0, y: geometryProxy.size.height - 600),
+                        endPoint: .init(x: 0, y: geometryProxy.size.height)
+                    )
+                )
             }
             VStack{
                 Spacer()
@@ -101,7 +138,6 @@ struct ChampionScreen: View {
                         VideoPlayer(url: "crest-aurora-loop")
                             .padding(-50)
                             .frame(width: 250, height: 250)
-                            .shadow(color: .black, radius: 40)
                     }
 //                    The following is for the old animated mastery crest
 //                    Keeping in case a new animated crest is added
@@ -122,6 +158,7 @@ struct ChampionScreen: View {
 //                    }
                     MasteryCrestImage(masteryLevel: championData.championLevel, mini: false)
                 }
+                .shadow(color: .black, radius: 40)
                 .frame(width: 300, height: 300)
                 .padding(-40)
                 
