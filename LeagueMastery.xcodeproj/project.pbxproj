@@ -37,6 +37,7 @@
 		B3C6129B2CC4915900C19B0C /* 3-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128C2CC4915900C19B0C /* 3-loop.mov */; };
 		B3C6129C2CC4915900C19B0C /* 8-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612912CC4915900C19B0C /* 8-loop.mov */; };
 		B3C6129D2CC4915900C19B0C /* 9-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612922CC4915900C19B0C /* 9-loop.mov */; };
+		B3DF70992D9C5854006E9671 /* Variablur in Frameworks */ = {isa = PBXBuildFile; productRef = B3DF70982D9C5854006E9671 /* Variablur */; };
 		B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */; };
 		B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB032C06D63F0046C4E2 /* ContentView.swift */; };
 		B3E6BB062C06D6420046C4E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E6BB052C06D6420046C4E2 /* Assets.xcassets */; };
@@ -118,6 +119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3C400F22D98C34300A8A21E /* Kingfisher in Frameworks */,
+				B3DF70992D9C5854006E9671 /* Variablur in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +368,7 @@
 			mainGroup = B3E6BAF52C06D63F0046C4E2;
 			packageReferences = (
 				B3C400EF2D98C33000A8A21E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				B3DF70972D9C5854006E9671 /* XCRemoteSwiftPackageReference "Variablur" */,
 			);
 			productRefGroup = B3E6BAFF2C06D63F0046C4E2 /* Products */;
 			projectDirPath = "";
@@ -782,6 +785,14 @@
 				minimumVersion = 8.3.1;
 			};
 		};
+		B3DF70972D9C5854006E9671 /* XCRemoteSwiftPackageReference "Variablur" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daprice/Variablur.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -789,6 +800,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B3C400EF2D98C33000A8A21E /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		B3DF70982D9C5854006E9671 /* Variablur */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3DF70972D9C5854006E9671 /* XCRemoteSwiftPackageReference "Variablur" */;
+			productName = Variablur;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
