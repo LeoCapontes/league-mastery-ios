@@ -59,21 +59,34 @@ extension ContentView {
                     let puuidResponse = try await puuidApiCall(
                         gameName: sumName,
                         tag: sumTag,
-                        region: selectedRegion.description)
+                        region: selectedRegion.description
+                    )
                     
                     response = try await masteryApiCall(
                         puuid:puuidResponse.puuid,
-                        selectedServer: selectedServer)
+                        selectedServer: selectedServer
+                    )
+                    
+                    let summonerResponse = try await summonerInfoApiCall(
+                        puuid: puuidResponse.puuid,
+                        selectedServer: selectedServer.raw
+                    )
                                         
                     let searchedUser = User(
                         puuid: puuidResponse.puuid,
                         name: sumName,
                         tagline: sumTag,
                         region: selectedRegion.description,
-                        server: selectedServer.raw
+                        server: selectedServer.raw,
+                        profileIconId: summonerResponse.profileIconId,
+                        summonerLevel: summonerResponse.summonerLevel
                     )
                     
                     userToDisplay = searchedUser
+                    
+#if DEBUG
+                    print("User is level: ", searchedUser.summonerLevel)
+#endif
                     
                     // swift data model context tasks should be done in
                     // main queue to ensure persistence
@@ -117,12 +130,19 @@ extension ContentView {
                         puuid:puuidResponse.puuid,
                         selectedServer: server)
                     
+                    let summonerResponse = try await summonerInfoApiCall(
+                        puuid: puuidResponse.puuid,
+                        selectedServer: selectedServer.raw
+                    )
+                    
                     let searchedUser = User(
                         puuid: puuidResponse.puuid,
                         name: name,
                         tagline: tag,
                         region: region,
-                        server: server
+                        server: server,
+                        profileIconId: summonerResponse.profileIconId,
+                        summonerLevel: summonerResponse.summonerLevel
                     )
                     
                     userToDisplay = searchedUser
@@ -149,14 +169,18 @@ extension ContentView {
             name: String,
             tag: String,
             region: String,
-            server: String
+            server: String,
+            profileIconId: Int,
+            summonerLevel: Int
         ){
             let newUser = User(
                 puuid: puuid,
                 name: name,
                 tagline: tag,
                 region: region,
-                server: server
+                server: server,
+                profileIconId: profileIconId,
+                summonerLevel: summonerLevel
             )
             
             modelContext.insert(newUser)
