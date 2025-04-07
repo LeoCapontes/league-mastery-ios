@@ -115,7 +115,9 @@ struct AccountScreen: View{
             name: "Hide on Bush",
             tagline: "KR1",
             region: "Korea",
-            server: "Asia"
+            server: "Asia",
+            profileIconId: 1,
+            summonerLevel: 999
         )
     )
 }

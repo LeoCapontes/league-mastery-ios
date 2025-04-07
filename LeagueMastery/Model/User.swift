@@ -19,12 +19,27 @@ class User {
     var region: String
     var server: String
     
-    init(puuid: String, name: String, tagline: String, isFavourite: Bool = false, region: String, server: String) {
+    // from summoner-v4
+    var profileIconId: Int
+    var summonerLevel: Int
+    
+    init(
+        puuid: String,
+        name: String,
+        tagline: String,
+        isFavourite: Bool = false,
+        region: String,
+        server: String,
+        profileIconId: Int,
+        summonerLevel: Int
+    ) {
         self.puuid = puuid
         self.name = name
         self.tagline = tagline
         self.isFavourite = isFavourite
         self.region = region
         self.server = server
+        self.profileIconId = profileIconId
+        self.summonerLevel = summonerLevel
     }
 }
