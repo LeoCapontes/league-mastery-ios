@@ -57,7 +57,11 @@ struct AccountScreen: View{
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             VStack{
-                StickyHeaderScrollView(name: user.name, tag: user.tagline){
+                StickyHeaderScrollView(
+                    name: user.name,
+                    tag: user.tagline,
+                    iconId: user.profileIconId
+                ){
                     ForEach(0..<selectedSort.count ,id: \.self){ index in
                         NavigationLink(value: selectedSort[index]){
                             LargeChampionRow(entry: selectedSort[index])

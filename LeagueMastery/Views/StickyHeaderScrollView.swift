@@ -5,6 +5,7 @@
 //  Created by Leo Capontes on 26/02/2025.
 //
 import SwiftUI
+import Kingfisher
 
 struct StickyHeaderScrollView<Content:View>: View {
     @State private var yOffset = false
@@ -12,6 +13,7 @@ struct StickyHeaderScrollView<Content:View>: View {
     
     var name: String
     var tag: String
+    var iconId: Int
     
     @ViewBuilder let content: Content
     
@@ -50,7 +52,8 @@ struct StickyHeaderScrollView<Content:View>: View {
                     HStack(){
                         // placeholder summoner icon
                         if !yOffset {
-                            Image(systemName: "person.fill")
+                            KFImage(URL(string: profileIconUrl(profileIconId: iconId)))
+                                .resizable()
                                 .frame(width: 56, height: 56)
                                 .background(.gray)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))

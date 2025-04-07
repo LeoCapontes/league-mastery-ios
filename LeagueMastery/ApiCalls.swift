@@ -96,6 +96,10 @@ func summonerInfoApiCall(
     }
 }
 
+func profileIconUrl(profileIconId: Int) -> String {
+    return "https://ddragon.leagueoflegends.com/cdn/15.7.1/img/profileicon/\(profileIconId).png"
+}
+
 func versionApiCall() async throws -> [String]{
     let url = URL(string: "https://ddragon.leagueoflegends.com/api/versions.json")!
     let (data, _) = try await URLSession.shared.data(from: url)
