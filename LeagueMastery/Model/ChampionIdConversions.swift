@@ -110,7 +110,7 @@ var splashOffsets: [Int:Offset] =
  31: Offset(50, -35), //Chogath
  134: Offset(90, 0), // Syndra
  38: Offset(20, 0), // kassadin
- 7: Offset(25, -5), //leblanc
+ 7: Offset(60, -5), //leblanc
  96: Offset(10, -80), // Kog
  420: Offset(40, 0), // Illaoi
  41: Offset(0, -15), // Gangplank
@@ -265,6 +265,7 @@ var splashOffsets: [Int:Offset] =
 #Preview {
     let mock = mockMasteryResponse
     let id = 80
+    let id = 15
     LargeChampionRow(entry: mock[id-1])
     LargeChampionRow(entry: mock[id])
     LargeChampionRow(entry: mock[id+1])
