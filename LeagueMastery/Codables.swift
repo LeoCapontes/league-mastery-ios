@@ -51,3 +51,12 @@ struct PuuidResponse: Codable {
     let gameName: String
     let tagLine: String
 }
+
+struct SummonerResponse: Codable {
+    let id: String
+    let accountId: String
+    let puuid: String
+    let profileIconId: Int
+    let revisionDate: Int
+    let summonerLevel: Int
+}

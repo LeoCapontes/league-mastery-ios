@@ -80,6 +80,22 @@ func masteryApiCall(
     }
 }
 
+func summonerInfoApiCall(
+    puuid: String,
+    selectedServer: String
+) async throws -> SummonerResponse{
+    let serverString = selectedServer
+    let url = URL(string:"\(Settings.shared.serverUrl)/summoner/by-puuid/\(serverString)/\(puuid)")!
+    print(url.absoluteString)
+    do{
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let response = try JSONDecoder().decode(SummonerResponse.self, from: data)
+        return response
+    }catch {
+        throw error
+    }
+}
+
 func versionApiCall() async throws -> [String]{
     let url = URL(string: "https://ddragon.leagueoflegends.com/api/versions.json")!
     let (data, _) = try await URLSession.shared.data(from: url)
