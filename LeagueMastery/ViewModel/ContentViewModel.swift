@@ -82,20 +82,21 @@ extension ContentView {
                         summonerLevel: summonerResponse.summonerLevel
                     )
                     
-                    userToDisplay = searchedUser
-                    
-#if DEBUG
-                    print("User is level: ", searchedUser.summonerLevel)
-#endif
-                    
                     // swift data model context tasks should be done in
                     // main queue to ensure persistence
-
                     Task { @MainActor in
                         addUser(newUser: searchedUser)
+                        if let newUser = modelContext.model(for: getUserIdentifier(puuid: puuidResponse.puuid)!) as? User {
+                            userToDisplay = newUser
+#if DEBUG
+                            print("User is level: ", userToDisplay!.summonerLevel)
+#endif
+                            showingProgress = false
+                            showingScreen = true
+                        } else {
+                            print("couldnt assign user")
+                        }
                     }
-                    showingProgress = false
-                    showingScreen = true
                 }catch{
                     showingProgress = false
                     response = nil
@@ -135,19 +136,17 @@ extension ContentView {
                         selectedServer: selectedServer.raw
                     )
                     
-                    let searchedUser = User(
-                        puuid: puuidResponse.puuid,
-                        name: name,
-                        tagline: tag,
-                        region: region,
-                        server: server,
-                        profileIconId: summonerResponse.profileIconId,
-                        summonerLevel: summonerResponse.summonerLevel
-                    )
                     
-                    userToDisplay = searchedUser
-                    showingProgress = false
-                    showingScreen = true
+                    if let selectedUser = modelContext.model(for: getUserIdentifier(puuid: puuidResponse.puuid)!) as? User {
+                        userToDisplay = selectedUser
+#if DEBUG
+                        print("User is level: ", userToDisplay!.summonerLevel)
+#endif
+                        showingProgress = false
+                        showingScreen = true
+                    } else {
+                        print("couldnt select user")
+                    }
                 }catch{
                     showingProgress = false
                     response = nil
@@ -184,10 +183,28 @@ extension ContentView {
             )
             
             modelContext.insert(newUser)
+            do {
+                try modelContext.save()
+            } catch {
+                print("couldn't save context")
+            }
         }
         
         func addUser(newUser: User){
             modelContext.insert(newUser)
+            do{
+                try modelContext.save()
+            } catch {
+                print("couldn't save context")
+            }
+        }
+        
+        func addToWatchlist(user: User, champId: Int) {
+            if let userToEdit = modelContext.model(for: user.id) as? User {
+                userToEdit.championWatchlist.append(champId)
+            } else {
+                print("Could not add to watch list")
+            }
         }
         
         func deleteAllUsers() {
@@ -201,6 +218,16 @@ extension ContentView {
             }
         }
         
+        func getUserIdentifier(puuid: String) -> PersistentIdentifier? {
+            let fetchDescriptor = FetchDescriptor<User>(
+                predicate: #Predicate {user in user.puuid == puuid }
+            )
+            if let user = try? modelContext.fetch(fetchDescriptor).first {
+                return user.persistentModelID
+            } else {
+                return nil
+            }
+        }
     }
 }
 

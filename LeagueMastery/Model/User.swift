@@ -9,12 +9,14 @@ import Foundation
 import SwiftData
 
 @Model
-class User {
+final class User {
+    // An array of champion IDs
+    var championWatchlist: [Int] = []
+    
     // filled by puuid api response
     @Attribute(.unique) var puuid: String
     var name: String
     var tagline: String
-    
     var isFavourite: Bool
     var region: String
     var server: String

@@ -80,8 +80,6 @@ struct ChampionScreen: View {
         return (championData.championSeasonMilestone >= 4)
     }
     
-    
-    
     var body: some View {
         ZStack{
             Rectangle()
@@ -339,5 +337,5 @@ struct MasteryMarks: View {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[40], metrics: GetResponseMetrics(mock)[1])
+    ChampionScreen(championData: mock[45], metrics: GetResponseMetrics(mock)[1])
 }

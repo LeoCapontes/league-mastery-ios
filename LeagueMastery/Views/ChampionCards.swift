@@ -218,6 +218,7 @@ struct LargeChampionRow: View {
     var splashOffset: Offset {
         return splashOffsets[entry.championId] ?? Offset()
     }
+    var addToWatchList: (Int) -> Void = placeholder
     
     let rowSplashMask = LinearGradient(
         stops: [
@@ -228,6 +229,14 @@ struct LargeChampionRow: View {
         startPoint: .trailing,
         endPoint: .leading)
 
+    init(entry: MasteryResponse, addToWatchList: @escaping (Int) -> Void) {
+        self.entry = entry
+        self.addToWatchList = addToWatchList
+    }
+    
+    init(entry: MasteryResponse) {
+        self.entry = entry
+    }
     
     var body: some View{
         ZStack{
@@ -271,6 +280,13 @@ struct LargeChampionRow: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .frame(width: nil, height:100)
         }
+        .contextMenu{
+            Button{
+                addToWatchList(entry.championId)
+            } label: {
+                Label("Add to watchlist", systemImage: "rectangle.stack.badge.plus")
+            }
+        }
     }
 }
 
@@ -311,19 +327,83 @@ struct ChampionRow: View {
     }
 }
 
+struct WatchlistItem: View {
+    var entry: MasteryResponse
+    
+    var body: some View {
+        GeometryReader{ geo in
+            ZStack{
+                KFImage(URL(string: portraitFromChampId(entry.championId)))
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 52, height: 52)
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                ZStack(){
+                    RoundedRectangle(cornerRadius: 4)
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(.black)
+                        .rotationEffect(Angle(degrees: 45))
+                    Text("\(entry.championSeasonMilestone)")
+                        .foregroundStyle(.white)
+                }
+                .position(
+                    x: geo.size.width * 0.8,
+                    y: geo.size.height * 0.2
+                )
+            }
+        }
+        .frame(width: 58, height: 58)
+    }
+}
+
+struct Watchlist<Content:View>: View {
+    @ViewBuilder let content: Content
+    
+    var body: some View {
+        ZStack{
+            VStack(alignment: .leading, spacing: 0){
+                Text("Watch List")
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.top, 4)
+                    .padding(.bottom, 2)
+                Divider()
+                ScrollView(.horizontal) {
+                    HStack{
+                        Spacer()
+                        content
+                        Spacer()
+                    }
+                }
+                .padding(.top, 4)
+                .padding(.bottom, 8)
+            }
+        }
+        .frame(height: 100)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+    
+}
+
+func placeholder(_ i: Int) -> Void {
+    
+}
+
 #Preview {
     let mock = mockMasteryResponse
     ZStack {
         ScrollView{
             LargeChampionCard(entry: mock[1])
-//            HStack{
-//                MediumChampionCard(entry: mock[1])
-//                MediumChampionCard(entry: mock[2])
-//                MediumChampionCard(entry: mock[0])
-//            }
-            LargeChampionRow(entry: mock[1])
-            LargeChampionRow(entry: mock[0])
-            LargeChampionRow(entry: mock[2])
+            let watched = Array(mock[0...6])
+            Watchlist {
+                ForEach(0..<6) {index in
+                    WatchlistItem(entry: watched[index])
+                }
+            }
+            LargeChampionRow(entry: mock[1], addToWatchList: placeholder)
+            LargeChampionRow(entry: mock[0], addToWatchList: placeholder)
+            LargeChampionRow(entry: mock[2], addToWatchList: placeholder)
             VStack(spacing: 2){
                 ForEach(3..<45) { index in
                     ChampionRow(entry: mock[0])

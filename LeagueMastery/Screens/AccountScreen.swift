@@ -9,13 +9,14 @@ import Foundation
 import SwiftUI
 
 struct AccountScreen: View{
-    let user: User
     let masteryData: [MasteryResponse]
     let metrics: [MasteryResponseMetrics]
     
     // two lookup dictionaries that use champion id as a shared key
     let masteryDictionary: [Int: MasteryResponse]
     let metricsDictionary: [Int: MasteryResponseMetrics]
+    
+    @Bindable var user: User
 
     init(masteryData: [MasteryResponse], user: User) {
         self.masteryData = masteryData
@@ -41,6 +42,20 @@ struct AccountScreen: View{
             $0.championSeasonMilestone > $1.championSeasonMilestone
         }
     }
+    
+    var watchedChampions: [MasteryResponse] {
+        var watchedChampions = [MasteryResponse]()
+        let watchlistIds = user.championWatchlist
+        
+        for id in watchlistIds{
+            if let toAdd = masteryData.first(where: { $0.championId == id }) {
+                watchedChampions.append(toAdd)
+            }
+        }
+        print("called watched champions")
+        return watchedChampions
+    }
+    
     var selectedSort: [MasteryResponse] {
         switch toSortBy{
         case "Score":
@@ -62,9 +77,19 @@ struct AccountScreen: View{
                     tag: user.tagline,
                     iconId: user.profileIconId
                 ){
+                    if (user.championWatchlist.count > 0){
+                        Watchlist{
+                            ForEach(0..<watchedChampions.count, id: \.self){ index in
+                                NavigationLink(value: watchedChampions[index]){
+                                    WatchlistItem(entry: watchedChampions[index])
+                                }
+                            }
+                        }
+                    }
+                    
                     ForEach(0..<selectedSort.count ,id: \.self){ index in
                         NavigationLink(value: selectedSort[index]){
-                            LargeChampionRow(entry: selectedSort[index])
+                            LargeChampionRow(entry: selectedSort[index], addToWatchList: addToWatchlist)
                         }
                     }
                 }
@@ -105,6 +130,11 @@ struct AccountScreen: View{
             }
         }
         .padding(.horizontal, 10)
+    }
+    
+    func addToWatchlist(champId: Int) {
+        user.championWatchlist.append(champId)
+        print(user.championWatchlist)
     }
     
 }
