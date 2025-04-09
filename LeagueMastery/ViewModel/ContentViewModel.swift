@@ -133,7 +133,7 @@ extension ContentView {
                     
                     let summonerResponse = try await summonerInfoApiCall(
                         puuid: puuidResponse.puuid,
-                        selectedServer: selectedServer.raw
+                        selectedServer: server
                     )
                     
                     
