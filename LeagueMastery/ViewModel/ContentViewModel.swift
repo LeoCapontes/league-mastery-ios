@@ -200,10 +200,19 @@ extension ContentView {
         }
         
         func addToWatchlist(user: User, champId: Int) {
-            if let userToEdit = modelContext.model(for: user.id) as? User {
-                userToEdit.championWatchlist.append(champId)
-            } else {
-                print("Could not add to watch list")
+            fetchData()
+            Task { @MainActor in
+                if let userToEdit = modelContext.model(for: user.id) as? User {
+                    userToEdit.championWatchlist.append(champId)
+                    do {
+                        try modelContext.save()
+                        print("saved context, watchlist: \(userToEdit.championWatchlist)")
+                    } catch {
+                        print("couldn't save context")
+                    }
+                } else {
+                    print("Could not add to watch list")
+                }
             }
         }
         
@@ -213,12 +222,18 @@ extension ContentView {
                 for user in users {
                     modelContext.delete(user)
                 }
+                do {
+                    try modelContext.save()
+                } catch {
+                    print("couldn't save context")
+                }
             } catch {
                 print("Failed to delete users")
             }
         }
         
         func getUserIdentifier(puuid: String) -> PersistentIdentifier? {
+            fetchData()
             let fetchDescriptor = FetchDescriptor<User>(
                 predicate: #Predicate {user in user.puuid == puuid }
             )
@@ -226,6 +241,16 @@ extension ContentView {
                 return user.persistentModelID
             } else {
                 return nil
+            }
+        }
+        
+        // make sure data is up to date.
+        func fetchData() {
+            do {
+                let descriptor = FetchDescriptor<User>(sortBy: [SortDescriptor(\.puuid)])
+                users = try modelContext.fetch(descriptor)
+            } catch {
+                print("Fetch failed")
             }
         }
     }

@@ -118,7 +118,7 @@ struct ContentView: View {
                     }
                     
                     if(viewModel.showingScreen) {
-                        AccountScreen(masteryData: viewModel.response!, user: viewModel.userToDisplay!)
+                        AccountScreen(masteryData: viewModel.response!, user: viewModel.userToDisplay!, addToWatchlist: viewModel.addToWatchlist)
                             .transition(.slide)
                     }
                 }

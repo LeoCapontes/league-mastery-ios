@@ -16,14 +16,21 @@ struct AccountScreen: View{
     let masteryDictionary: [Int: MasteryResponse]
     let metricsDictionary: [Int: MasteryResponseMetrics]
     
+    var addToWatchlist: (User, Int) -> Void
+    
     @Bindable var user: User
 
-    init(masteryData: [MasteryResponse], user: User) {
+    init(
+        masteryData: [MasteryResponse],
+        user: User,
+        addToWatchlist: @escaping (User, Int) -> Void
+    ) {
         self.masteryData = masteryData
         self.metrics = GetResponseMetrics(masteryData)
         self.masteryDictionary = Dictionary(uniqueKeysWithValues: masteryData.map { ($0.championId, $0) })
         self.metricsDictionary = Dictionary(uniqueKeysWithValues: metrics.map { ($0.championId, $0) })
         self.user = user
+        self.addToWatchlist = addToWatchlist
     }
     
     @State private var isFavourite = false
@@ -89,7 +96,7 @@ struct AccountScreen: View{
                     
                     ForEach(0..<selectedSort.count ,id: \.self){ index in
                         NavigationLink(value: selectedSort[index]){
-                            LargeChampionRow(entry: selectedSort[index], addToWatchList: addToWatchlist)
+                            LargeChampionRow(entry: selectedSort[index], addToWatchList: addToWatchlistCallback)
                         }
                     }
                 }
@@ -132,26 +139,25 @@ struct AccountScreen: View{
         .padding(.horizontal, 10)
     }
     
-    func addToWatchlist(champId: Int) {
-        user.championWatchlist.append(champId)
-        print(user.championWatchlist)
+    func addToWatchlistCallback(champId: Int) {
+        addToWatchlist(user, champId)
     }
     
 }
 
-#Preview {
-    
-    let mock = mockMasteryResponse
-    AccountScreen(
-        masteryData: mock,
-        user: User(
-            puuid: "d",
-            name: "Hide on Bush",
-            tagline: "KR1",
-            region: "Korea",
-            server: "Asia",
-            profileIconId: 1,
-            summonerLevel: 999
-        )
-    )
-}
+//#Preview {
+//    
+//    let mock = mockMasteryResponse
+//    AccountScreen(
+//        masteryData: mock,
+//        user: User(
+//            puuid: "d",
+//            name: "Hide on Bush",
+//            tagline: "KR1",
+//            region: "Korea",
+//            server: "Asia",
+//            profileIconId: 1,
+//            summonerLevel: 999
+//        )
+//    )
+//}
