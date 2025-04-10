@@ -284,7 +284,7 @@ struct LargeChampionRow: View {
             Button{
                 addToWatchList(entry.championId)
             } label: {
-                Label("Add to watchlist", systemImage: "rectangle.stack.badge.plus")
+                Label("Add to pinned", systemImage: "rectangle.stack.badge.plus")
             }
         }
     }
@@ -329,44 +329,79 @@ struct ChampionRow: View {
 
 struct WatchlistItem: View {
     var entry: MasteryResponse
+    var metric: String
+    
+    var toDisplay: String {
+        switch metric{
+        case "Mastery Points":
+            return entry.championPoints.compact()
+        case "Season Milestone":
+            return String(entry.championSeasonMilestone)
+        case "Mastery Level":
+            return String(entry.championLevel)
+        default:
+            return entry.championPoints.compact()
+        }
+    }
     
     var body: some View {
         GeometryReader{ geo in
-            ZStack{
+            ZStack(alignment: .top){
+                ZStack(alignment: .bottom){
+                    Rectangle()
+                        .frame(width: 52, height: 72)
+                        .clipShape(
+                            UnevenRoundedRectangle(
+                                cornerRadii: RectangleCornerRadii(
+                                    topLeading: 18,
+                                    bottomLeading: 12,
+                                    bottomTrailing: 12,
+                                    topTrailing: 18
+                                )
+                            )
+                        )
+                        .foregroundStyle(.ultraThinMaterial)
+                    Text(toDisplay)
+                        .font(.system(size: 14))
+                        .foregroundStyle(.white.opacity(0.9))
+                        .padding(.bottom, 2)
+                }
+                
                 KFImage(URL(string: portraitFromChampId(entry.championId)))
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 52, height: 52)
                     .clipShape(RoundedRectangle(cornerRadius: 18))
-                ZStack(){
-                    RoundedRectangle(cornerRadius: 4)
-                        .frame(width: 18, height: 18)
-                        .foregroundStyle(.black)
-                        .rotationEffect(Angle(degrees: 45))
-                    Text("\(entry.championSeasonMilestone)")
-                        .foregroundStyle(.white)
-                }
-                .position(
-                    x: geo.size.width * 0.8,
-                    y: geo.size.height * 0.2
-                )
             }
         }
-        .frame(width: 58, height: 58)
+        .frame(width: 58)
     }
 }
 
 struct Watchlist<Content:View>: View {
     @ViewBuilder let content: Content
+    var metrics = ["Mastery Points", "Season Milestone", "Mastery Level"]
+    @Binding var selectedMetric: String
     
     var body: some View {
         ZStack{
             VStack(alignment: .leading, spacing: 0){
-                Text("Watch List")
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 12)
-                    .padding(.top, 4)
-                    .padding(.bottom, 2)
+                HStack{
+                    Text("Pinned")
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.top, 4)
+                        .padding(.bottom, 2)
+                    Spacer()
+                    Picker("Please choose a color", selection: $selectedMetric) {
+                        ForEach(metrics, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .accentColor(.gray)
+
+                }
                 Divider()
                 ScrollView(.horizontal) {
                     HStack{
@@ -375,11 +410,12 @@ struct Watchlist<Content:View>: View {
                         Spacer()
                     }
                 }
+                .scrollIndicators(.hidden)
                 .padding(.top, 4)
                 .padding(.bottom, 8)
             }
         }
-        .frame(height: 100)
+        .frame(height: 120)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
@@ -391,16 +427,17 @@ func placeholder(_ i: Int) -> Void {
 }
 
 #Preview {
+    @Previewable @State var selectedPinnedMetric: String = "Season Milestone"
     let mock = mockMasteryResponse
     ZStack {
         ScrollView{
             LargeChampionCard(entry: mock[1])
             let watched = Array(mock[0...6])
-            Watchlist {
+            Watchlist(content: {
                 ForEach(0..<6) {index in
-                    WatchlistItem(entry: watched[index])
+                    WatchlistItem(entry: watched[index], metric: selectedPinnedMetric)
                 }
-            }
+            }, selectedMetric: $selectedPinnedMetric)
             LargeChampionRow(entry: mock[1], addToWatchList: placeholder)
             LargeChampionRow(entry: mock[0], addToWatchList: placeholder)
             LargeChampionRow(entry: mock[2], addToWatchList: placeholder)

@@ -19,6 +19,8 @@ struct AccountScreen: View{
     var addToWatchlist: (User, Int) -> Void
     
     @Bindable var user: User
+    
+    @State public var selectedPinnedMetric: String = "Season Milestone"
 
     init(
         masteryData: [MasteryResponse],
@@ -85,13 +87,16 @@ struct AccountScreen: View{
                     iconId: user.profileIconId
                 ){
                     if (user.championWatchlist.count > 0){
-                        Watchlist{
+                        Watchlist(content: {
                             ForEach(0..<watchedChampions.count, id: \.self){ index in
                                 NavigationLink(value: watchedChampions[index]){
-                                    WatchlistItem(entry: watchedChampions[index])
+                                    WatchlistItem(
+                                        entry: watchedChampions[index],
+                                        metric: selectedPinnedMetric
+                                    )
                                 }
                             }
-                        }
+                        }, selectedMetric: $selectedPinnedMetric)
                     }
                     
                     ForEach(0..<selectedSort.count ,id: \.self){ index in
