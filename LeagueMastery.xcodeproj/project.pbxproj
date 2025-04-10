@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B31E27982DA747EE006CB79E /* crest-aurora-loop-new.mov in Resources */ = {isa = PBXBuildFile; fileRef = B31E27972DA747EE006CB79E /* crest-aurora-loop-new.mov */; };
 		B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */; };
 		B36300E62C3D8E4A000E54AA /* ChampionIdConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */; };
 		B36300E72C3D8E4A000E54AA /* MockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E42C3D8E4A000E54AA /* MockModel.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B31E27972DA747EE006CB79E /* crest-aurora-loop-new.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "crest-aurora-loop-new.mov"; sourceTree = "<group>"; };
 		B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionScreen.swift; sourceTree = "<group>"; };
 		B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionIdConversions.swift; sourceTree = "<group>"; };
 		B36300E42C3D8E4A000E54AA /* MockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockModel.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				B3C6128C2CC4915900C19B0C /* 3-loop.mov */,
 				B3C6128D2CC4915900C19B0C /* 4-loop.mov */,
 				B3C6128E2CC4915900C19B0C /* 5-loop.mov */,
+				B31E27972DA747EE006CB79E /* crest-aurora-loop-new.mov */,
 				B3C6128F2CC4915900C19B0C /* 6-loop.mov */,
 				B3C612902CC4915900C19B0C /* 7-loop.mov */,
 				B3C612912CC4915900C19B0C /* 8-loop.mov */,
@@ -393,6 +396,7 @@
 				B3C612972CC4915900C19B0C /* 7-loop.mov in Resources */,
 				B3C612982CC4915900C19B0C /* 10-loop.mov in Resources */,
 				B3C612992CC4915900C19B0C /* 4-loop.mov in Resources */,
+				B31E27982DA747EE006CB79E /* crest-aurora-loop-new.mov in Resources */,
 				B3C6129A2CC4915900C19B0C /* 2-loop.mov in Resources */,
 				B3C6129B2CC4915900C19B0C /* 3-loop.mov in Resources */,
 				B3C6129C2CC4915900C19B0C /* 8-loop.mov in Resources */,
