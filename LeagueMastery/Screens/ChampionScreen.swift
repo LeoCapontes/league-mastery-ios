@@ -133,9 +133,11 @@ struct ChampionScreen: View {
                 Spacer()
                 ZStack{
                     if(auroraUnlocked) {
-                        VideoPlayer(url: "crest-aurora-loop")
+                        VideoPlayer(url: "crest-aurora-loop-new")
                             .padding(-50)
-                            .frame(width: 250, height: 250)
+                            .frame(width: 300, height: 300)
+                            .offset(x:0 ,y: 15)
+                            .shadow(color: .black, radius: 30)
                     }
 //                    The following is for the old animated mastery crest
 //                    Keeping in case a new animated crest is added
@@ -155,8 +157,9 @@ struct ChampionScreen: View {
 //                        }
 //                    }
                     MasteryCrestImage(masteryLevel: championData.championLevel, mini: false)
+                        
                 }
-                .shadow(color: .black, radius: 40)
+                .shadow(color: auroraUnlocked ? .clear : .black, radius: 30)
                 .frame(width: 300, height: 300)
                 .padding(-40)
                 
@@ -337,5 +340,5 @@ struct MasteryMarks: View {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[45], metrics: GetResponseMetrics(mock)[1])
+    ChampionScreen(championData: mock[10], metrics: GetResponseMetrics(mock)[1])
 }
