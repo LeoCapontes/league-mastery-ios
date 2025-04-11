@@ -81,7 +81,7 @@ struct ChampionImage: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .blur(radius: (blurred ? 2 : 0))
-                .frame(width: .infinity)
+                .frame(width: nil)
         }
     }
 }
@@ -393,7 +393,7 @@ struct Watchlist<Content:View>: View {
                         .padding(.top, 4)
                         .padding(.bottom, 2)
                     Spacer()
-                    Picker("Please choose a color", selection: $selectedMetric) {
+                    Picker("", selection: $selectedMetric) {
                         ForEach(metrics, id: \.self) {
                             Text($0)
                         }

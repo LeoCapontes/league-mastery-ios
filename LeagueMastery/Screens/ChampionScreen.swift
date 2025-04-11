@@ -166,7 +166,7 @@ struct ChampionScreen: View {
                 MasteryMarks(
                     requiredMarks: championData.markRequiredForNextLevel,
                     earnedMarks: championData.tokensEarned)
-                .frame(width:.infinity, height: 40)
+                .frame(width: nil, height: 40)
                 .padding(.bottom, -6)
                 
                 InfoContainer(championData: championData, metrics: metrics)
