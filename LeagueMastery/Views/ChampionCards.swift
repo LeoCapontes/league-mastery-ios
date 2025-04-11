@@ -331,6 +331,8 @@ struct WatchlistItem: View {
     var entry: MasteryResponse
     var metric: String
     
+    var removeCallback: (Int) -> Void
+    
     var toDisplay: String {
         switch metric{
         case "Mastery Points":
@@ -373,7 +375,13 @@ struct WatchlistItem: View {
                     .frame(width: 52, height: 52)
                     .clipShape(RoundedRectangle(cornerRadius: 18))
             }
-        }
+            .contextMenu{
+                Button{
+                    removeCallback(entry.championId)
+                } label: {
+                    Label("Remove from pinned", systemImage: "rectangle.stack.badge.minus")
+                }
+            }        }
         .frame(width: 58)
     }
 }
@@ -435,7 +443,11 @@ func placeholder(_ i: Int) -> Void {
             let watched = Array(mock[0...6])
             Watchlist(content: {
                 ForEach(0..<6) {index in
-                    WatchlistItem(entry: watched[index], metric: selectedPinnedMetric)
+                    WatchlistItem(
+                        entry: watched[index],
+                        metric: selectedPinnedMetric,
+                        removeCallback: placeholder
+                    )
                 }
             }, selectedMetric: $selectedPinnedMetric)
             LargeChampionRow(entry: mock[1], addToWatchList: placeholder)

@@ -17,6 +17,8 @@ struct AccountScreen: View{
     let metricsDictionary: [Int: MasteryResponseMetrics]
     
     var addToWatchlist: (User, Int) -> Void
+    var removeFromWatchlist: (User, Int) -> Void
+    
     
     @Bindable var user: User
     
@@ -25,7 +27,8 @@ struct AccountScreen: View{
     init(
         masteryData: [MasteryResponse],
         user: User,
-        addToWatchlist: @escaping (User, Int) -> Void
+        addToWatchlist: @escaping (User, Int) -> Void,
+        removeFromWatchlist: @escaping (User, Int) -> Void
     ) {
         self.masteryData = masteryData
         self.metrics = GetResponseMetrics(masteryData)
@@ -33,6 +36,7 @@ struct AccountScreen: View{
         self.metricsDictionary = Dictionary(uniqueKeysWithValues: metrics.map { ($0.championId, $0) })
         self.user = user
         self.addToWatchlist = addToWatchlist
+        self.removeFromWatchlist = removeFromWatchlist
     }
     
     @State private var isFavourite = false
@@ -92,7 +96,8 @@ struct AccountScreen: View{
                                 NavigationLink(value: watchedChampions[index]){
                                     WatchlistItem(
                                         entry: watchedChampions[index],
-                                        metric: selectedPinnedMetric
+                                        metric: selectedPinnedMetric,
+                                        removeCallback: removeFromWatchlistCallback
                                     )
                                 }
                             }
@@ -146,6 +151,10 @@ struct AccountScreen: View{
     
     func addToWatchlistCallback(champId: Int) {
         addToWatchlist(user, champId)
+    }
+    
+    func removeFromWatchlistCallback(champId: Int) {
+        removeFromWatchlist(user, champId)
     }
     
 }

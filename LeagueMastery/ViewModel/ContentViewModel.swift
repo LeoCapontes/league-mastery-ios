@@ -216,6 +216,23 @@ extension ContentView {
             }
         }
         
+        func removeFromWatchlist(user: User, champId: Int) {
+            fetchData()
+            Task { @MainActor in
+                if let userToEdit = modelContext.model(for: user.id) as? User {
+                    userToEdit.championWatchlist.removeAll(where: { $0 == champId })
+                    do {
+                        try modelContext.save()
+                        print("saved context, watchlist: \(userToEdit.championWatchlist)")
+                    } catch {
+                        print("couldn't save context")
+                    }
+                } else {
+                    print("Couldn't remove from watch list")
+                }
+            }
+        }
+        
         func deleteAllUsers() {
             do {
                 let users = try modelContext.fetch(FetchDescriptor<User>())
