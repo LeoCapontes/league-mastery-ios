@@ -111,32 +111,23 @@ struct AccountScreen: View{
                     }
                 }
             }
-            HStack{
-                    Button{
-                        isFavourite.toggle()
-                    } label: {
-                        ZStack{
-                            Circle()
-                                .frame(width: 48)
-                                .foregroundStyle(.regularMaterial)
-                            Image(systemName: isFavourite ? "star.fill" : "star")
-                            .foregroundStyle(.white)}
-                    }
-                    .buttonStyle(.plain)
-                Menu {
-                    ForEach(sortOptions, id: \.self){ option in
-                        Button(option, action: {toSortBy = option})
-                    }
-                } label : {
-                    ZStack{
-                        Circle()
-                            .frame(width: 48)
-                            .foregroundStyle(.regularMaterial)
+            Menu {
+                ForEach(sortOptions, id: \.self){ option in
+                    Button(option, action: {toSortBy = option})
+                }
+            } label : {
+                ZStack{
+                    HStack{
                         Image(systemName: "arrow.up.arrow.down")
-                            .foregroundStyle(.white)
+                        Text("\(toSortBy)")
                     }
-                }.padding()
+                    .foregroundStyle(.blue)
+                    .padding()
+                    .background(.regularMaterial)
+                    .clipShape(Capsule())
+                }
             }
+            .padding()
         }
         .navigationDestination(for: MasteryResponse.self){ entry in
             if let metric = metricsDictionary[entry.championId] {
@@ -159,19 +150,25 @@ struct AccountScreen: View{
     
 }
 
-//#Preview {
-//    
-//    let mock = mockMasteryResponse
-//    AccountScreen(
-//        masteryData: mock,
-//        user: User(
-//            puuid: "d",
-//            name: "Hide on Bush",
-//            tagline: "KR1",
-//            region: "Korea",
-//            server: "Asia",
-//            profileIconId: 1,
-//            summonerLevel: 999
-//        )
-//    )
-//}
+func callbackPlaceholder(_ x: User, _ y: Int) -> Void {
+    
+}
+
+#Preview {
+    let mock = mockMasteryResponse
+    AccountScreen(
+        masteryData: mock,
+        user: User(
+            puuid: "d",
+            name: "Hide on Bush",
+            tagline: "KR1",
+            region: "Korea",
+            server: "Asia",
+            profileIconId: 1,
+            summonerLevel: 999,
+            
+        ),
+        addToWatchlist: callbackPlaceholder,
+        removeFromWatchlist: callbackPlaceholder
+    )
+}
