@@ -124,8 +124,8 @@ struct MasteryFrame: View {
                 VStack{
                     MasteryBanner(masteryLevel: masteryLevel)
                 }
-                .frame(height: geometry.size.height * 0.5)
-                .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.7)
+                .frame(height: geometry.size.height * 0.55)
+                .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.75)
                 ZStack {
                     ChampionPortrait(championId: championId)
                     Image("mastery_framecomplete")
@@ -139,8 +139,8 @@ struct MasteryFrame: View {
                         y: geometry.size.height * 0.35)
                 )
                 MasteryCrestImage(masteryLevel: masteryLevel, mini: false)
-                    .frame(height: geometry.size.height * 0.5)
-                    .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.8)
+                    .frame(height: geometry.size.height * 0.75)
+                    .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.75)
             }
         }
         .padding(EdgeInsets(top: 10, leading: 3, bottom: 6, trailing: 2))
