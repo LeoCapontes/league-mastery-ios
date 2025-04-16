@@ -41,7 +41,7 @@ struct AccountScreen: View{
     
     @State private var isFavourite = false
     
-    var sortOptions = ["Score", "Level", "Milestone"]
+    var sortOptions = ["Score", "Level", "Milestone", "Alphabetical"]
     @State private var toSortBy = "Score"
     
     var byLevel: [MasteryResponse] {
@@ -53,6 +53,12 @@ struct AccountScreen: View{
     var byMilestone: [MasteryResponse] {
         return masteryData.sorted{
             $0.championSeasonMilestone > $1.championSeasonMilestone
+        }
+    }
+    
+    var byAlphabetical: [MasteryResponse] {
+        return masteryData.sorted{
+            namesFromChampId[$0.championId]! < namesFromChampId[$1.championId]!
         }
     }
     
@@ -77,6 +83,8 @@ struct AccountScreen: View{
             return byLevel
         case "Milestone":
             return byMilestone
+        case "Alphabetical":
+            return byAlphabetical
         default:
             return masteryData
         }
