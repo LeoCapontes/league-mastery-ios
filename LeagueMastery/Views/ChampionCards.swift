@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Kingfisher
+import CoreMotion
 
 struct MasteryCrestImage: View {
     var masteryLevel: Int
@@ -430,6 +431,92 @@ struct Watchlist<Content:View>: View {
     
 }
 
+struct Holographic: ViewModifier {
+    @EnvironmentObject var motion: MotionManager
+    @State var animAmount: CGFloat = 0.01
+    
+    var visible: Bool
+    var offset: CGFloat
+    
+    func body(content: Content) -> some View {
+        if(visible){
+            content
+                .overlay {
+                    Group{
+                        ForEach(0..<4){ count in
+                            Sheen(fx: motion.fx, fy: motion.fy, count: count)
+                            
+                            Sheen2(fx: motion.fx, fy: motion.fy, count: count)
+                        }
+                        
+                    }
+                    .offset(x: -offset*10, y: motion.fy*10)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .blendMode(.normal)
+        }
+        else {
+            content
+        }
+    }
+}
+
+struct Sheen: View {
+    var fx: CGFloat
+    var fy: CGFloat
+    var count: Int
+    
+    var body: some View{
+        Rectangle()
+            .foregroundStyle(
+                LinearGradient(
+                    stops: [
+                        Gradient.Stop(color: .clear, location: 0),
+                        Gradient.Stop(color: .clear, location: 0.3+(fx*0.05)),
+                        Gradient.Stop(color: .white.opacity(0.4+(fx*0.35)), location: 0.5),
+                        Gradient.Stop(color: .clear, location: 0.7),
+                        Gradient.Stop(color: .clear, location: 1)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .frame(width: 100, height:200)
+            .rotationEffect(Angle(degrees: 20))
+            .offset(x: (fx*25)+(200*CGFloat(count)))
+    }
+}
+
+struct Sheen2: View {
+    var fx: CGFloat
+    var fy: CGFloat
+    var count: Int
+    
+    var body: some View{
+        Rectangle()
+            .foregroundStyle(
+                LinearGradient(
+                    stops: [
+                        Gradient.Stop(color: .clear, location: 0),
+                        Gradient.Stop(color: .clear, location: 0.2+(fx*0.2)),
+                        Gradient.Stop(color: .white.opacity(0.3+(fx*0.5)), location: 0.5),
+                        Gradient.Stop(color: .clear, location: 0.8+(fx*(-0.2))),
+                        Gradient.Stop(color: .clear, location: 1)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .frame(width: 100, height:200)
+            .rotationEffect(Angle(degrees: 20))
+            .offset(x: (fx*35)-40+(200*CGFloat(count)))
+    }
+}
+
+struct Placeholder: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+    }
+}
+
 func placeholder(_ i: Int) -> Void {
     
 }
@@ -437,7 +524,9 @@ func placeholder(_ i: Int) -> Void {
 #Preview {
     @Previewable @State var selectedPinnedMetric: String = "Season Milestone"
     let mock = mockMasteryResponse
+    let motionManager = MotionManager()
     ZStack {
+        
         ScrollView{
             LargeChampionCard(entry: mock[1])
             let watched = Array(mock[0...6])
@@ -453,6 +542,7 @@ func placeholder(_ i: Int) -> Void {
             LargeChampionRow(entry: mock[1], addToWatchList: placeholder)
             LargeChampionRow(entry: mock[0], addToWatchList: placeholder)
             LargeChampionRow(entry: mock[2], addToWatchList: placeholder)
+                .modifier(Holographic(visible: true, offset: 1))
             VStack(spacing: 2){
                 ForEach(3..<45) { index in
                     ChampionRow(entry: mock[0])
@@ -462,7 +552,7 @@ func placeholder(_ i: Int) -> Void {
         }
         .padding()
     }
-    
+    .environmentObject(motionManager)
     .frame(width: .infinity, height:.infinity)
     .background(
         Image("background-mastery").resizable().aspectRatio(contentMode: .fill)

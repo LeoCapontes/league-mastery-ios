@@ -9,6 +9,9 @@ import Foundation
 import SwiftUI
 
 struct AccountScreen: View{
+    
+    let motionManager = MotionManager()
+    
     let masteryData: [MasteryResponse]
     let metrics: [MasteryResponseMetrics]
     
@@ -113,8 +116,16 @@ struct AccountScreen: View{
                     }
                     
                     ForEach(0..<selectedSort.count ,id: \.self){ index in
-                        NavigationLink(value: selectedSort[index]){
-                            LargeChampionRow(entry: selectedSort[index], addToWatchList: addToWatchlistCallback)
+                        let entry = selectedSort[index]
+                        NavigationLink(value: entry){
+                            LargeChampionRow(entry: entry, addToWatchList: addToWatchlistCallback)
+                                .modifier(
+                                    // Is holographic if a champion is 1 game from levelling up
+                                    Holographic(
+                                        visible: (entry.championPointsUntilNextLevel < 100 && (entry.markRequiredForNextLevel - entry.tokensEarned == 1)),
+                                        offset: CGFloat(index)
+                                    )
+                                )
                         }
                     }
                 }
@@ -137,6 +148,7 @@ struct AccountScreen: View{
             }
             .padding()
         }
+        .environmentObject(motionManager)
         .navigationDestination(for: MasteryResponse.self){ entry in
             if let metric = metricsDictionary[entry.championId] {
                 ChampionScreen(championData: entry, metrics: metric)
