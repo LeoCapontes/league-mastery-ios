@@ -438,21 +438,32 @@ struct Holographic: ViewModifier {
     var visible: Bool
     var offset: CGFloat
     
+    var realOffset: CGFloat {
+        return offset.truncatingRemainder(dividingBy: 50)
+    }
+    
+    
     func body(content: Content) -> some View {
         if(visible){
             content
                 .overlay {
                     Group{
-                        ForEach(0..<4){ count in
+                        ForEach(0..<3){ count in
                             Sheen(fx: motion.fx, fy: motion.fy, count: count)
                             
                             Sheen2(fx: motion.fx, fy: motion.fy, count: count)
                         }
                         
                     }
-                    .offset(x: -offset*10, y: motion.fy*10)
+                    .allowsHitTesting(false)
+                    .offset(x: -realOffset*10, y: motion.fy*10)
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18)
+                        .stroke(.white.opacity(0.2))
+                        .allowsHitTesting(false)
+                )
                 .blendMode(.normal)
         }
         else {
@@ -474,7 +485,7 @@ struct Sheen: View {
                         Gradient.Stop(color: .clear, location: 0),
                         Gradient.Stop(color: .clear, location: 0.3+(fx*0.05)),
                         Gradient.Stop(color: .white.opacity(0.4+(fx*0.35)), location: 0.5),
-                        Gradient.Stop(color: .clear, location: 0.7),
+                        Gradient.Stop(color: .clear, location: 0.7+(fx*(-0.05))),
                         Gradient.Stop(color: .clear, location: 1)],
                     startPoint: .leading,
                     endPoint: .trailing
@@ -482,7 +493,7 @@ struct Sheen: View {
             )
             .frame(width: 100, height:200)
             .rotationEffect(Angle(degrees: 20))
-            .offset(x: (fx*25)+(200*CGFloat(count)))
+            .offset(x: (fx*60)+(200*CGFloat(count)))
     }
 }
 
@@ -507,7 +518,7 @@ struct Sheen2: View {
             )
             .frame(width: 100, height:200)
             .rotationEffect(Angle(degrees: 20))
-            .offset(x: (fx*35)-40+(200*CGFloat(count)))
+            .offset(x: (fx*120)-40+(200*CGFloat(count)))
     }
 }
 
