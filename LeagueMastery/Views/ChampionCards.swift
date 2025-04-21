@@ -478,22 +478,24 @@ struct Sheen: View {
     var count: Int
     
     var body: some View{
-        Rectangle()
-            .foregroundStyle(
-                LinearGradient(
-                    stops: [
-                        Gradient.Stop(color: .clear, location: 0),
-                        Gradient.Stop(color: .clear, location: 0.3+(fx*0.05)),
-                        Gradient.Stop(color: .white.opacity(0.4+(fx*0.35)), location: 0.5),
-                        Gradient.Stop(color: .clear, location: 0.7+(fx*(-0.05))),
-                        Gradient.Stop(color: .clear, location: 1)],
-                    startPoint: .leading,
-                    endPoint: .trailing
+        GeometryReader { geo in
+            Rectangle()
+                .foregroundStyle(
+                    LinearGradient(
+                        stops: [
+                            Gradient.Stop(color: .clear, location: 0),
+                            Gradient.Stop(color: .clear, location: 0.3+(fx*0.05)),
+                            Gradient.Stop(color: .white.opacity(0.4+(fx*0.35)), location: 0.5),
+                            Gradient.Stop(color: .clear, location: 0.7+(fx*(-0.05))),
+                            Gradient.Stop(color: .clear, location: 1)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
                 )
-            )
-            .frame(width: 100, height:200)
-            .rotationEffect(Angle(degrees: 20))
-            .offset(x: (fx*60)+(200*CGFloat(count)))
+                .frame(width: 100, height: geo.size.height*1.5)
+                .rotationEffect(Angle(degrees: 20))
+                .offset(x: (fx*60)+(200*CGFloat(count)), y: -(geo.size.height*0.25))
+        }
     }
 }
 
@@ -503,22 +505,24 @@ struct Sheen2: View {
     var count: Int
     
     var body: some View{
-        Rectangle()
-            .foregroundStyle(
-                LinearGradient(
-                    stops: [
-                        Gradient.Stop(color: .clear, location: 0),
-                        Gradient.Stop(color: .clear, location: 0.2+(fx*0.2)),
-                        Gradient.Stop(color: .white.opacity(0.3+(fx*0.5)), location: 0.5),
-                        Gradient.Stop(color: .clear, location: 0.8+(fx*(-0.2))),
-                        Gradient.Stop(color: .clear, location: 1)],
-                    startPoint: .leading,
-                    endPoint: .trailing
+        GeometryReader { geo in
+            Rectangle()
+                .foregroundStyle(
+                    LinearGradient(
+                        stops: [
+                            Gradient.Stop(color: .clear, location: 0),
+                            Gradient.Stop(color: .clear, location: 0.2+(fx*0.2)),
+                            Gradient.Stop(color: .white.opacity(0.3+(fx*0.5)), location: 0.5),
+                            Gradient.Stop(color: .clear, location: 0.8+(fx*(-0.2))),
+                            Gradient.Stop(color: .clear, location: 1)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
                 )
-            )
-            .frame(width: 100, height:200)
-            .rotationEffect(Angle(degrees: 20))
-            .offset(x: (fx*120)-40+(200*CGFloat(count)))
+                .frame(width: 100, height: geo.size.height*1.5)
+                .rotationEffect(Angle(degrees: 20))
+                .offset(x: (fx*120)-40+(200*CGFloat(count)), y: -(geo.size.height*0.25))
+        }
     }
 }
 
