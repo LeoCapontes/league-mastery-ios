@@ -25,6 +25,9 @@ final class User {
     var profileIconId: Int
     var summonerLevel: Int
     
+    // from mastery-v4
+    var masteryScore: Int
+    
     init(
         puuid: String,
         name: String,
@@ -33,7 +36,8 @@ final class User {
         region: String,
         server: String,
         profileIconId: Int,
-        summonerLevel: Int
+        summonerLevel: Int,
+        masteryScore: Int
     ) {
         self.puuid = puuid
         self.name = name
@@ -43,5 +47,6 @@ final class User {
         self.server = server
         self.profileIconId = profileIconId
         self.summonerLevel = summonerLevel
+        self.masteryScore = masteryScore
     }
 }

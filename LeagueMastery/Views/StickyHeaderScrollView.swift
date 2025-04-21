@@ -14,6 +14,7 @@ struct StickyHeaderScrollView<Content:View>: View {
     var name: String
     var tag: String
     var iconId: Int
+    var score: Int
     
     @ViewBuilder let content: Content
     
@@ -63,7 +64,7 @@ struct StickyHeaderScrollView<Content:View>: View {
                                 Text(name)
                                 Text("#\(tag)")
                             }
-                            if !yOffset {Text("Score: Placeholder")}
+                            if !yOffset {Text("Score: \(score)")}
                         }
                     }
                     .padding(.horizontal)

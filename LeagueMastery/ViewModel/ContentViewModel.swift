@@ -71,6 +71,11 @@ extension ContentView {
                         puuid: puuidResponse.puuid,
                         selectedServer: selectedServer.raw
                     )
+                    
+                    let masteryScoreResponse = try await masteryScoreApiCall(
+                        puuid: puuidResponse.puuid,
+                        selectedServer: selectedServer.raw
+                    )
                                         
                     let searchedUser = User(
                         puuid: puuidResponse.puuid,
@@ -79,7 +84,8 @@ extension ContentView {
                         region: selectedRegion.description,
                         server: selectedServer.raw,
                         profileIconId: summonerResponse.profileIconId,
-                        summonerLevel: summonerResponse.summonerLevel
+                        summonerLevel: summonerResponse.summonerLevel,
+                        masteryScore: masteryScoreResponse
                     )
                     
                     // swift data model context tasks should be done in
@@ -136,7 +142,6 @@ extension ContentView {
                         selectedServer: server
                     )
                     
-                    
                     if let selectedUser = modelContext.model(for: getUserIdentifier(puuid: puuidResponse.puuid)!) as? User {
                         userToDisplay = selectedUser
 #if DEBUG
@@ -170,7 +175,8 @@ extension ContentView {
             region: String,
             server: String,
             profileIconId: Int,
-            summonerLevel: Int
+            summonerLevel: Int,
+            masteryScore: Int
         ){
             let newUser = User(
                 puuid: puuid,
@@ -179,7 +185,8 @@ extension ContentView {
                 region: region,
                 server: server,
                 profileIconId: profileIconId,
-                summonerLevel: summonerLevel
+                summonerLevel: summonerLevel,
+                masteryScore: masteryScore
             )
             
             modelContext.insert(newUser)

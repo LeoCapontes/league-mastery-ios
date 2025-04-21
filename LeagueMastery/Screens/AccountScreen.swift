@@ -22,7 +22,6 @@ struct AccountScreen: View{
     var addToWatchlist: (User, Int) -> Void
     var removeFromWatchlist: (User, Int) -> Void
     
-    
     @Bindable var user: User
     
     @State public var selectedPinnedMetric: String = "Season Milestone"
@@ -99,7 +98,8 @@ struct AccountScreen: View{
                 StickyHeaderScrollView(
                     name: user.name,
                     tag: user.tagline,
-                    iconId: user.profileIconId
+                    iconId: user.profileIconId,
+                    score: user.masteryScore
                 ){
                     if (user.championWatchlist.count > 0){
                         Watchlist(content: {
@@ -186,7 +186,7 @@ func callbackPlaceholder(_ x: User, _ y: Int) -> Void {
             server: "Asia",
             profileIconId: 1,
             summonerLevel: 999,
-            
+            masteryScore: 999
         ),
         addToWatchlist: callbackPlaceholder,
         removeFromWatchlist: callbackPlaceholder

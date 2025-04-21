@@ -96,6 +96,23 @@ func summonerInfoApiCall(
     }
 }
 
+func masteryScoreApiCall(
+    puuid: String,
+    selectedServer: String
+) async throws -> Int{
+    let serverString = selectedServer
+    let url = URL(string:"\(Settings.shared.serverUrl)/masteryscore/by-puuid/\(serverString)/\(puuid)")!
+    print(url.absoluteString)
+    
+    do{
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let response = try JSONDecoder().decode(Int.self, from: data)
+        return response
+    }catch {
+        throw error
+    }
+}
+
 func profileIconUrl(profileIconId: Int) -> String {
     return "https://ddragon.leagueoflegends.com/cdn/15.7.1/img/profileicon/\(profileIconId).png"
 }
