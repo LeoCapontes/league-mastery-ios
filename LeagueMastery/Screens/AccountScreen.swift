@@ -60,7 +60,7 @@ struct AccountScreen: View{
     
     var byAlphabetical: [MasteryResponse] {
         return masteryData.sorted{
-            namesFromChampId[$0.championId]! < namesFromChampId[$1.championId]!
+            getNameFromId(id: $0.championId) < getNameFromId(id: $1.championId)
         }
     }
     

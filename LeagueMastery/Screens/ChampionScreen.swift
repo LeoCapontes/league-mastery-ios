@@ -216,7 +216,7 @@ struct InfoContainer: View {
     var metrics: MasteryResponseMetrics
     
     var body: some View{
-        Text(namesFromChampId[championData.championId]!)
+        Text(getNameFromId(id: championData.championId))
             .foregroundStyle(.white)
             .bold()
             .font(.system(size: 28))

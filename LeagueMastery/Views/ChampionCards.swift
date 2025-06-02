@@ -258,7 +258,7 @@ struct LargeChampionRow: View {
                         y:geometry.size.height*0.5
                     )
                     VStack(alignment: .leading){
-                        Text("\(namesFromChampId[entry.championId]!)")
+                        Text("\(getNameFromId(id: entry.championId))")
                             .bold()
                             .font(.title2)
                         Text("Level \(entry.championLevel)")
@@ -297,7 +297,7 @@ struct ChampionRow: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
-                Text(namesFromChampId[entry.championId]!)
+                Text(getNameFromId(id: entry.championId))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.leading)
                     .bold()
@@ -439,7 +439,7 @@ struct Holographic: ViewModifier {
     var offset: CGFloat
     
     var realOffset: CGFloat {
-        return offset.truncatingRemainder(dividingBy: 50)
+        return offset.truncatingRemainder(dividingBy: 3170)
     }
     
     
@@ -458,12 +458,12 @@ struct Holographic: ViewModifier {
                     .allowsHitTesting(false)
                     .offset(x: -realOffset*10, y: motion.fy*10)
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 18))
                 .overlay(
                     RoundedRectangle(cornerRadius: 18)
-                        .stroke(.white.opacity(0.2))
+                        .stroke(.white.opacity(0.2), lineWidth: 3)
                         .allowsHitTesting(false)
                 )
+                .clipShape(RoundedRectangle(cornerRadius: 18))
                 .blendMode(.normal)
         }
         else {

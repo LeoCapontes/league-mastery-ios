@@ -72,6 +72,20 @@ var namesFromChampId: [Int:String] =
  13: "Ryze", 122: "Darius", 83: "Yorick", 127: "Lissandra", 68: "Rumble", 221: "Zeri", 222: "Jinx",
  34: "Anivia", 223: "TahmKench", 254: "Vi", 711: "Vex", 78: "Poppy", 82: "Mordekaiser", 887: "Gwen"]
 
+var displayableChampionNames: [String:String] =
+["AurelionSol" : "Aurelion Sol",
+ "MonkeyKing" : "Wukong",
+ "KogMaw" : "Kog'Maw"]
+
+// handles getting user-facing champion names i.e. MonkeyKing to Wukong
+func getNameFromId(id: Int) -> String {
+    var rawName = namesFromChampId[id]!
+    if let displayName = displayableChampionNames[rawName] {
+        return displayName
+    }
+    return rawName
+}
+
 struct Offset {
     var x: CGFloat = 0
     var y: CGFloat = 0
@@ -264,7 +278,6 @@ var splashOffsets: [Int:Offset] =
 
 #Preview {
     let mock = mockMasteryResponse
-    let id = 80
     let id = 15
     LargeChampionRow(entry: mock[id-1])
     LargeChampionRow(entry: mock[id])
