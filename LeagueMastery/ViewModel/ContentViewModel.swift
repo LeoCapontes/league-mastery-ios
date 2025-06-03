@@ -310,10 +310,8 @@ enum Server: CaseIterable, Identifiable, CustomStringConvertible {
     case me1
     case na1
     case oc1
-    case ph2
     case ru2
     case sg2
-    case th2
     case tr1
     case tw2
     case vn2
@@ -332,6 +330,26 @@ enum Server: CaseIterable, Identifiable, CustomStringConvertible {
             return "Japan"
         case .kr:
             return "Korea"
+        case .la1:
+            return "LAN"
+        case .la2:
+            return "LAS"
+        case .me1:
+            return "Middle East"
+        case .na1:
+            return "North America"
+        case .oc1:
+            return "Oceania"
+        case .vn2:
+            return "Vietnam"
+        case .tw2:
+            return "Taiwan"
+        case .sg2:
+            return "Southeast Asia"
+        case .tr1:
+            return "Turkey"
+        case .ru2:
+            return "Russia"
         default:
             return "def"
         }
@@ -359,14 +377,10 @@ enum Server: CaseIterable, Identifiable, CustomStringConvertible {
             return "na1"
         case .oc1:
             return "oc1"
-        case .ph2:
-            return "ph2"
         case .ru2:
             return "ru2"
         case .sg2:
             return "sg2"
-        case .th2:
-            return "th2"
         case .tr1:
             return "tr1"
         case .tw2:
