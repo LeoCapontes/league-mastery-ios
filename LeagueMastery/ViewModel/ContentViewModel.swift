@@ -321,35 +321,35 @@ enum Server: CaseIterable, Identifiable, CustomStringConvertible {
     var description: String {
         switch self{
         case .br1:
-            return "Brazil"
+            return "BR"
         case .eun1:
             return "EUNE"
         case .euw1:
             return "EUW"
         case .jp1:
-            return "Japan"
+            return "JP"
         case .kr:
-            return "Korea"
+            return "KR"
         case .la1:
             return "LAN"
         case .la2:
             return "LAS"
         case .me1:
-            return "Middle East"
+            return "ME"
         case .na1:
-            return "North America"
+            return "NA"
         case .oc1:
-            return "Oceania"
+            return "OCE"
         case .vn2:
-            return "Vietnam"
+            return "VN"
         case .tw2:
-            return "Taiwan"
+            return "TW"
         case .sg2:
-            return "Southeast Asia"
+            return "SEA"
         case .tr1:
-            return "Turkey"
+            return "TR"
         case .ru2:
-            return "Russia"
+            return "RU"
         default:
             return "def"
         }
