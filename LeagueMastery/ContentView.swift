@@ -51,55 +51,11 @@ struct ContentView: View {
                             }
                             .transition(.opacity)
                        }
-                        HStack{
-                            HStack{
-                                TextField(
-                                    "",
-                                    text: $viewModel.sumName,
-                                    prompt: Text("Name")
-                                        .foregroundStyle(Color(
-                                            red: 150/255,
-                                            green: 150/255,
-                                            blue: 150/255
-                                        ))
-                                )
-                                .frame(width: 124)
-//                                .border(.green)
-                                Divider().overlay(Color.white)
-                                Text("#")
-                                TextField(
-                                    "",
-                                    text: $viewModel.sumTag,
-                                    prompt: Text("Tag")
-                                        .foregroundStyle(Color(
-                                            red: 150/255,
-                                            green: 150/255,
-                                            blue: 150/255
-                                        ))
-                                )
-                                .frame(width: 48)
-//                                .border(.green)
-                            }
-                            .frame(height: 24)
-                            .focused($fieldFocused)
-                            .onSubmit {
-                                SearchSummoner()
-                            }
-                            .padding(.horizontal)
-                            .padding(.vertical, viewModel.showingScreen ? 2: 18)
-                            
-                            
-                            Picker("Region", selection: $viewModel.selectedServer){
-                                ForEach(Server.allCases){ option in
-                                    Text(String(describing: option))
-                                }
-                            }
-                            .padding(0)
-//                            .border(.green)
-                        }
-                        .background(Color.gray
-                            .opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        SummonerSearchField(
+                            viewModel: $viewModel,
+                            fieldFocused: $fieldFocused,
+                            searchSummoner: SearchSummoner
+                        )
                         
                         Button(action: SearchSummoner) {
                             Text("Search")
@@ -155,6 +111,76 @@ struct ContentView: View {
     func SearchSummoner(){
         viewModel.searchSumm()
         fieldFocused = false
+    }
+    
+}
+
+struct SummonerSearchField: View {
+    @Binding var viewModel: ContentView.ViewModel
+    @FocusState.Binding var fieldFocused: Bool
+    var searchSummoner: () -> Void
+    
+    var body: some View {
+        GeometryReader { geo in
+            HStack{
+                HStack{
+                    TextField(
+                        "",
+                        text: $viewModel.sumName,
+                        prompt: Text("Name")
+                            .foregroundStyle(Color(
+                                red: 150/255,
+                                green: 150/255,
+                                blue: 150/255
+                            ))
+                    )
+                    .frame(width: geo.size.width*0.3)
+//                    .border(.green)
+                    
+                    Divider().overlay(Color.white)
+                    Text("#")
+                    
+                    TextField(
+                        "",
+                        text: $viewModel.sumTag,
+                        prompt: Text("Tag")
+                            .foregroundStyle(Color(
+                                red: 150/255,
+                                green: 150/255,
+                                blue: 150/255
+                            ))
+                    )
+                    .frame(width: geo.size.width*0.2)
+//                    .border(.green)
+                }
+                .frame(height: 24)
+                .focused($fieldFocused)
+                .onSubmit {
+                    searchSummoner()
+                }
+//                .padding(.horizontal)
+                .padding(.vertical, viewModel.showingScreen ? 2: 18)
+                
+                
+                Picker("Region", selection: $viewModel.selectedServer){
+                    ForEach(Server.allCases){ option in
+                        Text(String(describing: option))
+                    }
+                }
+                .frame(minWidth: 86)
+                .padding(0)
+//                .border(.green)
+            }
+            .position(
+                x: geo.size.width*0.5,
+                y: geo.size.height*0.5)
+            .background(Color.gray
+                .opacity(0.2))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+        .frame(height: viewModel.showingScreen ? 36 : 72)
+        .animation(.default, value: viewModel.showingScreen)
+//        .border(.green)
     }
 }
 
