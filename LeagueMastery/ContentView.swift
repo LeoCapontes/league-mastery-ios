@@ -178,7 +178,7 @@ struct SummonerSearchField: View {
                 .opacity(0.2))
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
-        .frame(height: viewModel.showingScreen ? 36 : 72)
+        .frame(height: viewModel.showingScreen ? 36 : 64)
         .animation(.default, value: viewModel.showingScreen)
 //        .border(.green)
     }

@@ -45,20 +45,36 @@ struct AccountScreen: View{
     
     var sortOptions = ["Score", "Level", "Milestone", "Alphabetical"]
     @State private var toSortBy = "Score"
+    @State private var sortAsc = false
     
     var byLevel: [MasteryResponse] {
+        if(sortAsc) {
+            return masteryData.sorted{
+                $0.championLevel < $1.championLevel
+            }
+        }
         return masteryData.sorted{
             $0.championLevel > $1.championLevel
         }
     }
     
     var byMilestone: [MasteryResponse] {
+        if(sortAsc) {
+            return masteryData.sorted{
+                $0.championSeasonMilestone < $1.championSeasonMilestone
+            }
+        }
         return masteryData.sorted{
             $0.championSeasonMilestone > $1.championSeasonMilestone
         }
     }
     
     var byAlphabetical: [MasteryResponse] {
+        if(sortAsc) {
+            return masteryData.sorted{
+                getNameFromId(id: $0.championId) > getNameFromId(id: $1.championId)
+            }
+        }
         return masteryData.sorted{
             getNameFromId(id: $0.championId) < getNameFromId(id: $1.championId)
         }
@@ -80,7 +96,7 @@ struct AccountScreen: View{
     var selectedSort: [MasteryResponse] {
         switch toSortBy{
         case "Score":
-            return masteryData
+            return sortAsc ? masteryData.reversed() : masteryData
         case "Level":
             return byLevel
         case "Milestone":
@@ -134,10 +150,14 @@ struct AccountScreen: View{
                 ForEach(sortOptions, id: \.self){ option in
                     Button(option, action: {toSortBy = option})
                 }
+                Section{
+                    Button(sortAsc ? "Ascending" : "Descending", action : {sortAsc = !sortAsc})
+                }
+                .menuActionDismissBehavior(.disabled)
             } label : {
                 ZStack{
                     HStack{
-                        Image(systemName: "arrow.up.arrow.down")
+                        Image(systemName: sortAsc ? "arrow.up" : "arrow.down")
                         Text("\(toSortBy)")
                     }
                     .foregroundStyle(.blue)
