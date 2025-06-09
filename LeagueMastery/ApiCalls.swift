@@ -56,11 +56,25 @@ func masteryApiCall(
     let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
     print(url.absoluteString)
     do{
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
-        return response
-    } catch {
-        throw error
+        let (data, httpResponse) = try await URLSession.shared.data(from: url)
+        guard let httpResponse = httpResponse as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+        if httpResponse.statusCode == 200{
+            let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
+            return response
+        } else {
+            print(httpResponse.statusCode)
+            if httpResponse.statusCode == 404 {
+                print("Throwing no data found")
+                throw ApiError.noDataFound
+            }
+            if httpResponse.statusCode == 400 {
+                print("Throwing no key")
+                throw ApiError.noKey
+            }
+            throw ApiError.other("Search failed")
+        }
     }
 }
 

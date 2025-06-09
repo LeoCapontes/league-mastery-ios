@@ -103,7 +103,7 @@ extension ContentView {
                             print("couldnt assign user")
                         }
                     }
-                }catch{
+                } catch {
                     showingProgress = false
                     response = nil
                     switch error {
@@ -141,8 +141,17 @@ extension ContentView {
                         puuid: puuidResponse.puuid,
                         selectedServer: server
                     )
+                    let masteryScoreResponse = try await masteryScoreApiCall(
+                        puuid: puuidResponse.puuid,
+                        selectedServer: selectedServer.raw
+                    )
                     
                     if let selectedUser = modelContext.model(for: getUserIdentifier(puuid: puuidResponse.puuid)!) as? User {
+                        // fetch new details
+                        Task {@MainActor in
+                            selectedUser.profileIconId = summonerResponse.profileIconId
+                            selectedUser.masteryScore = masteryScoreResponse
+                        }
                         userToDisplay = selectedUser
 #if DEBUG
                         print("User is level: ", userToDisplay!.summonerLevel)
@@ -152,10 +161,19 @@ extension ContentView {
                     } else {
                         print("couldnt select user")
                     }
-                }catch{
+                } catch {
                     showingProgress = false
                     response = nil
+                    switch error {
+                    case ApiError.noDataFound:
+                        alertMessage = "Summoner not found"
+                    case ApiError.noKey:
+                        print("Something wrong with key")
+                    default:
+                        alertMessage = "Something went wrong"
+                    }
                     print("Error in task \(error)")
+                    showingAlert = true
                 }
             }
         }
