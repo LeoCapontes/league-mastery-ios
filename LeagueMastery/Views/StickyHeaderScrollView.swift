@@ -73,14 +73,27 @@ struct StickyHeaderScrollView<Content:View>: View {
                         height: headerHeight,
                         alignment: .leading
                     )
-                    .background(.ultraThinMaterial.opacity(yOffset ? 1.0: 0.0))
+                    .modifier(GlassOrMaterial(materialType: .ultraThinMaterial))
                     .zIndex(yOffset ? 0 : -1)
                     .animation(.default, value: headerHeight)
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: ClipRadius()
+                    )
+                )
             }
         } else {
             // TODO: Fallback on earlier versions
         }
+    }
+}
+
+// Clip dependent on ios version
+func ClipRadius() -> CGFloat {
+    if #available(iOS 26.0, *) {
+        return CGFloat(20)
+    } else {
+        return CGFloat(16)
     }
 }

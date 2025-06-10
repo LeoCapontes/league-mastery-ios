@@ -162,10 +162,10 @@ struct AccountScreen: View{
                     }
                     .foregroundStyle(.blue)
                     .padding()
-                    .background(.regularMaterial)
-                    .clipShape(Capsule())
                 }
             }
+            .modifier(GlassOrMaterial(materialType: .regularMaterial))
+            .clipShape(Capsule())
             .padding()
         }
         .environmentObject(motionManager)
@@ -192,6 +192,18 @@ struct AccountScreen: View{
 
 func callbackPlaceholder(_ x: User, _ y: Int) -> Void {
     
+}
+
+struct GlassOrMaterial: ViewModifier {
+    var materialType: Material
+    
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect()
+        } else {
+            content.background(materialType)
+        }
+    }
 }
 
 #Preview {
