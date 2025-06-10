@@ -144,6 +144,7 @@ struct AccountScreen: View{
                                 )
                         }
                     }
+                    Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
             }
             Menu {
@@ -209,7 +210,7 @@ struct GlassOrMaterial: ViewModifier {
 #Preview {
     let mock = mockMasteryResponse
     AccountScreen(
-        masteryData: mock,
+        masteryData: Array<MasteryResponse>(mock[1...12]),
         user: User(
             puuid: "d",
             name: "Hide on Bush",
@@ -223,4 +224,5 @@ struct GlassOrMaterial: ViewModifier {
         addToWatchlist: callbackPlaceholder,
         removeFromWatchlist: callbackPlaceholder
     )
+    .ignoresSafeArea(edges: .bottom)
 }
