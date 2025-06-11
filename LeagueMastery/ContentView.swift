@@ -80,7 +80,8 @@ struct ContentView: View {
                             addToWatchlist: viewModel.addToWatchlist,
                             removeFromWatchlist: viewModel.removeFromWatchlist
                         )
-                            .transition(.slide)
+                        .transition(.slide)
+                        .onAppear(perform: {fieldFocused = false})
                     }
                 }
                 .foregroundColor(.white)
