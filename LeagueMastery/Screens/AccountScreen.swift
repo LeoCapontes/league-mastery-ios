@@ -25,6 +25,8 @@ struct AccountScreen: View{
     @Bindable var user: User
     
     @State public var selectedPinnedMetric: String = "Season Milestone"
+    
+    @State var champSearchString: String = ""
 
     init(
         masteryData: [MasteryResponse],
@@ -107,6 +109,17 @@ struct AccountScreen: View{
             return masteryData
         }
     }
+
+    var searchResult: [MasteryResponse] {
+        if(champSearchString == "") {
+            return selectedSort
+        } else {
+            print(champSearchString)
+            return selectedSort.filter{
+                getNameFromId(id: $0.championId).contains(champSearchString)
+            }
+        }
+    }
     
     var body: some View {
         ZStack(alignment: .bottomTrailing){
@@ -131,8 +144,8 @@ struct AccountScreen: View{
                         }, selectedMetric: $selectedPinnedMetric)
                     }
                     
-                    ForEach(0..<selectedSort.count ,id: \.self){ index in
-                        let entry = selectedSort[index]
+                    ForEach(0..<searchResult.count ,id: \.self){ index in
+                        let entry = searchResult[index]
                         NavigationLink(value: entry){
                             LargeChampionRow(entry: entry, addToWatchList: addToWatchlistCallback)
                                 .modifier(
@@ -147,26 +160,32 @@ struct AccountScreen: View{
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
             }
-            Menu {
-                ForEach(sortOptions, id: \.self){ option in
-                    Button(option, action: {toSortBy = option})
-                }
-                Section{
-                    Button(sortAsc ? "Ascending" : "Descending", action : {sortAsc = !sortAsc})
-                }
-                .menuActionDismissBehavior(.disabled)
-            } label : {
-                ZStack{
-                    HStack{
-                        Image(systemName: sortAsc ? "arrow.up" : "arrow.down")
-                        Text("\(toSortBy)")
-                    }
-                    .foregroundStyle(.blue)
+            HStack{
+                TextField("", text: $champSearchString, prompt: Text("Search Champions..."))
                     .padding()
+                    .background(.regularMaterial)
+                    .clipShape(Capsule())
+                Menu {
+                    ForEach(sortOptions, id: \.self){ option in
+                        Button(option, action: {toSortBy = option})
+                    }
+                    Section{
+                        Button(sortAsc ? "Ascending" : "Descending", action : {sortAsc = !sortAsc})
+                    }
+                    .menuActionDismissBehavior(.disabled)
+                } label : {
+                    ZStack{
+                        HStack{
+                            Image(systemName: sortAsc ? "arrow.up" : "arrow.down")
+                            Text("\(toSortBy)")
+                        }
+                        .foregroundStyle(.blue)
+                        .padding()
+                    }
                 }
+                .modifier(GlassOrMaterial(materialType: .regularMaterial))
+                .clipShape(Capsule())
             }
-            .modifier(GlassOrMaterial(materialType: .regularMaterial))
-            .clipShape(Capsule())
             .padding()
         }
         .environmentObject(motionManager)
