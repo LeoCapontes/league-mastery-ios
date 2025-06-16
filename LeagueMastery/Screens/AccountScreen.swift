@@ -92,6 +92,10 @@ struct AccountScreen: View{
             }
         }
         print("called watched champions")
+        print("retrieved champions: ")
+        for watchedChampion in watchedChampions {
+            print(watchedChampion.championId)
+        }
         return watchedChampions
     }
     
@@ -163,7 +167,7 @@ struct AccountScreen: View{
             HStack{
                 TextField("", text: $champSearchString, prompt: Text("Search Champions..."))
                     .padding()
-                    .background(.regularMaterial)
+                    .modifier(GlassOrMaterial(materialType: .regularMaterial))
                     .clipShape(Capsule())
                 Menu {
                     ForEach(sortOptions, id: \.self){ option in

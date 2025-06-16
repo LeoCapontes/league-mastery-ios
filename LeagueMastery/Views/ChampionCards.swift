@@ -445,32 +445,53 @@ struct Holographic: ViewModifier {
     
     func body(content: Content) -> some View {
         if(visible){
-            content
-                .overlay {
-                    Group{
-                        ForEach(0..<3){ count in
-                            Sheen(fx: motion.fx, fy: motion.fy, count: count)
+            if #available(iOS 26, *){
+                content
+                    .overlay {
+                        Group{
+                            ForEach(0..<3){ count in
+                                Sheen(fx: motion.fx, fy: motion.fy, count: count)
+                                
+                                Sheen2(fx: motion.fx, fy: motion.fy, count: count)
+                            }
                             
-                            Sheen2(fx: motion.fx, fy: motion.fy, count: count)
                         }
-                        
-                    }
-                    .allowsHitTesting(false)
-                    .offset(x: -realOffset*10, y: motion.fy*10)
-                }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 18)
-                        .stroke(.white.opacity(0.2), lineWidth: 3)
                         .allowsHitTesting(false)
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 18))
-                .blendMode(.normal)
+                        .offset(x: -realOffset*10, y: motion.fy*10)
+                    }
+                    .glassEffect(in: .rect(cornerRadius: 18))
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                    .blendMode(.normal)
+            } else {
+                content
+                    .overlay {
+                        Group{
+                            ForEach(0..<3){ count in
+                                Sheen(fx: motion.fx, fy: motion.fy, count: count)
+                                
+                                Sheen2(fx: motion.fx, fy: motion.fy, count: count)
+                            }
+                            
+                        }
+                        .allowsHitTesting(false)
+                        .offset(x: -realOffset*10, y: motion.fy*10)
+                    }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18)
+                            .stroke(.white.opacity(0.2), lineWidth: 3)
+                            .allowsHitTesting(false)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                    .blendMode(.normal)
+            }
         }
         else {
             content
         }
     }
 }
+
+
 
 struct Sheen: View {
     var fx: CGFloat
