@@ -136,10 +136,10 @@ struct AccountScreen: View{
                 ){
                     if (user.championWatchlist.count > 0){
                         Watchlist(content: {
-                            ForEach(0..<watchedChampions.count, id: \.self){ index in
-                                NavigationLink(value: watchedChampions[index]){
+                            ForEach(watchedChampions, id: \.self){ entry in
+                                NavigationLink(value: entry){
                                     WatchlistItem(
-                                        entry: watchedChampions[index],
+                                        entry: entry,
                                         metric: selectedPinnedMetric,
                                         removeCallback: removeFromWatchlistCallback
                                     )
