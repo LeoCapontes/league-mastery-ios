@@ -24,21 +24,35 @@ struct ContentView: View {
     init(modelContext: ModelContext) {
            let viewModel = ViewModel(modelContext: modelContext)
            _viewModel = State(initialValue: viewModel)
-   }
+    }
     
     var body: some View {
         NavigationStack{
             ZStack{
                 Rectangle()
-                    .ignoresSafeArea(.container, edges: .bottom)
+                    .ignoresSafeArea(.container, edges: .all)
                     .foregroundStyle(Color("BGColor"))
+                if(!viewModel.showingScreen){
+                    VStack{
+                        Spacer()
+                        HStack{
+                            Spacer()
+                            NavigationLink(destination: PreferencesScreen()) {
+                                Image(systemName: "gearshape.fill")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 24))
+                            }
+                        }
+                        .padding(24)
+                    }
+                }
 // Old background
 //                Image("background-mastery")
 //                    .resizable()
 //                    .aspectRatio(contentMode: .fill)
 //                    .frame(minWidth: 0, maxWidth: .infinity)
 //                    .edgesIgnoringSafeArea(.all)
-                VStack {
+                VStack{
                     HStack{
                         if(viewModel.showingScreen) {
                             Button(action: {viewModel.showingScreen = false}){

@@ -7,11 +7,17 @@
 import SwiftUI
 
 struct PreferencesScreen: View {
-    @AppStorage("evelvlUpIndicator")
-    private var levelUpIndicator: String = LevelUpIndicatorMode.holographic.rawValue
+    @AppStorage("LevelUpIndicator")
+    private var levelUpIndicator: String = LevelUpIndicatorMode.pip.rawValue
     
     var body: some View {
-        
+        Form{
+            Picker("Level up indicator", selection: $levelUpIndicator) {
+                ForEach(LevelUpIndicatorMode.allCases) { mode in
+                    Text(mode.rawValue)
+                }
+            }
+        }
     }
 }
 
