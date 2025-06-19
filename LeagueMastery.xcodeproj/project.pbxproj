@@ -16,6 +16,9 @@
 		B36301012C41F009000E54AA /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36301002C41F009000E54AA /* Codables.swift */; };
 		B36341F42D6EB5070060A2C4 /* StickyHeaderScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36341F32D6EB4F70060A2C4 /* StickyHeaderScrollView.swift */; };
 		B37985A62DB4666A00FEFAF7 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37985A52DB4666600FEFAF7 /* MotionManager.swift */; };
+		B38CA8622E036F75008EB074 /* PreferencesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38CA8612E036F69008EB074 /* PreferencesScreen.swift */; };
+		B38CA8642E037528008EB074 /* LevelUpIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38CA8632E03751E008EB074 /* LevelUpIndicator.swift */; };
+		B38CA86E2E038A83008EB074 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38CA86D2E038A7E008EB074 /* ViewExtensions.swift */; };
 		B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABC2C43338600194223 /* AccountScreen.swift */; };
 		B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39DBABE2C44C09000194223 /* ApiCalls.swift */; };
 		B39E414F2D32F5810073E406 /* MilestoneProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */; };
@@ -77,6 +80,9 @@
 		B36301002C41F009000E54AA /* Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codables.swift; sourceTree = "<group>"; };
 		B36341F32D6EB4F70060A2C4 /* StickyHeaderScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderScrollView.swift; sourceTree = "<group>"; };
 		B37985A52DB4666600FEFAF7 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
+		B38CA8612E036F69008EB074 /* PreferencesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesScreen.swift; sourceTree = "<group>"; };
+		B38CA8632E03751E008EB074 /* LevelUpIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpIndicator.swift; sourceTree = "<group>"; };
+		B38CA86D2E038A7E008EB074 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		B39DBABC2C43338600194223 /* AccountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreen.swift; sourceTree = "<group>"; };
 		B39DBABE2C44C09000194223 /* ApiCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiCalls.swift; sourceTree = "<group>"; };
 		B39E414E2D32F56D0073E406 /* MilestoneProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneProgress.swift; sourceTree = "<group>"; };
@@ -160,6 +166,8 @@
 		B36300E92C3D8E54000E54AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B38CA86D2E038A7E008EB074 /* ViewExtensions.swift */,
+				B38CA8602E036E9E008EB074 /* ViewModifiers */,
 				B36341F32D6EB4F70060A2C4 /* StickyHeaderScrollView.swift */,
 				B3B4F6BF2D42D61600F5F514 /* CacheAsyncImage.swift */,
 				B39E41512D3358BA0073E406 /* Shapes.swift */,
@@ -172,9 +180,18 @@
 			path = LeagueMastery/Views;
 			sourceTree = SOURCE_ROOT;
 		};
+		B38CA8602E036E9E008EB074 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				B38CA8632E03751E008EB074 /* LevelUpIndicator.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		B39DBABB2C43337000194223 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B38CA8612E036F69008EB074 /* PreferencesScreen.swift */,
 				B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */,
 				B39DBABC2C43338600194223 /* AccountScreen.swift */,
 			);
@@ -436,10 +453,12 @@
 				B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */,
 				B3B4F6C02D42D61B00F5F514 /* CacheAsyncImage.swift in Sources */,
 				B37985A62DB4666A00FEFAF7 /* MotionManager.swift in Sources */,
+				B38CA8622E036F75008EB074 /* PreferencesScreen.swift in Sources */,
 				B39E41522D3358BE0073E406 /* Shapes.swift in Sources */,
 				B39DBABF2C44C09000194223 /* ApiCalls.swift in Sources */,
 				B39E414F2D32F5810073E406 /* MilestoneProgress.swift in Sources */,
 				B36300E72C3D8E4A000E54AA /* MockModel.swift in Sources */,
+				B38CA8642E037528008EB074 /* LevelUpIndicator.swift in Sources */,
 				B39DBABD2C43338600194223 /* AccountScreen.swift in Sources */,
 				B3BF86282D5A84C900915BE6 /* SearchedUsers.swift in Sources */,
 				B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */,
@@ -447,6 +466,7 @@
 				B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */,
 				B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */,
 				B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */,
+				B38CA86E2E038A83008EB074 /* ViewExtensions.swift in Sources */,
 				B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */,
 				B3BF86242D5A70A400915BE6 /* User.swift in Sources */,
 				B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */,

@@ -148,17 +148,12 @@ struct AccountScreen: View{
                         }, selectedMetric: $selectedPinnedMetric)
                     }
                     
-                    ForEach(0..<searchResult.count ,id: \.self){ index in
-                        let entry = searchResult[index]
-                        NavigationLink(value: entry){
+                    ForEach(Array(searchResult.enumerated()), id: \.element) { (index, entry) in
+                        NavigationLink(value: entry) {
                             LargeChampionRow(entry: entry, addToWatchList: addToWatchlistCallback)
-                                .modifier(
-                                    // Is holographic if a champion is 1 game from levelling up
-                                    Holographic(
-                                        visible: (entry.championPointsUntilNextLevel < 100 && (entry.markRequiredForNextLevel - entry.tokensEarned == 1)),
-                                        offset: CGFloat(index)
-                                    )
-                                )
+                                .if(canLevelUp(entry)) { view in
+                                    view.modifier(LevelUpIndicator(offset: CGFloat(index)))
+                                }
                         }
                     }
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
@@ -212,6 +207,10 @@ struct AccountScreen: View{
         removeFromWatchlist(user, champId)
     }
     
+}
+
+func canLevelUp(_ entry: MasteryResponse) -> Bool{
+    return (entry.championPointsUntilNextLevel < 100 && (entry.markRequiredForNextLevel - entry.tokensEarned == 1))
 }
 
 func callbackPlaceholder(_ x: User, _ y: Int) -> Void {
