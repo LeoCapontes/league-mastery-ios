@@ -30,7 +30,7 @@ struct ContentView: View {
         NavigationStack{
             ZStack{
                 Rectangle()
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea(.container, edges: .bottom)
                     .foregroundStyle(Color("BGColor"))
 // Old background
 //                Image("background-mastery")
@@ -85,7 +85,7 @@ struct ContentView: View {
                     }
                 }
                 .foregroundColor(.white)
-                .edgesIgnoringSafeArea(.bottom)
+                .ignoresSafeArea(.container, edges: .bottom)
                 .animation(.default, value: viewModel.showingScreen)
                 
                 if(viewModel.showingScreen) {
@@ -102,7 +102,7 @@ struct ContentView: View {
                         .scaleEffect(1.5, anchor: .center)
                 }
             }
-            .edgesIgnoringSafeArea(.bottom)
+            .ignoresSafeArea(.container, edges: .bottom)
         }
         .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
             Button("OK") {}

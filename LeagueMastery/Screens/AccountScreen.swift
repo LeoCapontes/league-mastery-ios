@@ -25,8 +25,8 @@ struct AccountScreen: View{
     @Bindable var user: User
     
     @State public var selectedPinnedMetric: String = "Season Milestone"
-    
     @State var champSearchString: String = ""
+    @FocusState var champSearchFocus: Bool
 
     init(
         masteryData: [MasteryResponse],
@@ -164,6 +164,7 @@ struct AccountScreen: View{
                     .padding()
                     .modifier(GlassOrMaterial(materialType: .regularMaterial))
                     .clipShape(Capsule())
+                    .scrollDismissesKeyboard(.interactively)
                 Menu {
                     ForEach(sortOptions, id: \.self){ option in
                         Button(option, action: {toSortBy = option})
@@ -196,7 +197,7 @@ struct AccountScreen: View{
                 ChampionScreen(championData: entry, metrics: metrics[0])
             }
         }
-        .padding(.horizontal, 10)
+        .ignoresSafeArea(.container)
     }
     
     func addToWatchlistCallback(champId: Int) {
