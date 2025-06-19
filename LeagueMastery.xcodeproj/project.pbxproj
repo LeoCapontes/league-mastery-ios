@@ -191,6 +191,7 @@
 		B39DBABB2C43337000194223 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B3E6BB032C06D63F0046C4E2 /* ContentView.swift */,
 				B38CA8612E036F69008EB074 /* PreferencesScreen.swift */,
 				B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */,
 				B39DBABC2C43338600194223 /* AccountScreen.swift */,
@@ -259,7 +260,6 @@
 				B39DBABB2C43337000194223 /* Screens */,
 				B3E6BB2B2C06D9A50046C4E2 /* ViewModel */,
 				B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */,
-				B3E6BB032C06D63F0046C4E2 /* ContentView.swift */,
 				B3E6BB052C06D6420046C4E2 /* Assets.xcassets */,
 				B3E6BB072C06D6420046C4E2 /* Preview Content */,
 				B36301002C41F009000E54AA /* Codables.swift */,
