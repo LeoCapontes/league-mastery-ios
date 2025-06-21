@@ -11,6 +11,8 @@ struct PreferencesScreen: View {
     @AppStorage("LevelUpIndicator")
     private var levelUpIndicator: String = LevelUpIndicatorMode.pip.rawValue
     
+    @State private var showingCacheAlert = false
+    
     var body: some View {
         Form{
             Picker("Level up indicator", selection: $levelUpIndicator) {
@@ -19,19 +21,22 @@ struct PreferencesScreen: View {
                 }
             }
             Section(footer: Text("Clears saved champion splash arts, useful for when a champion's splash art gets updated")){
-                Button(action: clearImageCache){
+                Button(action: { clearImageCache(showingAlert: $showingCacheAlert) }){
                     Text("Clear image cache")
                 }
             }
+        }
+        .alert("Cache cleared", isPresented: $showingCacheAlert) {
+            Button("OK", role: .cancel) {}
         }
         .navigationTitle(Text("Settings"))
     }
 }
 
-func clearImageCache() {
+func clearImageCache(showingAlert: Binding<Bool>) {
     let cache = ImageCache.default
     cache.clearMemoryCache()
-    cache.clearDiskCache()
+    cache.clearDiskCache{showingAlert.wrappedValue = true}
 }
 
 enum LevelUpIndicatorMode: String, CaseIterable, Identifiable {
