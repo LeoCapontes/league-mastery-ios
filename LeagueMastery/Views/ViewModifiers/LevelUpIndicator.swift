@@ -53,7 +53,7 @@ struct Holographic: ViewModifier {
     var offset: CGFloat
     
     var realOffset: CGFloat {
-        return offset.truncatingRemainder(dividingBy: 3170)
+        return offset.truncatingRemainder(dividingBy: 25)
     }
     
     func body(content: Content) -> some View {
@@ -65,7 +65,6 @@ struct Holographic: ViewModifier {
                             Sheen(fx: motion.fx, fy: motion.fy, count: count)
                             Sheen2(fx: motion.fx, fy: motion.fy, count: count)
                         }
-                        
                     }
                     .allowsHitTesting(false)
                     .offset(x: -realOffset*10, y: motion.fy*10)
@@ -79,10 +78,8 @@ struct Holographic: ViewModifier {
                     Group{
                         ForEach(0..<3){ count in
                             Sheen(fx: motion.fx, fy: motion.fy, count: count)
-                            
                             Sheen2(fx: motion.fx, fy: motion.fy, count: count)
                         }
-                        
                     }
                     .allowsHitTesting(false)
                     .offset(x: -realOffset*10, y: motion.fy*10)
@@ -156,10 +153,17 @@ struct Sheen2: View {
 
 
 #Preview{
+    let motionManager = MotionManager()
     let mock = mockMasteryResponse
-    VStack {
-        LargeChampionRow(entry: mock[0])
-            .modifier(Pip())
-        LargeChampionRow(entry: mock[0])
+    ScrollView{
+        VStack {
+            LargeChampionRow(entry: mock[0])
+                .modifier(Pip())
+            ForEach(0..<10) { count in
+                LargeChampionRow(entry: mock[0])
+                    .modifier(Holographic(offset: CGFloat(count)))
+            }
+        }
     }
+    .environmentObject(motionManager)
 }
