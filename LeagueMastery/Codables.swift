@@ -54,7 +54,6 @@ struct PuuidResponse: Codable {
 
 struct SummonerResponse: Codable {
     let id: String
-    let accountId: String
     let puuid: String
     let profileIconId: Int
     let revisionDate: Int
