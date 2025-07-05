@@ -29,6 +29,7 @@
 		B3BF86242D5A70A400915BE6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF86232D5A70A400915BE6 /* User.swift */; };
 		B3BF86282D5A84C900915BE6 /* SearchedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF86272D5A84C900915BE6 /* SearchedUsers.swift */; };
 		B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C134B62CDB0CFA00456A3B /* Utils.swift */; };
+		B3C16EA92E18BC2B00D932BF /* leagueMasteryLogo.icon in Resources */ = {isa = PBXBuildFile; fileRef = B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */; };
 		B3C400F22D98C34300A8A21E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B3C400F12D98C34300A8A21E /* Kingfisher */; };
 		B3C400F42D999AF000A8A21E /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */; };
 		B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C612712CC489CA00C19B0C /* VideoPlayer.swift */; };
@@ -93,6 +94,7 @@
 		B3BF86232D5A70A400915BE6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B3BF86272D5A84C900915BE6 /* SearchedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUsers.swift; sourceTree = "<group>"; };
 		B3C134B62CDB0CFA00456A3B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = leagueMasteryLogo.icon; sourceTree = "<group>"; };
 		B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		B3C612712CC489CA00C19B0C /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		B3C6128A2CC4915900C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
@@ -199,13 +201,6 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		B3C400F02D98C34300A8A21E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B3C612892CC4910C00C19B0C /* Media */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,11 +223,11 @@
 		B3E6BAF52C06D63F0046C4E2 = {
 			isa = PBXGroup;
 			children = (
+				B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */,
 				B32025442D78E85900E6E06E /* Screenshots */,
 				B3E6BB002C06D63F0046C4E2 /* LeagueMastery */,
 				B3E6BB112C06D6420046C4E2 /* LeagueMasteryTests */,
 				B3E6BB1B2C06D6420046C4E2 /* LeagueMasteryUITests */,
-				B3C400F02D98C34300A8A21E /* Frameworks */,
 				B3E6BAFF2C06D63F0046C4E2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -412,6 +407,7 @@
 				B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */,
 				B3C612952CC4915900C19B0C /* 6-loop.mov in Resources */,
 				B3B4F6BE2D41641200F5F514 /* crest-aurora-loop.mov in Resources */,
+				B3C16EA92E18BC2B00D932BF /* leagueMasteryLogo.icon in Resources */,
 				B3C612962CC4915900C19B0C /* 5-loop.mov in Resources */,
 				B3C612972CC4915900C19B0C /* 7-loop.mov in Resources */,
 				B3C612982CC4915900C19B0C /* 10-loop.mov in Resources */,
@@ -630,8 +626,9 @@
 		B3E6BB232C06D6420046C4E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = leagueMasteryLogo;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeagueMastery/Preview Content\"";
@@ -662,8 +659,9 @@
 		B3E6BB242C06D6420046C4E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = leagueMasteryLogo;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LeagueMastery/Preview Content\"";
