@@ -198,6 +198,7 @@ struct AccountScreen: View{
             }
         }
         .ignoresSafeArea(.container)
+        .padding(.horizontal, 6)
     }
     
     func addToWatchlistCallback(champId: Int) {

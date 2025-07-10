@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import Variablur
 
 struct ContentView: View {
     let gradient = LinearGradient(
@@ -20,6 +21,7 @@ struct ContentView: View {
     
     @State private var viewModel: ViewModel
     @FocusState private var fieldFocused: Bool
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     
     init(modelContext: ModelContext) {
            let viewModel = ViewModel(modelContext: modelContext)
@@ -46,12 +48,24 @@ struct ContentView: View {
                         .padding(24)
                     }
                 }
-// Old background
-//                Image("background-mastery")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .frame(minWidth: 0, maxWidth: .infinity)
-//                    .edgesIgnoringSafeArea(.all)
+ 
+            Image("background-mastery")
+                .resizable()
+                .brightness(colorScheme == .light ? 0 : -0.05)
+                .saturation(colorScheme == .light ? 1 : 1)
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .edgesIgnoringSafeArea(.all)
+                .variableBlur(radius: 200) { geometryProxy, context in
+                    // add a blur to the mask to smooth out where the variable blur begins
+                    context.addFilter(.blur(radius: 30))
+                    
+                    context.fill(
+                        Path(CGRect(origin: .zero, size: geometryProxy.size)),
+                        with: .color(.white)
+                    )
+                }
+                .allowsHitTesting(false)
                 VStack{
                     HStack{
                         if(viewModel.showingScreen) {
