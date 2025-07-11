@@ -203,8 +203,8 @@ struct SortSearchContainer: View {
     
     var body: some View{
         if #available(iOS 26.0, *){
-            GlassEffectContainer{
-                HStack{
+            GlassEffectContainer(){
+                HStack(){
                     TextField("", text: $searchString, prompt: Text("Search Champions..."))
                         .padding()
                         .clipShape(Capsule())
@@ -277,20 +277,24 @@ struct GlassOrMaterial: ViewModifier {
 
 #Preview {
     let mock = mockMasteryResponse
-    AccountScreen(
-        masteryData: Array<MasteryResponse>(mock[1...12]),
-        user: User(
-            puuid: "d",
-            name: "Hide on Bush",
-            tagline: "KR1",
-            region: "Korea",
-            server: "Asia",
-            profileIconId: 1,
-            summonerLevel: 999,
-            masteryScore: 999
-        ),
-        addToWatchlist: callbackPlaceholder,
-        removeFromWatchlist: callbackPlaceholder
-    )
-    .ignoresSafeArea(edges: .bottom)
+    ZStack{
+        BackgroundImage()
+        AccountScreen(
+            masteryData: Array<MasteryResponse>(mock[1...12]),
+            user: User(
+                puuid: "d",
+                name: "Hide on Bush",
+                tagline: "KR1",
+                region: "Korea",
+                server: "Asia",
+                profileIconId: 1,
+                summonerLevel: 999,
+                masteryScore: 999
+            ),
+            addToWatchlist: callbackPlaceholder,
+            removeFromWatchlist: callbackPlaceholder
+        )
+        .padding(.top)
+        .ignoresSafeArea(edges: .bottom)
+    }
 }

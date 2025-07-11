@@ -50,33 +50,36 @@ struct StickyHeaderScrollView<Content:View>: View {
                     // workaround animations being affected by scrolling by
                     // overlaying the text on top of the scroll view rather
                     // than inside of it
-                    HStack(){
-                        // placeholder summoner icon
-                        if !yOffset {
-                            KFImage(URL(string: profileIconUrl(profileIconId: iconId)))
-                                .resizable()
-                                .frame(width: 56, height: 56)
-                                .background(.gray)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                    if #available(iOS 26.0, *){
+                        StickyHeader(
+                            geo: geo,
+                            name: name,
+                            iconId: iconId,
+                            score: score,
+                            tag: tag,
+                            yOffset: $yOffset,
+                            headerHeight: $headerHeight
+                        )
+                        .if(yOffset){ view in
+                            view.glassEffect(in: UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20, bottomLeading: 1, bottomTrailing: 1, topTrailing: 20)))
                         }
-                        VStack(alignment:.leading){
-                            HStack{
-                                Text(name)
-                                Text("#\(tag)")
-                            }
-                            if !yOffset {Text("Score: \(score)")}
+                    } else {
+                        StickyHeader(
+                            geo: geo,
+                            name: name,
+                            iconId: iconId,
+                            score: score,
+                            tag: tag,
+                            yOffset: $yOffset,
+                            headerHeight: $headerHeight
+                        )
+                        .if(yOffset){ view in
+                            view.background(.thinMaterial)
                         }
                     }
-                    .padding(.horizontal)
-                    .frame(
-                        width: geo.size.width,
-                        height: headerHeight,
-                        alignment: .leading
-                    )
-                    .modifier(GlassOrMaterial(materialType: .ultraThinMaterial))
-                    .zIndex(yOffset ? 0 : -1)
-                    .animation(.default, value: headerHeight)
                 }
+                .zIndex(yOffset ? 0 : -1)
+                .animation(.default, value: headerHeight)
                 .clipShape(
                     RoundedRectangle(
                         cornerRadius: ClipRadius()
@@ -86,6 +89,43 @@ struct StickyHeaderScrollView<Content:View>: View {
         } else {
             // TODO: Fallback on earlier versions
         }
+    }
+}
+
+struct StickyHeader: View {
+    var geo: GeometryProxy
+    
+    var name: String
+    var iconId: Int
+    var score: Int
+    var tag: String
+    @Binding var yOffset: Bool
+    @Binding var headerHeight: CGFloat
+    
+    var body: some View {
+        HStack(){
+            // placeholder summoner icon
+            if !yOffset {
+                KFImage(URL(string: profileIconUrl(profileIconId: iconId)))
+                    .resizable()
+                    .frame(width: 56, height: 56)
+                    .background(.gray)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            VStack(alignment:.leading){
+                HStack{
+                    Text(name)
+                    Text("#\(tag)")
+                }
+                if !yOffset {Text("Score: \(score)")}
+            }
+        }
+        .padding(.horizontal)
+        .frame(
+            width: geo.size.width,
+            height: headerHeight,
+            alignment: .leading
+        )
     }
 }
 
