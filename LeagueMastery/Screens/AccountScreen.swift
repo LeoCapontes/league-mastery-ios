@@ -45,7 +45,6 @@ struct AccountScreen: View{
     
     @State private var isFavourite = false
     
-    var sortOptions = ["Score", "Level", "Milestone", "Alphabetical"]
     @State private var toSortBy = "Score"
     @State private var sortAsc = false
     
@@ -159,33 +158,9 @@ struct AccountScreen: View{
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
             }
-            HStack{
-                TextField("", text: $champSearchString, prompt: Text("Search Champions..."))
-                    .padding()
-                    .modifier(GlassOrMaterial(materialType: .regularMaterial))
-                    .clipShape(Capsule())
-                    .scrollDismissesKeyboard(.interactively)
-                Menu {
-                    ForEach(sortOptions, id: \.self){ option in
-                        Button(option, action: {toSortBy = option})
-                    }
-                    Section{
-                        Button(sortAsc ? "Ascending" : "Descending", action : {sortAsc = !sortAsc})
-                    }
-                    .menuActionDismissBehavior(.disabled)
-                } label : {
-                    ZStack{
-                        HStack{
-                            Image(systemName: sortAsc ? "arrow.up" : "arrow.down")
-                            Text("\(toSortBy)")
-                        }
-                        .foregroundStyle(.blue)
-                        .padding()
-                    }
-                }
-                .modifier(GlassOrMaterial(materialType: .regularMaterial))
-                .clipShape(Capsule())
-            }
+            SortSearchContainer(
+                searchString: $champSearchString, toSortBy: $toSortBy, sortAsc: $sortAsc
+            )
             .padding()
         }
         .environmentObject(motionManager)
@@ -217,6 +192,75 @@ func canLevelUp(_ entry: MasteryResponse) -> Bool{
 
 func callbackPlaceholder(_ x: User, _ y: Int) -> Void {
     
+}
+
+struct SortSearchContainer: View {
+    @Binding var searchString: String
+    @Binding var toSortBy: String
+    @Binding var sortAsc: Bool
+    
+    let sortOptions = ["Score", "Level", "Milestone", "Alphabetical"]
+    
+    var body: some View{
+        if #available(iOS 26.0, *){
+            GlassEffectContainer{
+                HStack{
+                    TextField("", text: $searchString, prompt: Text("Search Champions..."))
+                        .padding()
+                        .clipShape(Capsule())
+                        .scrollDismissesKeyboard(.interactively)
+                        .glassEffect()
+                    Menu {
+                        ForEach(sortOptions, id: \.self){ option in
+                            Button(option, action: {toSortBy = option})
+                        }
+                        Section{
+                            Button(sortAsc ? "Ascending" : "Descending", action : {sortAsc = !sortAsc})
+                        }
+                        .menuActionDismissBehavior(.disabled)
+                    } label : {
+                        ZStack{
+                            HStack{
+                                Image(systemName: sortAsc ? "arrow.up" : "arrow.down")
+                                Text("\(toSortBy)")
+                            }
+                            .foregroundStyle(.blue)
+                            .padding(10)
+                        }
+                    }
+                    .glassEffect()
+                }
+            }
+        }else {
+            HStack{
+                TextField("", text: $searchString, prompt: Text("Search Champions..."))
+                    .padding()
+                    .modifier(GlassOrMaterial(materialType: .regularMaterial))
+                    .clipShape(Capsule())
+                    .scrollDismissesKeyboard(.interactively)
+                Menu {
+                    ForEach(sortOptions, id: \.self){ option in
+                        Button(option, action: {toSortBy = option})
+                    }
+                    Section{
+                        Button(sortAsc ? "Ascending" : "Descending", action : {sortAsc = !sortAsc})
+                    }
+                    .menuActionDismissBehavior(.disabled)
+                } label : {
+                    ZStack{
+                        HStack{
+                            Image(systemName: sortAsc ? "arrow.up" : "arrow.down")
+                            Text("\(toSortBy)")
+                        }
+                        .foregroundStyle(.blue)
+                        .padding()
+                    }
+                }
+                .modifier(GlassOrMaterial(materialType: .regularMaterial))
+                .clipShape(Capsule())
+            }
+        }
+    }
 }
 
 struct GlassOrMaterial: ViewModifier {
