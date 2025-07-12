@@ -53,7 +53,6 @@ struct PuuidResponse: Codable {
 }
 
 struct SummonerResponse: Codable {
-    let id: String
     let puuid: String
     let profileIconId: Int
     let revisionDate: Int
