@@ -128,7 +128,7 @@ func masteryScoreApiCall(
 }
 
 func profileIconUrl(profileIconId: Int) -> String {
-    return "https://ddragon.leagueoflegends.com/cdn/15.7.1/img/profileicon/\(profileIconId).png"
+    return "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/\(profileIconId).jpg"
 }
 
 func versionApiCall() async throws -> [String]{
