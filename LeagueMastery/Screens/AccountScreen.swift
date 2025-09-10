@@ -44,7 +44,6 @@ struct AccountScreen: View{
     }
     
     @State private var isFavourite = false
-    
     @State private var toSortBy = "Score"
     @State private var sortAsc = false
     
@@ -225,13 +224,13 @@ struct SortSearchContainer: View {
                                 Text("\(toSortBy)")
                             }
                             .foregroundStyle(.blue)
-                            .padding(10)
+                            .padding()
                         }
                     }
                     .glassEffect()
                 }
             }
-        }else {
+        } else {
             HStack{
                 TextField("", text: $searchString, prompt: Text("Search Champions..."))
                     .padding()

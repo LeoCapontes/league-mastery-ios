@@ -30,6 +30,7 @@
 		B3BF86282D5A84C900915BE6 /* SearchedUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BF86272D5A84C900915BE6 /* SearchedUsers.swift */; };
 		B3C134B72CDB0CFE00456A3B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C134B62CDB0CFA00456A3B /* Utils.swift */; };
 		B3C16EA92E18BC2B00D932BF /* leagueMasteryLogo.icon in Resources */ = {isa = PBXBuildFile; fileRef = B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */; };
+		B3C3676A2E71A2DD00F45119 /* leagueMasteryLogo 3.icon in Resources */ = {isa = PBXBuildFile; fileRef = B3C367692E71A2DD00F45119 /* leagueMasteryLogo 3.icon */; };
 		B3C400F22D98C34300A8A21E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B3C400F12D98C34300A8A21E /* Kingfisher */; };
 		B3C400F42D999AF000A8A21E /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */; };
 		B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C612712CC489CA00C19B0C /* VideoPlayer.swift */; };
@@ -43,7 +44,6 @@
 		B3C6129B2CC4915900C19B0C /* 3-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128C2CC4915900C19B0C /* 3-loop.mov */; };
 		B3C6129C2CC4915900C19B0C /* 8-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612912CC4915900C19B0C /* 8-loop.mov */; };
 		B3C6129D2CC4915900C19B0C /* 9-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C612922CC4915900C19B0C /* 9-loop.mov */; };
-		B3CBA0EA2E1E035C00EDC36E /* leagueMasteryLogo 2.icon in Resources */ = {isa = PBXBuildFile; fileRef = B3CBA0E92E1E035C00EDC36E /* leagueMasteryLogo 2.icon */; };
 		B3DF70992D9C5854006E9671 /* Variablur in Frameworks */ = {isa = PBXBuildFile; productRef = B3DF70982D9C5854006E9671 /* Variablur */; };
 		B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */; };
 		B3E6BB042C06D63F0046C4E2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6BB032C06D63F0046C4E2 /* ContentView.swift */; };
@@ -96,6 +96,7 @@
 		B3BF86272D5A84C900915BE6 /* SearchedUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUsers.swift; sourceTree = "<group>"; };
 		B3C134B62CDB0CFA00456A3B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = leagueMasteryLogo.icon; sourceTree = "<group>"; };
+		B3C367692E71A2DD00F45119 /* leagueMasteryLogo 3.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "leagueMasteryLogo 3.icon"; sourceTree = "<group>"; };
 		B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		B3C612712CC489CA00C19B0C /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		B3C6128A2CC4915900C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
@@ -109,7 +110,6 @@
 		B3C612922CC4915900C19B0C /* 9-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "9-loop.mov"; sourceTree = "<group>"; };
 		B3C612932CC4915900C19B0C /* 10-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "10-loop.mov"; sourceTree = "<group>"; };
 		B3CAC74B2CF55D4900465361 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B3CBA0E92E1E035C00EDC36E /* leagueMasteryLogo 2.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "leagueMasteryLogo 2.icon"; sourceTree = "<group>"; };
 		B3E6BAFE2C06D63F0046C4E2 /* LeagueMastery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeagueMastery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E6BB012C06D63F0046C4E2 /* LeagueMasteryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueMasteryApp.swift; sourceTree = "<group>"; };
 		B3E6BB032C06D63F0046C4E2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */,
-				B3CBA0E92E1E035C00EDC36E /* leagueMasteryLogo 2.icon */,
+				B3C367692E71A2DD00F45119 /* leagueMasteryLogo 3.icon */,
 				B32025442D78E85900E6E06E /* Screenshots */,
 				B3E6BB002C06D63F0046C4E2 /* LeagueMastery */,
 				B3E6BB112C06D6420046C4E2 /* LeagueMasteryTests */,
@@ -417,11 +417,11 @@
 				B3C612992CC4915900C19B0C /* 4-loop.mov in Resources */,
 				B31E27982DA747EE006CB79E /* crest-aurora-loop-new.mov in Resources */,
 				B3C6129A2CC4915900C19B0C /* 2-loop.mov in Resources */,
-				B3CBA0EA2E1E035C00EDC36E /* leagueMasteryLogo 2.icon in Resources */,
 				B3C6129B2CC4915900C19B0C /* 3-loop.mov in Resources */,
 				B3C6129C2CC4915900C19B0C /* 8-loop.mov in Resources */,
 				B3C6129D2CC4915900C19B0C /* 9-loop.mov in Resources */,
 				B3E6BB092C06D6420046C4E2 /* Preview Assets.xcassets in Resources */,
+				B3C3676A2E71A2DD00F45119 /* leagueMasteryLogo 3.icon in Resources */,
 				B3E6BB062C06D6420046C4E2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -630,7 +630,7 @@
 		B3E6BB232C06D6420046C4E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "leagueMasteryLogo 2";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "leagueMasteryLogo 3";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -663,7 +663,7 @@
 		B3E6BB242C06D6420046C4E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "leagueMasteryLogo 2";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "leagueMasteryLogo 3";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;

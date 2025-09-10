@@ -1,0 +1,190 @@
+{
+  "fill" : {
+    "automatic-gradient" : "srgb:0.10372,0.14605,0.18397,1.00000"
+  },
+  "groups" : [
+    {
+      "hidden" : false,
+      "layers" : [
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.91548,0.92428,0.95069,1.00000",
+              "display-p3:0.81961,0.99216,0.99608,1.00000"
+            ]
+          },
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "gem.svg",
+          "name" : "gem",
+          "opacity" : 1,
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              50
+            ]
+          }
+        },
+        {
+          "blend-mode" : "normal",
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.98039,0.83242,0.52941,1.00000",
+              "display-p3:0.76471,0.55962,0.31353,1.00000"
+            ]
+          },
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "midcrest.svg",
+          "name" : "midcrest",
+          "opacity" : 1,
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              50
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.60392,0.40744,0.20533,1.00000",
+              "display-p3:0.32941,0.18528,0.12188,1.00000"
+            ]
+          },
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "crest_bg.svg",
+          "name" : "crest_bg",
+          "opacity" : 0.99,
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              84
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.82745,0.60455,0.28133,1.00000",
+              "display-p3:0.61176,0.37209,0.15906,1.00000"
+            ]
+          },
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "inner_ring.svg",
+          "name" : "inner_ring",
+          "opacity" : 0.99,
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              -17
+            ]
+          }
+        },
+        {
+          "blend-mode" : "normal",
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.95686,0.85609,0.45929,1.00000",
+              "display-p3:0.61176,0.38466,0.20188,1.00000"
+            ]
+          },
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "top_wing.svg",
+          "name" : "top_wing",
+          "opacity" : 0.95,
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              5
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "display-p3:0.08429,0.22381,0.40138,1.00000"
+          },
+          "hidden" : false,
+          "image-name" : "wings_2.svg",
+          "name" : "wings_2",
+          "opacity" : 0.95,
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              -32
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "display-p3:0.08429,0.22381,0.40138,0.81448"
+          },
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "wings3.svg",
+          "name" : "wings3",
+          "opacity" : 0.9,
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              72
+            ]
+          }
+        },
+        {
+          "fill-specializations" : [
+            {
+              "value" : {
+                "linear-gradient" : [
+                  "display-p3:0.82246,0.90771,0.96783,1.00000",
+                  "extended-srgb:0.00000,0.53333,1.00000,1.00000"
+                ]
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "automatic-gradient" : "display-p3:1.00000,0.81093,0.50170,1.00000"
+              }
+            }
+          ],
+          "glass" : false,
+          "hidden" : true,
+          "image-name" : "drawing.svg",
+          "name" : "drawing",
+          "position" : {
+            "scale" : 2.75,
+            "translation-in-points" : [
+              0,
+              -25
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
