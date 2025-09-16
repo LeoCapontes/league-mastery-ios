@@ -90,6 +90,7 @@ struct ContentView: View {
                             addToWatchlist: viewModel.addToWatchlist,
                             removeFromWatchlist: viewModel.removeFromWatchlist
                         )
+                        .swipeBack($viewModel.showingScreen)
                         .transition(.slide)
                         .onAppear(perform: {fieldFocused = false})
                     }
@@ -215,6 +216,48 @@ struct BackgroundImage: View{
                 )
             }
             .allowsHitTesting(false)
+    }
+}
+
+struct SwipeBack: ViewModifier {
+    @Binding var isPresented: Bool
+    @State var xDragAmount = 0.0
+    @State var opacityAmount = 1.0
+    
+    func body(content: Content) -> some View {
+        content
+            .offset(x: xDragAmount)
+            .opacity(opacityAmount)
+            .gesture(
+                DragGesture()
+                    .onChanged{ drag in
+                        withAnimation {
+                            xDragAmount = drag.translation.width
+                            if drag.translation.width < 25 {
+                                opacityAmount = (25 - xDragAmount) / 100
+                            } else {
+                                opacityAmount = 0
+                            }
+                        }
+                    }
+                    .onEnded { drag in
+                        withAnimation {
+                            if drag.translation.width > 25 {
+                                isPresented = false
+                                opacityAmount = 0
+                            } else {
+                                xDragAmount = 0
+                                opacityAmount = 1
+                            }
+                        }
+                    }
+            )
+    }
+}
+
+extension View {
+    func swipeBack(_ isPresented: Binding<Bool>) -> some View {
+        modifier(SwipeBack(isPresented: isPresented))
     }
 }
 
