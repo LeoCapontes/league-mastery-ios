@@ -228,21 +228,23 @@ struct SwipeBack: ViewModifier {
         content
             .offset(x: xDragAmount)
             .opacity(opacityAmount)
-            .gesture(
+            .simultaneousGesture(
                 DragGesture()
                     .onChanged{ drag in
                         withAnimation {
-                            xDragAmount = drag.translation.width
-                            if drag.translation.width < 25 {
-                                opacityAmount = (25 - xDragAmount) / 100
-                            } else {
-                                opacityAmount = 0
+                            if abs(drag.translation.width) > abs(drag.translation.height) {
+                                xDragAmount = drag.translation.width
+                                if drag.translation.width < 100 {
+                                    opacityAmount = (100 - xDragAmount) / 100
+                                } else {
+                                    opacityAmount = 0
+                                }
                             }
                         }
                     }
                     .onEnded { drag in
                         withAnimation {
-                            if drag.translation.width > 25 {
+                            if drag.translation.width > 100 {
                                 isPresented = false
                                 opacityAmount = 0
                             } else {
