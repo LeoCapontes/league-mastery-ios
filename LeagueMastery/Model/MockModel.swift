@@ -26,3 +26,16 @@ var mockMasteryResponse: [MasteryResponse] {
         return []
     }
 }
+
+
+var mockUser: User = User(
+    puuid: "123",
+    name: "user",
+    tagline: "#region",
+    isFavourite: false,
+    region: "region",
+    server: "server",
+    profileIconId: 1,
+    summonerLevel: 1,
+    masteryScore: 999
+)

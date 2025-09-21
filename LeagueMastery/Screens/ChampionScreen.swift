@@ -59,6 +59,11 @@ struct ChampionScreen: View {
     var championData: MasteryResponse
     var metrics: MasteryResponseMetrics
     
+    init(championData: MasteryResponse) {
+        self.championData = championData
+        self.metrics = GetResponseMetrics(championData)
+    }
+    
     @State var bgColor: Color = Color("BGColor")
     @State var champImage: ChampionImage? = nil
     
@@ -340,5 +345,5 @@ struct MasteryMarks: View {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[10], metrics: GetResponseMetrics(mock)[1])
+    ChampionScreen(championData: mock[10])
 }

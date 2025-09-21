@@ -11,14 +11,7 @@ import SwiftUI
 struct AccountScreen: View{
     
     let motionManager = MotionManager()
-    
     let masteryData: [MasteryResponse]
-    let metrics: [MasteryResponseMetrics]
-    
-    // two lookup dictionaries that use champion id as a shared key
-    let masteryDictionary: [Int: MasteryResponse]
-    let metricsDictionary: [Int: MasteryResponseMetrics]
-    
     var addToWatchlist: (User, Int) -> Void
     var removeFromWatchlist: (User, Int) -> Void
     
@@ -35,9 +28,6 @@ struct AccountScreen: View{
         removeFromWatchlist: @escaping (User, Int) -> Void
     ) {
         self.masteryData = masteryData
-        self.metrics = GetResponseMetrics(masteryData)
-        self.masteryDictionary = Dictionary(uniqueKeysWithValues: masteryData.map { ($0.championId, $0) })
-        self.metricsDictionary = Dictionary(uniqueKeysWithValues: metrics.map { ($0.championId, $0) })
         self.user = user
         self.addToWatchlist = addToWatchlist
         self.removeFromWatchlist = removeFromWatchlist
@@ -135,7 +125,7 @@ struct AccountScreen: View{
                     if (user.championWatchlist.count > 0){
                         Watchlist(content: {
                             ForEach(watchedChampions, id: \.self){ entry in
-                                NavigationLink(value: entry){
+                                NavigationLink(value: Route.champion(entry)){
                                     WatchlistItem(
                                         entry: entry,
                                         metric: selectedPinnedMetric,
@@ -147,7 +137,7 @@ struct AccountScreen: View{
                     }
                     
                     ForEach(Array(searchResult.enumerated()), id: \.element) { (index, entry) in
-                        NavigationLink(value: entry) {
+                        NavigationLink(value: Route.champion(entry)) {
                             LargeChampionRow(entry: entry, addToWatchList: addToWatchlistCallback)
                                 .if(canLevelUp(entry)) { view in
                                     view.modifier(LevelUpIndicator(offset: CGFloat(index)))
@@ -163,14 +153,6 @@ struct AccountScreen: View{
             .padding()
         }
         .environmentObject(motionManager)
-        .navigationDestination(for: MasteryResponse.self){ entry in
-            if let metric = metricsDictionary[entry.championId] {
-                ChampionScreen(championData: entry, metrics: metric)
-            } else {
-                //TODO: this is a placeholder, handle this gracefully
-                ChampionScreen(championData: entry, metrics: metrics[0])
-            }
-        }
         .ignoresSafeArea(.container)
         .padding(.horizontal, 6)
     }

@@ -20,6 +20,7 @@ struct ContentView: View {
     
     
     @State private var viewModel: ViewModel
+
     @FocusState private var fieldFocused: Bool
     
     init(modelContext: ModelContext) {
@@ -28,7 +29,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationStack{
+        NavigationStack(){
             ZStack{
                 Rectangle()
                     .ignoresSafeArea(.container, edges: .all)
@@ -69,6 +70,11 @@ struct ContentView: View {
                         
                         Button(action: SearchSummoner) {
                             Text("Search")
+                            NavigationLink(value: Route.account) {
+                                if(viewModel.showingScreen) {
+                                    Text("Search")
+                                }
+                            }
                         }
                     }
                     .padding(.horizontal, 10)
@@ -83,17 +89,6 @@ struct ContentView: View {
                         }
                     }
                     
-                    if(viewModel.showingScreen) {
-                        AccountScreen(
-                            masteryData: viewModel.response!,
-                            user: viewModel.userToDisplay!,
-                            addToWatchlist: viewModel.addToWatchlist,
-                            removeFromWatchlist: viewModel.removeFromWatchlist
-                        )
-                        .swipeBack($viewModel.showingScreen)
-                        .transition(.slide)
-                        .onAppear(perform: {fieldFocused = false})
-                    }
                 }
                 .foregroundColor(.white)
                 .ignoresSafeArea(.container, edges: .bottom)
@@ -114,6 +109,24 @@ struct ContentView: View {
                 }
             }
             .ignoresSafeArea(.container, edges: .bottom)
+//            .navigationDestination(for: MasteryResponse.self){ entry in
+//                let metric = GetResponseMetrics(viewModel.response!)[entry.championId]
+//                ChampionScreen(championData: entry, metrics: metric)
+//            }
+            .navigationDestination(for: Route.self) { route in
+                switch route{
+                case .account:
+                    AccountScreen(
+                        masteryData: viewModel.response!,
+                        user: viewModel.userToDisplay ?? mockUser,
+                        addToWatchlist: viewModel.addToWatchlist,
+                        removeFromWatchlist: viewModel.removeFromWatchlist
+                    )
+                case .champion(let masteryResponse):
+                    ChampionScreen(championData: masteryResponse)
+                }
+                
+            }
         }
         .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
             Button("OK") {}
@@ -218,51 +231,6 @@ struct BackgroundImage: View{
             .allowsHitTesting(false)
     }
 }
-
-struct SwipeBack: ViewModifier {
-    @Binding var isPresented: Bool
-    @State var xDragAmount = 0.0
-    @State var opacityAmount = 1.0
-    
-    func body(content: Content) -> some View {
-        content
-            .offset(x: xDragAmount)
-            .opacity(opacityAmount)
-            .simultaneousGesture(
-                DragGesture()
-                    .onChanged{ drag in
-                        withAnimation {
-                            if abs(drag.translation.width) > abs(drag.translation.height) {
-                                xDragAmount = drag.translation.width
-                                if drag.translation.width < 100 {
-                                    opacityAmount = (100 - xDragAmount) / 100
-                                } else {
-                                    opacityAmount = 0
-                                }
-                            }
-                        }
-                    }
-                    .onEnded { drag in
-                        withAnimation {
-                            if drag.translation.width > 100 {
-                                isPresented = false
-                                opacityAmount = 0
-                            } else {
-                                xDragAmount = 0
-                                opacityAmount = 1
-                            }
-                        }
-                    }
-            )
-    }
-}
-
-extension View {
-    func swipeBack(_ isPresented: Binding<Bool>) -> some View {
-        modifier(SwipeBack(isPresented: isPresented))
-    }
-}
-
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
