@@ -15,6 +15,7 @@ extension ContentView {
         var modelContext: ModelContext
         var users = [User]()
         var userToDisplay: User?
+        var path = [Route]()
         
         var sumName: String = ""
         var sumTag: String = ""
@@ -99,6 +100,7 @@ extension ContentView {
 #endif
                             showingProgress = false
                             showingScreen = true
+                            path.append(.account)
                         } else {
                             print("couldnt assign user")
                         }
@@ -158,6 +160,7 @@ extension ContentView {
 #endif
                         showingProgress = false
                         showingScreen = true
+                        path.append(.account)
                     } else {
                         print("couldnt select user")
                     }

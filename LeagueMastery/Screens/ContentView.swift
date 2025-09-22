@@ -20,7 +20,6 @@ struct ContentView: View {
     
     
     @State private var viewModel: ViewModel
-
     @FocusState private var fieldFocused: Bool
     
     init(modelContext: ModelContext) {
@@ -29,39 +28,26 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationStack(){
+        NavigationStack(path: $viewModel.path){
             ZStack{
                 Rectangle()
                     .ignoresSafeArea(.container, edges: .all)
                     .foregroundStyle(Color("BGColor"))
-                if(!viewModel.showingScreen){
-                    VStack{
+                VStack{
+                    Spacer()
+                    HStack{
                         Spacer()
-                        HStack{
-                            Spacer()
-                            NavigationLink(destination: PreferencesScreen()) {
-                                Image(systemName: "gearshape.fill")
-                                    .foregroundStyle(.white)
-                                    .font(.system(size: 24))
-                            }
+                        NavigationLink(destination: PreferencesScreen()) {
+                            Image(systemName: "gearshape.fill")
+                                .foregroundStyle(.white)
+                                .font(.system(size: 24))
                         }
-                        .padding(24)
                     }
+                    .padding(24)
                 }
                 BackgroundImage()
                 VStack{
                     HStack{
-                        if(viewModel.showingScreen) {
-                            Button(action: {viewModel.showingScreen = false}){
-                                Image(systemName: "chevron.backward")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width:12)
-                                    .padding(.horizontal)
-                                    .foregroundStyle(.white)
-                            }
-                            .transition(.opacity)
-                       }
                         SummonerSearchField(
                             viewModel: $viewModel,
                             fieldFocused: $fieldFocused,
@@ -70,23 +56,16 @@ struct ContentView: View {
                         
                         Button(action: SearchSummoner) {
                             Text("Search")
-                            NavigationLink(value: Route.account) {
-                                if(viewModel.showingScreen) {
-                                    Text("Search")
-                                }
-                            }
                         }
                     }
                     .padding(.horizontal, 10)
-                    
-                    if(!viewModel.showingScreen) {
-                        VStack(alignment: .leading){
-                            SearchedUsers(
-                                sort: SortDescriptor(\User.isFavourite, order: .reverse),
-                                searchFunc: viewModel.searchSumm(name:tag:region:server:),
-                                clearSearches: viewModel.deleteAllUsers
-                            )
-                        }
+                
+                    VStack(alignment: .leading){
+                        SearchedUsers(
+                            sort: SortDescriptor(\User.isFavourite, order: .reverse),
+                            searchFunc: viewModel.searchSumm(name:tag:region:server:),
+                            clearSearches: viewModel.deleteAllUsers
+                        )
                     }
                     
                 }
@@ -94,14 +73,14 @@ struct ContentView: View {
                 .ignoresSafeArea(.container, edges: .bottom)
                 .animation(.default, value: viewModel.showingScreen)
                 
-                if(viewModel.showingScreen) {
-                    VStack{
-                        Spacer()
-                        Rectangle()
-                            .frame(height: 84)
-                            .foregroundStyle(gradient)
-                    }.allowsHitTesting(false)
-                }
+//                if(viewModel.showingScreen) {
+//                    VStack{
+//                        Spacer()
+//                        Rectangle()
+//                            .frame(height: 84)
+//                            .foregroundStyle(gradient)
+//                    }.allowsHitTesting(false)
+//                }
                 if(viewModel.showingProgress){
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
@@ -109,10 +88,6 @@ struct ContentView: View {
                 }
             }
             .ignoresSafeArea(.container, edges: .bottom)
-//            .navigationDestination(for: MasteryResponse.self){ entry in
-//                let metric = GetResponseMetrics(viewModel.response!)[entry.championId]
-//                ChampionScreen(championData: entry, metrics: metric)
-//            }
             .navigationDestination(for: Route.self) { route in
                 switch route{
                 case .account:
@@ -184,7 +159,7 @@ struct SummonerSearchField: View {
                     searchSummoner()
                 }
 //                .padding(.horizontal)
-                .padding(.vertical, viewModel.showingScreen ? 2: 18)
+                .padding(.vertical, 12)
                 
                 
                 Picker("Region", selection: $viewModel.selectedServer){
@@ -203,9 +178,7 @@ struct SummonerSearchField: View {
                 .opacity(0.2))
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
-        .frame(height: viewModel.showingScreen ? 36 : 64)
-        .animation(.default, value: viewModel.showingScreen)
-//        .border(.green)
+        .frame(height: 64)
     }
 }
 
