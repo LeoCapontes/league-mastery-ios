@@ -28,83 +28,83 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationStack(path: $viewModel.path){
-            ZStack{
-                Rectangle()
-                    .ignoresSafeArea(.container, edges: .all)
-                    .foregroundStyle(Color("BGColor"))
-                VStack{
-                    Spacer()
-                    HStack{
+        ZStack{
+            BackgroundImage()
+            NavigationStack(path: $viewModel.path){
+                ZStack{
+                    VStack{
                         Spacer()
-                        NavigationLink(destination: PreferencesScreen()) {
-                            Image(systemName: "gearshape.fill")
-                                .foregroundStyle(.white)
-                                .font(.system(size: 24))
+                        HStack{
+                            Spacer()
+                            NavigationLink(destination: PreferencesScreen()) {
+                                Image(systemName: "gearshape.fill")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 24))
+                            }
                         }
+                        .padding(24)
                     }
-                    .padding(24)
-                }
-                BackgroundImage()
-                VStack{
-                    HStack{
-                        SummonerSearchField(
-                            viewModel: $viewModel,
-                            fieldFocused: $fieldFocused,
-                            searchSummoner: SearchSummoner
-                        )
+                    VStack{
+                        HStack{
+                            SummonerSearchField(
+                                viewModel: $viewModel,
+                                fieldFocused: $fieldFocused,
+                                searchSummoner: SearchSummoner
+                            )
+                            
+                            Button(action: SearchSummoner) {
+                                Text("Search")
+                            }
+                        }
+                        .padding(.horizontal, 10)
                         
-                        Button(action: SearchSummoner) {
-                            Text("Search")
+                        VStack(alignment: .leading){
+                            SearchedUsers(
+                                sort: SortDescriptor(\User.isFavourite, order: .reverse),
+                                searchFunc: viewModel.searchSumm(name:tag:region:server:),
+                                clearSearches: viewModel.deleteAllUsers
+                            )
                         }
+                        
                     }
-                    .padding(.horizontal, 10)
-                
-                    VStack(alignment: .leading){
-                        SearchedUsers(
-                            sort: SortDescriptor(\User.isFavourite, order: .reverse),
-                            searchFunc: viewModel.searchSumm(name:tag:region:server:),
-                            clearSearches: viewModel.deleteAllUsers
+                    .foregroundColor(.white)
+                    .ignoresSafeArea(.container, edges: .bottom)
+                    .animation(.default, value: viewModel.showingScreen)
+                    
+                    //                if(viewModel.showingScreen) {
+                    //                    VStack{
+                    //                        Spacer()
+                    //                        Rectangle()
+                    //                            .frame(height: 84)
+                    //                            .foregroundStyle(gradient)
+                    //                    }.allowsHitTesting(false)
+                    //                }
+                    if(viewModel.showingProgress){
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(1.5, anchor: .center)
+                    }
+                }
+                .ignoresSafeArea(.container, edges: .bottom)
+                .navigationDestination(for: Route.self) { route in
+                    switch route{
+                    case .account:
+                        AccountScreen(
+                            masteryData: viewModel.response!,
+                            user: viewModel.userToDisplay ?? mockUser,
+                            addToWatchlist: viewModel.addToWatchlist,
+                            removeFromWatchlist: viewModel.removeFromWatchlist
                         )
+                    case .champion(let masteryResponse):
+                        ChampionScreen(championData: masteryResponse)
                     }
                     
                 }
-                .foregroundColor(.white)
-                .ignoresSafeArea(.container, edges: .bottom)
-                .animation(.default, value: viewModel.showingScreen)
-                
-//                if(viewModel.showingScreen) {
-//                    VStack{
-//                        Spacer()
-//                        Rectangle()
-//                            .frame(height: 84)
-//                            .foregroundStyle(gradient)
-//                    }.allowsHitTesting(false)
-//                }
-                if(viewModel.showingProgress){
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .scaleEffect(1.5, anchor: .center)
-                }
+                .containerBackground(.clear, for: .navigation)
             }
-            .ignoresSafeArea(.container, edges: .bottom)
-            .navigationDestination(for: Route.self) { route in
-                switch route{
-                case .account:
-                    AccountScreen(
-                        masteryData: viewModel.response!,
-                        user: viewModel.userToDisplay ?? mockUser,
-                        addToWatchlist: viewModel.addToWatchlist,
-                        removeFromWatchlist: viewModel.removeFromWatchlist
-                    )
-                case .champion(let masteryResponse):
-                    ChampionScreen(championData: masteryResponse)
-                }
-                
+            .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
+                Button("OK") {}
             }
-        }
-        .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
-            Button("OK") {}
         }
     }
     
