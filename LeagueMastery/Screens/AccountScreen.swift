@@ -147,14 +147,17 @@ struct AccountScreen: View{
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
             }
+            .ignoresSafeArea(edges: .bottom)
             SortSearchContainer(
                 searchString: $champSearchString, toSortBy: $toSortBy, sortAsc: $sortAsc
             )
-            .padding()
+            .padding(.horizontal)
+            .padding(.vertical, -4)
+            .ignoresSafeArea(edges: .bottom)
         }
         .environmentObject(motionManager)
-        .ignoresSafeArea(.container)
         .padding(.horizontal, 6)
+        .containerBackground(.clear, for: .navigation)
     }
     
     func addToWatchlistCallback(champId: Int) {
