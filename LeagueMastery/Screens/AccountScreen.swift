@@ -19,6 +19,7 @@ struct AccountScreen: View{
     
     @State public var selectedPinnedMetric: String = "Season Milestone"
     @State var champSearchString: String = ""
+    @State var showingNavTitle: Bool = false
     @FocusState var champSearchFocus: Bool
 
     init(
@@ -117,6 +118,7 @@ struct AccountScreen: View{
         ZStack(alignment: .bottomTrailing){
             VStack{
                 StickyHeaderScrollView(
+                    isScrolled: $showingNavTitle,
                     name: user.name,
                     tag: user.tagline,
                     iconId: user.profileIconId,
@@ -147,7 +149,7 @@ struct AccountScreen: View{
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
             }
-            .ignoresSafeArea(edges: .bottom)
+            .ignoresSafeArea(.all)
             SortSearchContainer(
                 searchString: $champSearchString, toSortBy: $toSortBy, sortAsc: $sortAsc
             )
@@ -158,6 +160,10 @@ struct AccountScreen: View{
         .environmentObject(motionManager)
         .padding(.horizontal, 6)
         .containerBackground(.clear, for: .navigation)
+        .navigationBarTitleDisplayMode(.automatic)
+        .navigationTitle(showingNavTitle ? "\(user.name) #\(user.tagline)" : "")
+        .animation(.default, value: showingNavTitle)
+        
     }
     
     func addToWatchlistCallback(champId: Int) {
@@ -260,25 +266,27 @@ struct GlassOrMaterial: ViewModifier {
 }
 
 #Preview {
+    @Previewable @State var path = [Route]()
     let mock = mockMasteryResponse
-    ZStack{
-        BackgroundImage()
-        AccountScreen(
-            masteryData: Array<MasteryResponse>(mock[1...12]),
-            user: User(
-                puuid: "d",
-                name: "Hide on Bush",
-                tagline: "KR1",
-                region: "Korea",
-                server: "Asia",
-                profileIconId: 1,
-                summonerLevel: 999,
-                masteryScore: 999
-            ),
-            addToWatchlist: callbackPlaceholder,
-            removeFromWatchlist: callbackPlaceholder
-        )
-        .padding(.top)
-        .ignoresSafeArea(edges: .bottom)
+    NavigationStack(path: $path) {
+        ZStack{
+            BackgroundImage()
+            AccountScreen(
+                masteryData: Array<MasteryResponse>(mock[1...12]),
+                user: User(
+                    puuid: "d",
+                    name: "Hide on Bush",
+                    tagline: "KR1",
+                    region: "Korea",
+                    server: "Asia",
+                    profileIconId: 1,
+                    summonerLevel: 999,
+                    masteryScore: 999
+                ),
+                addToWatchlist: callbackPlaceholder,
+                removeFromWatchlist: callbackPlaceholder
+            )
+            .ignoresSafeArea(.all)
+        }
     }
 }

@@ -10,6 +10,7 @@ import Kingfisher
 struct StickyHeaderScrollView<Content:View>: View {
     @State private var yOffset = false
     @State private var headerHeight = CGFloat(50)
+    @Binding var isScrolled: Bool
     
     var name: String
     var tag: String
@@ -33,7 +34,7 @@ struct StickyHeaderScrollView<Content:View>: View {
                                 .font(.system(size: yOffset ? 16: 24))
                                 .frame(
                                     width: geo.size.width,
-                                    height: 64,
+                                    height: geo.size.height * 0.195,
                                     alignment: yOffset ? .leading: .center)
                                 .padding(.horizontal)
                                 .animation(.default, value: yOffset)
@@ -44,7 +45,10 @@ struct StickyHeaderScrollView<Content:View>: View {
                         geo.contentOffset.y > 24
                     } action: { oldValue, newValue in
                         yOffset = newValue
-                        headerHeight = yOffset ? 42 : 64
+                        headerHeight = yOffset ? 100 : geo.size.height * 0.31
+                    }
+                    .onChange(of: yOffset) {
+                        isScrolled = yOffset
                     }
                     
                     // workaround animations being affected by scrolling by
@@ -60,9 +64,9 @@ struct StickyHeaderScrollView<Content:View>: View {
                             yOffset: $yOffset,
                             headerHeight: $headerHeight
                         )
-                        .if(yOffset){ view in
-                            view.glassEffect(in: UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20, bottomLeading: 1, bottomTrailing: 1, topTrailing: 20)))
-                        }
+//                        .if(yOffset){ view in
+//                            view.glassEffect(in: UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20, bottomLeading: 1, bottomTrailing: 1, topTrailing: 20)))
+//                        }
                     } else {
                         StickyHeader(
                             geo: geo,
@@ -79,7 +83,7 @@ struct StickyHeaderScrollView<Content:View>: View {
                     }
                 }
                 .zIndex(yOffset ? 0 : -1)
-                .animation(.default, value: headerHeight)
+                .animation(.snappy, value: headerHeight)
                 .clipShape(
                     RoundedRectangle(
                         cornerRadius: ClipRadius()
@@ -103,7 +107,7 @@ struct StickyHeader: View {
     @Binding var headerHeight: CGFloat
     
     var body: some View {
-        HStack(){
+        HStack(alignment: .bottom){
             // placeholder summoner icon
             if !yOffset {
                 KFImage(URL(string: profileIconUrl(profileIconId: iconId)))
@@ -111,13 +115,14 @@ struct StickyHeader: View {
                     .frame(width: 56, height: 56)
                     .background(.gray)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
-            VStack(alignment:.leading){
-                HStack{
-                    Text(name)
-                    Text("#\(tag)")
+                
+                VStack(alignment:.leading){
+                    HStack{
+                        Text(name)
+                        Text("#\(tag)")
+                    }
+                    if !yOffset {Text("Score: \(score)")}
                 }
-                if !yOffset {Text("Score: \(score)")}
             }
         }
         .padding(.horizontal)
@@ -126,6 +131,7 @@ struct StickyHeader: View {
             height: headerHeight,
             alignment: .leading
         )
+//        .border(.green)
     }
 }
 
