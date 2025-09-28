@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B31E27982DA747EE006CB79E /* crest-aurora-loop-new.mov in Resources */ = {isa = PBXBuildFile; fileRef = B31E27972DA747EE006CB79E /* crest-aurora-loop-new.mov */; };
+		B32FCA7A2E881A1500CE451A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B32FCA792E881A1500CE451A /* Launch Screen.storyboard */; };
 		B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */; };
 		B36300E62C3D8E4A000E54AA /* ChampionIdConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */; };
 		B36300E72C3D8E4A000E54AA /* MockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E42C3D8E4A000E54AA /* MockModel.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		B31E27972DA747EE006CB79E /* crest-aurora-loop-new.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "crest-aurora-loop-new.mov"; sourceTree = "<group>"; };
+		B32FCA792E881A1500CE451A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionScreen.swift; sourceTree = "<group>"; };
 		B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionIdConversions.swift; sourceTree = "<group>"; };
 		B36300E42C3D8E4A000E54AA /* MockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockModel.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 		B3E6BAF52C06D63F0046C4E2 = {
 			isa = PBXGroup;
 			children = (
+				B32FCA792E881A1500CE451A /* Launch Screen.storyboard */,
 				B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */,
 				B3C367692E71A2DD00F45119 /* leagueMasteryLogo 3.icon */,
 				B32025442D78E85900E6E06E /* Screenshots */,
@@ -409,6 +412,7 @@
 			files = (
 				B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */,
 				B3C612952CC4915900C19B0C /* 6-loop.mov in Resources */,
+				B32FCA7A2E881A1500CE451A /* Launch Screen.storyboard in Resources */,
 				B3B4F6BE2D41641200F5F514 /* crest-aurora-loop.mov in Resources */,
 				B3C16EA92E18BC2B00D932BF /* leagueMasteryLogo.icon in Resources */,
 				B3C612962CC4915900C19B0C /* 5-loop.mov in Resources */,
@@ -640,9 +644,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LeagueMastery/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
@@ -673,9 +678,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LeagueMastery/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;

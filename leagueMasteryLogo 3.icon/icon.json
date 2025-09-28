@@ -1,6 +1,9 @@
 {
   "fill" : {
-    "automatic-gradient" : "srgb:0.10372,0.14605,0.18397,1.00000"
+    "linear-gradient" : [
+      "display-p3:0.09025,0.11356,0.29827,1.00000",
+      "display-p3:0.05058,0.06364,0.16717,1.00000"
+    ]
   },
   "groups" : [
     {
@@ -13,7 +16,7 @@
               "display-p3:0.81961,0.99216,0.99608,1.00000"
             ]
           },
-          "glass" : true,
+          "glass" : false,
           "hidden" : false,
           "image-name" : "gem.svg",
           "name" : "gem",
@@ -34,7 +37,7 @@
               "display-p3:0.76471,0.55962,0.31353,1.00000"
             ]
           },
-          "glass" : true,
+          "glass" : false,
           "hidden" : false,
           "image-name" : "midcrest.svg",
           "name" : "midcrest",
@@ -74,7 +77,7 @@
               "display-p3:0.61176,0.37209,0.15906,1.00000"
             ]
           },
-          "glass" : true,
+          "glass" : false,
           "hidden" : false,
           "image-name" : "inner_ring.svg",
           "name" : "inner_ring",
@@ -95,7 +98,7 @@
               "display-p3:0.61176,0.38466,0.20188,1.00000"
             ]
           },
-          "glass" : true,
+          "glass" : false,
           "hidden" : false,
           "image-name" : "top_wing.svg",
           "name" : "top_wing",
@@ -112,6 +115,7 @@
           "fill" : {
             "solid" : "display-p3:0.08429,0.22381,0.40138,1.00000"
           },
+          "glass" : false,
           "hidden" : false,
           "image-name" : "wings_2.svg",
           "name" : "wings_2",
@@ -128,7 +132,7 @@
           "fill" : {
             "solid" : "display-p3:0.08429,0.22381,0.40138,0.81448"
           },
-          "glass" : true,
+          "glass" : false,
           "hidden" : false,
           "image-name" : "wings3.svg",
           "name" : "wings3",
