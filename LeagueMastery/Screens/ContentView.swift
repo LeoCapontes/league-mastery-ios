@@ -186,22 +186,26 @@ struct BackgroundImage: View{
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
     var body: some View {
-        Image("background-mastery")
-            .resizable()
-            .brightness(colorScheme == .light ? 0 : -0.05)
-            .saturation(colorScheme == .light ? 1 : 1)
-            .aspectRatio(contentMode: .fill)
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .edgesIgnoringSafeArea(.all)
-            .variableBlur(radius: 200) { geometryProxy, context in
-                // add a blur to the mask to smooth out where the variable blur begins
-                context.addFilter(.blur(radius: 30))
-                context.fill(
-                    Path(CGRect(origin: .zero, size: geometryProxy.size)),
-                    with: .color(.white)
-                )
-            }
-            .allowsHitTesting(false)
+        ZStack{
+            Color(.black)
+                .edgesIgnoringSafeArea(.all)
+            Image("background-mastery")
+                .resizable()
+                .brightness(colorScheme == .light ? 0 : -0.05)
+                .saturation(colorScheme == .light ? 1 : 1)
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .edgesIgnoringSafeArea(.all)
+                .variableBlur(radius: 200) { geometryProxy, context in
+                    // add a blur to the mask to smooth out where the variable blur begins
+                    context.addFilter(.blur(radius: 30))
+                    context.fill(
+                        Path(CGRect(origin: .zero, size: geometryProxy.size)),
+                        with: .color(.white)
+                    )
+                }
+                .allowsHitTesting(false)
+        }
     }
 }
 

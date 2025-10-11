@@ -107,7 +107,7 @@ struct StickyHeader: View {
     @Binding var headerHeight: CGFloat
     
     var body: some View {
-        HStack(alignment: .bottom){
+        HStack(){
             // placeholder summoner icon
             if !yOffset {
                 KFImage(URL(string: profileIconUrl(profileIconId: iconId)))
@@ -123,6 +123,7 @@ struct StickyHeader: View {
                     }
                     if !yOffset {Text("Score: \(score)")}
                 }
+                .foregroundStyle(.white) 
             }
         }
         .padding(.horizontal)

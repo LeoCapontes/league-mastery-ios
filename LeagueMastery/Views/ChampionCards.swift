@@ -274,10 +274,12 @@ struct LargeChampionRow: View {
                     )
                 }.frame(width:nil)
             }
-            .background(
-                .ultraThinMaterial
+            .background {
+                Color.clear
+                    .background(.ultraThinMaterial)
                     .opacity(0.5)
-            )
+                    .environment(\.colorScheme, .dark)
+            }
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .frame(width: nil, height:100)
         }
