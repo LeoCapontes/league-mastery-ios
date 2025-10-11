@@ -65,9 +65,9 @@ struct ContentView: View {
                                 clearSearches: viewModel.deleteAllUsers
                             )
                         }
-                        
                     }
                     .foregroundColor(.white)
+                    .allowsHitTesting( viewModel.showingProgress ? false : true)
                     .ignoresSafeArea(.container, edges: .bottom)
                     .animation(.default, value: viewModel.showingScreen)
                     
