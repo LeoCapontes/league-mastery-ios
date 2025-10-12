@@ -36,7 +36,6 @@ struct StickyHeaderScrollView<Content:View>: View {
                                     width: geo.size.width,
                                     height: geo.size.height * 0.195,
                                     alignment: yOffset ? .leading: .center)
-                                .padding(.horizontal)
                                 .animation(.default, value: yOffset)
                             }
                         }

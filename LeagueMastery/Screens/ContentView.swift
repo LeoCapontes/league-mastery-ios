@@ -10,15 +10,6 @@ import SwiftData
 import Variablur
 
 struct ContentView: View {
-    let gradient = LinearGradient(
-        stops: [
-            Gradient.Stop(color: Color.black.opacity(0.2), location: 0.1),
-            Gradient.Stop(color: .clear, location: 1)
-        ],
-        startPoint: .bottom,
-        endPoint: .top)
-    
-    
     @State private var viewModel: ViewModel
     @FocusState private var fieldFocused: Bool
     

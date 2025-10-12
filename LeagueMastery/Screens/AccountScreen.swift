@@ -9,6 +9,14 @@ import Foundation
 import SwiftUI
 
 struct AccountScreen: View{
+    let gradient = LinearGradient(
+        stops: [
+            Gradient.Stop(color: Color.black.opacity(0.75), location: 0),
+            Gradient.Stop(color: .clear, location: 0.15),
+            Gradient.Stop(color: .clear, location: 1)
+        ],
+        startPoint: .bottom,
+        endPoint: .top)
     
     let motionManager = MotionManager()
     let masteryData: [MasteryResponse]
@@ -146,19 +154,23 @@ struct AccountScreen: View{
                                 }
                         }
                     }
+                    .padding(.horizontal, 6)
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
             }
             .ignoresSafeArea(.all)
+            Rectangle()
+                .foregroundStyle(gradient)
+                .edgesIgnoringSafeArea(.bottom)
+                .allowsHitTesting(false)
             SortSearchContainer(
                 searchString: $champSearchString, toSortBy: $toSortBy, sortAsc: $sortAsc
             )
             .padding(.horizontal)
-            .padding(.vertical, -4)
+            .padding(.vertical, -8)
             .ignoresSafeArea(edges: .bottom)
         }
         .environmentObject(motionManager)
-        .padding(.horizontal, 6)
         .containerBackground(.clear, for: .navigation)
         .navigationBarTitleDisplayMode(.automatic)
         .navigationTitle(showingNavTitle ? "\(user.name) #\(user.tagline)" : "")
@@ -197,6 +209,7 @@ struct SortSearchContainer: View {
                 HStack(){
                     TextField("", text: $searchString, prompt: Text("Search Champions..."))
                         .padding()
+                        .padding(.vertical, -2)
                         .clipShape(Capsule())
                         .scrollDismissesKeyboard(.interactively)
                         .glassEffect()
@@ -216,6 +229,7 @@ struct SortSearchContainer: View {
                             }
                             .foregroundStyle(.blue)
                             .padding()
+                            .padding(.vertical, -2)
                         }
                     }
                     .glassEffect()
@@ -225,6 +239,7 @@ struct SortSearchContainer: View {
             HStack{
                 TextField("", text: $searchString, prompt: Text("Search Champions..."))
                     .padding()
+                    .padding(.vertical, -2)
                     .modifier(GlassOrMaterial(materialType: .regularMaterial))
                     .clipShape(Capsule())
                     .scrollDismissesKeyboard(.interactively)
@@ -244,6 +259,7 @@ struct SortSearchContainer: View {
                         }
                         .foregroundStyle(.blue)
                         .padding()
+                        .padding(.vertical, -2)
                     }
                 }
                 .modifier(GlassOrMaterial(materialType: .regularMaterial))
@@ -286,7 +302,7 @@ struct GlassOrMaterial: ViewModifier {
                 addToWatchlist: callbackPlaceholder,
                 removeFromWatchlist: callbackPlaceholder
             )
-            .ignoresSafeArea(.all)
+//            .ignoresSafeArea(.all)
         }
     }
 }
