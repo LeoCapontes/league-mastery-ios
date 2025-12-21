@@ -22,7 +22,7 @@ func puuidApiCall(
     tag: String,
     region: String
 ) async throws -> PuuidResponse{
-    let url = URL(string: "\(Settings.shared.serverUrl)/account/by-riot-id/\(region)/\(gameName)/\(tag)")!
+    let url = URL(string: "\(Settings.shared.serverUrl)/account/by-riot-id/\(region.lowercased())/\(gameName)/\(tag)")!
     do {
         print(url.absoluteString)
         let (data, httpResponse) = try await URLSession.shared.data(from: url)
