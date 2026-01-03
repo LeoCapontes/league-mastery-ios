@@ -122,6 +122,10 @@ struct AccountScreen: View{
         }
     }
     
+    var masteryTens: Int {
+        return masteryData.count(where: { $0.championLevel > 9 })
+    }
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             VStack{
@@ -130,7 +134,8 @@ struct AccountScreen: View{
                     name: user.name,
                     tag: user.tagline,
                     iconId: user.profileIconId,
-                    score: user.masteryScore
+                    score: user.masteryScore,
+                    tens: masteryTens
                 ){
                     if (user.championWatchlist.count > 0){
                         Watchlist(content: {

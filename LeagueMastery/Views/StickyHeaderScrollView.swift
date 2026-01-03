@@ -16,6 +16,7 @@ struct StickyHeaderScrollView<Content:View>: View {
     var tag: String
     var iconId: Int
     var score: Int
+    var tens: Int
     
     @ViewBuilder let content: Content
     
@@ -60,6 +61,7 @@ struct StickyHeaderScrollView<Content:View>: View {
                             iconId: iconId,
                             score: score,
                             tag: tag,
+                            tens: tens,
                             yOffset: $yOffset,
                             headerHeight: $headerHeight
                         )
@@ -73,6 +75,7 @@ struct StickyHeaderScrollView<Content:View>: View {
                             iconId: iconId,
                             score: score,
                             tag: tag,
+                            tens: tens,
                             yOffset: $yOffset,
                             headerHeight: $headerHeight
                         )
@@ -102,6 +105,7 @@ struct StickyHeader: View {
     var iconId: Int
     var score: Int
     var tag: String
+    var tens: Int
     @Binding var yOffset: Bool
     @Binding var headerHeight: CGFloat
     
@@ -116,15 +120,31 @@ struct StickyHeader: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 
                 VStack(alignment:.leading){
-                    HStack{
+                    HStack(alignment: .firstTextBaseline){
                         Text(name)
+                            .font(.system(size: 22))
                         Text("#\(tag)")
+                            .font(.system(size: 10))
+                            .foregroundStyle(.gray)
                     }
-                    if !yOffset {Text("Score: \(score)")}
+                    Text("Score: \(score)")
+                        .font(.system(size: 14))
+                        .foregroundStyle(.gray)
                 }
-                .foregroundStyle(.white) 
+                Spacer()
+                HStack{
+                    Image("mastery-10")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: 48)
+                        .padding(.bottom, 4)
+//                        .border(.green)
+                    Text("\(tens)")
+                        .font(.system(size: 16, weight: .bold))
+                }
             }
         }
+        .foregroundStyle(.white)
         .padding(.horizontal)
         .frame(
             width: geo.size.width,
