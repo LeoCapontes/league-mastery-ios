@@ -149,6 +149,7 @@ struct AccountScreen: View{
                                 }
                             }
                         }, selectedMetric: $selectedPinnedMetric)
+                        .padding(.horizontal, 6)
                     }
                     
                     ForEach(Array(searchResult.enumerated()), id: \.element) { (index, entry) in
