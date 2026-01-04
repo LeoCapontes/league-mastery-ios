@@ -37,6 +37,15 @@ struct ContentView: View {
                     }
                     VStack{
                         HStack{
+                            Image("launch_image")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(.vertical, 12)
+                            Text("LEAGUE\nMASTERY")
+                                .font(.system(size: 36, weight: .heavy, design: .monospaced))
+                        }
+                        .frame(maxHeight: 100)
+                        HStack{
                             SummonerSearchField(
                                 viewModel: $viewModel,
                                 fieldFocused: $fieldFocused,
