@@ -22,7 +22,7 @@ struct ContentView: View {
         ZStack{
             BackgroundImage()
             NavigationStack(path: $viewModel.path){
-                ZStack{
+                ZStack(alignment: .top){
                     VStack{
                         Spacer()
                         HStack{
@@ -64,6 +64,24 @@ struct ContentView: View {
                                 searchFunc: viewModel.searchSumm(name:tag:region:server:),
                                 clearSearches: viewModel.deleteAllUsers
                             )
+                            .frame(height: 200)
+//                            .border(.green)
+                        }
+                        PinnedUser(
+                            entries: mockMasteryResponse,
+                            user: User(
+                                puuid: "d",
+                                name: "Hide on Bush",
+                                tagline: "KR1",
+                                region: "Korea",
+                                server: "Asia",
+                                profileIconId: 1,
+                                summonerLevel: 999,
+                                masteryScore: 999
+                            )
+                        )
+                        .onDisappear {
+                            print("pinned dissapear")
                         }
                     }
                     .foregroundColor(.white)

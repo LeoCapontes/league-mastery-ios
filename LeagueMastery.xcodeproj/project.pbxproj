@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B31E27982DA747EE006CB79E /* crest-aurora-loop-new.mov in Resources */ = {isa = PBXBuildFile; fileRef = B31E27972DA747EE006CB79E /* crest-aurora-loop-new.mov */; };
+		B321A1732F09F16F0028BE78 /* PinnedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B321A1722F09F1660028BE78 /* PinnedUser.swift */; };
 		B32FCA7A2E881A1500CE451A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B32FCA792E881A1500CE451A /* Launch Screen.storyboard */; };
 		B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */; };
 		B36300E62C3D8E4A000E54AA /* ChampionIdConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */; };
@@ -75,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		B31E27972DA747EE006CB79E /* crest-aurora-loop-new.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "crest-aurora-loop-new.mov"; sourceTree = "<group>"; };
+		B321A1722F09F1660028BE78 /* PinnedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedUser.swift; sourceTree = "<group>"; };
 		B32FCA792E881A1500CE451A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B33EE9412CA9F2D600E9BA15 /* ChampionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionScreen.swift; sourceTree = "<group>"; };
 		B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionIdConversions.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 		B36300E92C3D8E54000E54AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B321A1722F09F1660028BE78 /* PinnedUser.swift */,
 				B38CA86D2E038A7E008EB074 /* ViewExtensions.swift */,
 				B38CA8602E036E9E008EB074 /* ViewModifiers */,
 				B36341F32D6EB4F70060A2C4 /* StickyHeaderScrollView.swift */,
@@ -473,6 +476,7 @@
 				B38CA86E2E038A83008EB074 /* ViewExtensions.swift in Sources */,
 				B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */,
 				B3BF86242D5A70A400915BE6 /* User.swift in Sources */,
+				B321A1732F09F16F0028BE78 /* PinnedUser.swift in Sources */,
 				B3E6BB2D2C06DA480046C4E2 /* ContentViewModel.swift in Sources */,
 				B36301012C41F009000E54AA /* Codables.swift in Sources */,
 				B36300E62C3D8E4A000E54AA /* ChampionIdConversions.swift in Sources */,
