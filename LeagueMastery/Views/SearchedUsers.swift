@@ -35,7 +35,6 @@ struct SearchedUsers: View {
             .scrollContentBackground(.hidden)
             .background(Color.gray.opacity(0.2))
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .frame(maxHeight: 200)
             .animation(.default, value: users)
         }
         .padding()
