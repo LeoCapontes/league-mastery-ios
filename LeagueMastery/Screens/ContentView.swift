@@ -80,9 +80,7 @@ struct ContentView: View {
                                 masteryScore: 999
                             )
                         )
-                        .onDisappear {
-                            print("pinned dissapear")
-                        }
+                        .frame(height: 200)
                     }
                     .foregroundColor(.white)
                     .allowsHitTesting( viewModel.showingProgress ? false : true)

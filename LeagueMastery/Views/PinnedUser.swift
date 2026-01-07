@@ -32,6 +32,17 @@ struct PinnedUser: View {
     @State var mockIndex: Int = 0
     @State var selectedMetric: userMetric = .canLevel
     
+    var maskYOffset: Double {
+        switch selectedMetric {
+        case .canLevel:
+            return -56
+        case .topScore:
+            return 0
+        case .topMilestone:
+            return 56
+        }
+    }
+    
     
     var body: some View {
         ZStack{
@@ -74,11 +85,12 @@ struct PinnedUser: View {
                                 .overlay{
                                     RoundedRectangle(cornerRadius: 12)
                                         .frame(width: 360, height: 48)
-                                        .offset(x: 0, y: -56)
+                                        .offset(x: 0, y: maskYOffset)
                                         .blendMode(.destinationOut)
                                 }
                                 .compositingGroup()
                         }
+                        .animation(.snappy.speed(2), value: maskYOffset)
                     
                     HStack{
                         VStack(alignment: .leading, spacing: 18){
