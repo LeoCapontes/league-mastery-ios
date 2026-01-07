@@ -80,7 +80,8 @@ struct ContentView: View {
                                 masteryScore: 999
                             )
                         )
-                        .frame(height: 200)
+                        .frame(height: 186)
+                        .padding(.vertical)
                     }
                     .foregroundColor(.white)
                     .allowsHitTesting( viewModel.showingProgress ? false : true)

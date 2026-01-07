@@ -29,20 +29,46 @@ let cardOverlay = LinearGradient(
 struct PinnedUser: View {
     var entries: [MasteryResponse]
     var user: User
-    @State var mockIndex: Int = 0
+    @State var slideShowCounter: Int = 0
     @State var selectedMetric: userMetric = .canLevel
     
     var maskYOffset: Double {
         switch selectedMetric {
         case .canLevel:
-            return -56
+            return -58
         case .topScore:
             return 0
         case .topMilestone:
-            return 56
+            return 58
         }
     }
     
+    var top3Entries: [MasteryResponse] {
+        return Array(entries.prefix(3))
+    }
+    
+    var canLevelEntries: [MasteryResponse] {
+        return entries.filter { $0.championPointsUntilNextLevel < 0}
+    }
+    
+    var topMilestoneEntries: [MasteryResponse] {
+        return Array(
+            entries
+                .sorted{ $0.championSeasonMilestone < $1.championSeasonMilestone }
+                .prefix(3)
+        )
+    }
+    
+    var currentArray: [MasteryResponse] {
+        switch selectedMetric {
+        case .canLevel:
+            return canLevelEntries
+        case .topScore:
+            return top3Entries
+        case .topMilestone:
+            return topMilestoneEntries
+        }
+    }
     
     var body: some View {
         ZStack{
@@ -75,15 +101,15 @@ struct PinnedUser: View {
     //            .border(.green)
 
                 ZStack(){
-                    BackgroundChampionImage(championId: entries[mockIndex].championId)
-                        .id(mockIndex)
+                    BackgroundChampionImage(championId: currentArray[(slideShowCounter % currentArray.count)].championId)
+                        .id(slideShowCounter)
                         .transition(.opacity.animation(.easeOut))
                         .padding(-10)
                     //            .border(.green)
                         .overlay {
                             cardOverlay
                                 .overlay{
-                                    RoundedRectangle(cornerRadius: 12)
+                                    RoundedRectangle(cornerRadius: 10)
                                         .frame(width: 360, height: 48)
                                         .offset(x: 0, y: maskYOffset)
                                         .blendMode(.destinationOut)
@@ -120,7 +146,7 @@ struct PinnedUser: View {
                     .padding()
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-                .frame(minWidth: nil, maxWidth: nil, minHeight: 200, maxHeight: .infinity)
+                .frame(minWidth: nil, maxWidth: nil, minHeight: 186, maxHeight: .infinity)
                 //        .border(.green)
             }
             .background(.ultraThinMaterial.opacity(0.2))
@@ -140,7 +166,7 @@ struct PinnedUser: View {
                 break
             }
 
-            mockIndex += 1
+            slideShowCounter += 1
             print("incremented")
         }
     }
