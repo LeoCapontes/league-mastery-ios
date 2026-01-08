@@ -141,7 +141,25 @@ struct PinnedUser: View {
                                 .foregroundStyle(selectedMetric == .topMilestone ? .white : .gray)
                         }
                         Spacer()
-                        Text("")
+                        VStack(){
+                            Spacer()
+                            VStack(spacing: 0){
+                                Text("\(getNameFromId(id: currentArray[(slideShowCounter % currentArray.count)].championId))")
+                                    .bold()
+                                    .font(.title3)
+                                    .scaledToFill()
+                                    .foregroundStyle(.white.opacity(0.75))
+//                                    .border(.green)
+                                LevelUpReady(entry: currentArray[(slideShowCounter % currentArray.count)])
+//                                    .border(.green)
+                            }
+                            .background{
+                                Rectangle()
+                                    .foregroundStyle(.black.opacity(0.5))
+                                    .blur(radius: 12)
+                            }
+                        }
+                        Spacer()
                     }
                     .padding()
                 }
@@ -175,6 +193,37 @@ struct PinnedUser: View {
         case canLevel
         case topScore
         case topMilestone
+    }
+}
+
+struct LevelUpReady: View {
+    var entry: MasteryResponse
+    
+    var noChangeInIcon: Bool {
+        entry.championLevel > 9
+    }
+    
+    var body: some View {
+        HStack{
+            VStack(spacing: 0){
+                if(noChangeInIcon) {
+                    Text("\(entry.championLevel)")
+                        .padding(.bottom, -6)
+                }
+                MasteryCrestImage(masteryLevel: entry.championLevel, mini: false)
+            }
+            Image(systemName: "arrow.right")
+            VStack(spacing: 0){
+                if(noChangeInIcon) {
+                    Text("\(entry.championLevel + 1)")
+                        .padding(.bottom, -6)
+                }
+                MasteryCrestImage(masteryLevel: entry.championLevel + 1, mini: false)
+            }
+        }
+        .foregroundStyle(.white)
+        .bold()
+        .frame(maxWidth: 125)
     }
 }
 
