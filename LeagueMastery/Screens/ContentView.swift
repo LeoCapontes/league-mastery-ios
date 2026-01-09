@@ -22,7 +22,7 @@ struct ContentView: View {
         ZStack{
             BackgroundImage()
             NavigationStack(path: $viewModel.path){
-                ZStack(alignment: .top){
+                ZStack(){
                     VStack{
                         Spacer()
                         HStack{
@@ -87,6 +87,7 @@ struct ContentView: View {
                     .allowsHitTesting( viewModel.showingProgress ? false : true)
                     .ignoresSafeArea(.container, edges: .bottom)
                     .animation(.default, value: viewModel.showingScreen)
+                    .offset(y: -50)
                     
                     //                if(viewModel.showingScreen) {
                     //                    VStack{
@@ -199,6 +200,29 @@ struct SummonerSearchField: View {
     }
 }
 
+struct SummonerSearchContainer: View {
+    @Binding var viewModel: ContentView.ViewModel
+    @FocusState.Binding var fieldFocused: Bool
+    var searchSummoner: () -> Void
+    
+    
+    var body: some View {
+        VStack{
+            SummonerSearchField(
+                viewModel: $viewModel,
+                fieldFocused: $fieldFocused,
+                searchSummoner: searchSummoner
+            )
+            
+            SearchedUsers(
+                sort: SortDescriptor(\User.isFavourite, order: .reverse),
+                searchFunc: viewModel.searchSumm(name:tag:region:server:),
+                clearSearches: viewModel.deleteAllUsers
+            )
+        }
+    }
+}
+
 struct BackgroundImage: View{
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
@@ -227,8 +251,20 @@ struct BackgroundImage: View{
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let config = ModelConfiguration(for: User.self, isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: User.self, configurations: config)
+    let context = container.mainContext
     
-    ContentView(modelContext: container.mainContext).modelContainer(container)
+    let mockSearchedUsers = [
+        User(puuid: "a", name: "Faker", tagline: "KR1", region: "Korea", server: "KR", profileIconId: 1, summonerLevel: 1, masteryScore: 1),
+        User(puuid: "b", name: "Chovy", tagline: "KR1", region: "Korea", server: "KR", profileIconId: 1, summonerLevel: 1, masteryScore: 1),
+        User(puuid: "c", name: "Bdd", tagline: "KR1", region: "Korea", server: "KR", profileIconId: 1, summonerLevel: 1, masteryScore: 1),
+        User(puuid: "d", name: "Zeus", tagline: "KR1", region: "Korea", server: "KR", profileIconId: 1, summonerLevel: 1, masteryScore: 1)
+    ]
+    
+    for user in mockSearchedUsers {
+        context.insert(user)
+    }
+    
+    return ContentView(modelContext: container.mainContext).modelContainer(container)
 }
