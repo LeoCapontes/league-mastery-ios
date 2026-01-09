@@ -13,6 +13,8 @@ struct ContentView: View {
     @State private var viewModel: ViewModel
     @FocusState private var fieldFocused: Bool
     
+    var searchContainerHeight: Double = 275
+    
     init(modelContext: ModelContext) {
            let viewModel = ViewModel(modelContext: modelContext)
            _viewModel = State(initialValue: viewModel)
@@ -45,28 +47,33 @@ struct ContentView: View {
                                 .font(.system(size: 36, weight: .heavy, design: .monospaced))
                         }
                         .frame(maxHeight: 100)
-                        HStack{
-                            SummonerSearchField(
-                                viewModel: $viewModel,
-                                fieldFocused: $fieldFocused,
-                                searchSummoner: SearchSummoner
-                            )
-                            
-                            Button(action: SearchSummoner) {
-                                Text("Search")
-                            }
+                        VStack{
+//                            HStack{
+//                                SummonerSearchField(
+//                                    viewModel: $viewModel,
+//                                    fieldFocused: $fieldFocused,
+//                                    searchSummoner: SearchSummoner
+//                                )
+//                                
+//                                Button(action: SearchSummoner) {
+//                                    Text("Search")
+//                                }
+//                            }
+//                            .padding(.horizontal, 10)
+//                            
+//                            VStack(alignment: .leading){
+//                                SearchedUsers(
+//                                    sort: SortDescriptor(\User.isFavourite, order: .reverse),
+//                                    searchFunc: viewModel.searchSumm(name:tag:region:server:),
+//                                    clearSearches: viewModel.deleteAllUsers
+//                                )
+//                                .frame(height: 200)
+//                                //                            .border(.green)
+//                            }
                         }
-                        .padding(.horizontal, 10)
+                        .frame(height: searchContainerHeight)
+                        .opacity(0)
                         
-                        VStack(alignment: .leading){
-                            SearchedUsers(
-                                sort: SortDescriptor(\User.isFavourite, order: .reverse),
-                                searchFunc: viewModel.searchSumm(name:tag:region:server:),
-                                clearSearches: viewModel.deleteAllUsers
-                            )
-                            .frame(height: 200)
-//                            .border(.green)
-                        }
                         PinnedUser(
                             entries: mockMasteryResponse,
                             user: User(
@@ -89,6 +96,20 @@ struct ContentView: View {
                     .animation(.default, value: viewModel.showingScreen)
                     .offset(y: -50)
                     
+                    Rectangle()
+                        .foregroundStyle(.black.opacity(fieldFocused ? 0.75 : 0))
+                    
+                    
+                    
+                    SummonerSearchContainer(
+                        viewModel: $viewModel,
+                        fieldFocused: $fieldFocused,
+                        searchSummoner: SearchSummoner
+                    )
+                    .frame(maxHeight: fieldFocused ? 500 : searchContainerHeight)
+                    .ignoresSafeArea(.container, edges: .bottom)
+                    .offset(y: -110)
+                    
                     //                if(viewModel.showingScreen) {
                     //                    VStack{
                     //                        Spacer()
@@ -103,7 +124,7 @@ struct ContentView: View {
                             .scaleEffect(1.5, anchor: .center)
                     }
                 }
-                .ignoresSafeArea(.container, edges: .bottom)
+                .ignoresSafeArea(edges: .all)
                 .navigationDestination(for: Route.self) { route in
                     switch route{
                     case .account:
@@ -208,11 +229,17 @@ struct SummonerSearchContainer: View {
     
     var body: some View {
         VStack{
-            SummonerSearchField(
-                viewModel: $viewModel,
-                fieldFocused: $fieldFocused,
-                searchSummoner: searchSummoner
-            )
+            HStack{
+                SummonerSearchField(
+                    viewModel: $viewModel,
+                    fieldFocused: $fieldFocused,
+                    searchSummoner: searchSummoner
+                )
+                
+                Button(action: searchSummoner) {
+                    Text("Search")
+                }
+            }
             
             SearchedUsers(
                 sort: SortDescriptor(\User.isFavourite, order: .reverse),
@@ -220,6 +247,8 @@ struct SummonerSearchContainer: View {
                 clearSearches: viewModel.deleteAllUsers
             )
         }
+        .foregroundStyle(.white)
+        .padding()
     }
 }
 

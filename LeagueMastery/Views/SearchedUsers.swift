@@ -37,7 +37,6 @@ struct SearchedUsers: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .animation(.default, value: users)
         }
-        .padding()
     }
     
     init(
