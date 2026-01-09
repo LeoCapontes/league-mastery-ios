@@ -12,6 +12,8 @@ struct SearchedUsers: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: [SortDescriptor(\User.isFavourite)]) var users: [User]
     
+    @FocusState.Binding var fieldFocused: Bool
+    
     var startSearch: (String, String, String, String) -> Void
     var clearSearches: () -> Void
     
@@ -28,6 +30,10 @@ struct SearchedUsers: View {
                 VStack(spacing: 0){
                     ForEach(users) { user in
                         UserRow(user: user, onRowPress: startSearch)
+                            .onTapGesture {
+                                fieldFocused = false
+                                print("UNFOCUSING")
+                            }
                         Divider()
                     }
                 }
@@ -42,11 +48,13 @@ struct SearchedUsers: View {
     init(
         sort: SortDescriptor<User>,
         searchFunc: @escaping (String, String, String, String) -> Void,
-        clearSearches: @escaping () -> Void
+        clearSearches: @escaping () -> Void,
+        fieldFocused: FocusState<Bool>.Binding
     ) {
         self.clearSearches = clearSearches
         self.startSearch = searchFunc
         _users = Query(sort: [sort])
+        self._fieldFocused = fieldFocused
     }
 }
 

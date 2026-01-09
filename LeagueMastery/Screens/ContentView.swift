@@ -97,7 +97,7 @@ struct ContentView: View {
                     .offset(y: -50)
                     
                     Rectangle()
-                        .foregroundStyle(.black.opacity(fieldFocused ? 0.75 : 0))
+                        .foregroundStyle(.black.opacity(fieldFocused ? 0.95 : 0))
                     
                     
                     
@@ -109,6 +109,7 @@ struct ContentView: View {
                     .frame(maxHeight: fieldFocused ? 500 : searchContainerHeight)
                     .ignoresSafeArea(.container, edges: .bottom)
                     .offset(y: -110)
+                    .animation(.snappy.speed(1.5), value: fieldFocused)
                     
                     //                if(viewModel.showingScreen) {
                     //                    VStack{
@@ -148,8 +149,8 @@ struct ContentView: View {
     }
     
     func SearchSummoner(){
-        viewModel.searchSumm()
         fieldFocused = false
+        viewModel.searchSumm()
     }
     
 }
@@ -230,6 +231,13 @@ struct SummonerSearchContainer: View {
     var body: some View {
         VStack{
             HStack{
+                if (fieldFocused) {
+                    Button(action: {fieldFocused = false}) {
+                        Image(systemName: "chevron.left")
+                            .bold()
+                    }
+                    .padding(.horizontal)
+                }
                 SummonerSearchField(
                     viewModel: $viewModel,
                     fieldFocused: $fieldFocused,
@@ -244,7 +252,8 @@ struct SummonerSearchContainer: View {
             SearchedUsers(
                 sort: SortDescriptor(\User.isFavourite, order: .reverse),
                 searchFunc: viewModel.searchSumm(name:tag:region:server:),
-                clearSearches: viewModel.deleteAllUsers
+                clearSearches: viewModel.deleteAllUsers,
+                fieldFocused: $fieldFocused
             )
         }
         .foregroundStyle(.white)
