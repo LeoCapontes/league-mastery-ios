@@ -47,32 +47,11 @@ struct ContentView: View {
                                 .font(.system(size: 36, weight: .heavy, design: .monospaced))
                         }
                         .frame(maxHeight: 100)
-                        VStack{
-//                            HStack{
-//                                SummonerSearchField(
-//                                    viewModel: $viewModel,
-//                                    fieldFocused: $fieldFocused,
-//                                    searchSummoner: SearchSummoner
-//                                )
-//                                
-//                                Button(action: SearchSummoner) {
-//                                    Text("Search")
-//                                }
-//                            }
-//                            .padding(.horizontal, 10)
-//                            
-//                            VStack(alignment: .leading){
-//                                SearchedUsers(
-//                                    sort: SortDescriptor(\User.isFavourite, order: .reverse),
-//                                    searchFunc: viewModel.searchSumm(name:tag:region:server:),
-//                                    clearSearches: viewModel.deleteAllUsers
-//                                )
-//                                .frame(height: 200)
-//                                //                            .border(.green)
-//                            }
-                        }
-                        .frame(height: searchContainerHeight)
-                        .opacity(0)
+                        
+                        // makes space for search field container above it in the ZStack
+                        Rectangle()
+                            .frame(height: searchContainerHeight)
+                            .opacity(0)
                         
                         PinnedUser(
                             entries: mockMasteryResponse,
@@ -91,14 +70,15 @@ struct ContentView: View {
                         .padding(.vertical)
                     }
                     .foregroundColor(.white)
-                    .allowsHitTesting( viewModel.showingProgress ? false : true)
+                    .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
                     .ignoresSafeArea(.container, edges: .bottom)
                     .animation(.default, value: viewModel.showingScreen)
                     .offset(y: -50)
+                    .opacity(fieldFocused ? 0 : 1)
+                    .animation(.snappy, value: fieldFocused)
                     
-                    Rectangle()
-                        .foregroundStyle(.black.opacity(fieldFocused ? 0.95 : 0))
-                    
+//                    Rectangle()
+//                        .foregroundStyle(.black.opacity(fieldFocused ? 0.95 : 0))
                     
                     
                     SummonerSearchContainer(
@@ -106,19 +86,11 @@ struct ContentView: View {
                         fieldFocused: $fieldFocused,
                         searchSummoner: SearchSummoner
                     )
-                    .frame(maxHeight: fieldFocused ? 500 : searchContainerHeight)
+                    .frame(maxHeight: fieldFocused ? 550 : searchContainerHeight)
                     .ignoresSafeArea(.container, edges: .bottom)
                     .offset(y: -110)
-                    .animation(.snappy.speed(1.5), value: fieldFocused)
+                    .animation(.snappy, value: fieldFocused)
                     
-                    //                if(viewModel.showingScreen) {
-                    //                    VStack{
-                    //                        Spacer()
-                    //                        Rectangle()
-                    //                            .frame(height: 84)
-                    //                            .foregroundStyle(gradient)
-                    //                    }.allowsHitTesting(false)
-                    //                }
                     if(viewModel.showingProgress){
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
