@@ -265,7 +265,7 @@ struct GradesContainer: View {
         ZStack{
             VStack{
                 HStack(spacing: 0){
-                    ForEach(0..<requiredGrades.count) {index in
+                    ForEach(0..<requiredGrades.count, id: \.self) {index in
                         GradeBox(
                             requiredGrade: requiredGrades[index],
                             achievedGrade: achievedGrades[index]
@@ -310,7 +310,7 @@ struct MasteryMarks: View {
     var earnedMarks: Int
     
     var emptyToShow: Int {
-        var diff = requiredMarks-earnedMarks
+        let diff = requiredMarks-earnedMarks
         if diff >= 0 {
             return diff
         }
@@ -328,12 +328,12 @@ struct MasteryMarks: View {
             
         } else {
             HStack{
-                ForEach(0..<earnedMarks){ mark in
+                ForEach(0..<earnedMarks, id: \.self){ mark in
                     Image("mastery-mark")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 }
-                ForEach(0..<emptyToShow){ mark in
+                ForEach(0..<emptyToShow, id: \.self){ mark in
                     Image("mastery-mark-empty")
                         .resizable()
                         .aspectRatio(contentMode: .fit)

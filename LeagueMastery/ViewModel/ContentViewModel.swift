@@ -371,8 +371,6 @@ enum Server: CaseIterable, Identifiable, CustomStringConvertible {
             return "TR"
         case .ru2:
             return "RU"
-        default:
-            return "def"
         }
     }
     

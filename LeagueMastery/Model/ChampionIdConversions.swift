@@ -26,9 +26,9 @@ func populateChampions() {
     Task{
         do{
             champions = try await championsApiCall()
-            print(champions)
+            print(champions.debugDescription)
             if let champions = champions {
-                for (entry, info) in champions.data{
+                for (_, info) in champions.data{
                     let key = Int(info.key) ?? 1
                     let name = info.id
                     namesFromChampId[key] = name
@@ -79,7 +79,7 @@ var displayableChampionNames: [String:String] =
 
 // handles getting user-facing champion names i.e. MonkeyKing to Wukong
 func getNameFromId(id: Int) -> String {
-    var rawName = namesFromChampId[id]!
+    let rawName = namesFromChampId[id]!
     if let displayName = displayableChampionNames[rawName] {
         return displayName
     }

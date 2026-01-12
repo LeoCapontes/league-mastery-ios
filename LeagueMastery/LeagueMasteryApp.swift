@@ -29,7 +29,7 @@ struct LeagueMasteryApp: App {
 }
 
 // allows for sorting by bool
-extension Bool: Comparable {
+extension Bool: @retroactive Comparable {
     public static func <(lhs: Self, rhs: Self) -> Bool {
         !lhs && rhs
     }

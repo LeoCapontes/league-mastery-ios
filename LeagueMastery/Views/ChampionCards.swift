@@ -71,7 +71,7 @@ struct ChampionImage: View {
                 .onSuccess { result in
                     if(withAvgColor){
                         let uiImage = result.image
-                        if let avgUIColor = uiImage.averageColor() {
+                        if uiImage.averageColor() != nil {
                             //averageColor = Color(avgUIColor)
                             print(averageColor)
                         } else {

@@ -325,6 +325,7 @@ struct BackgroundChampionImage: View {
 }
 
 #Preview {
+    @Previewable @State var bgColor: Color = Color("BGColor")
     let mock = mockMasteryResponse
     let user = User(
         puuid: "d",
@@ -337,7 +338,6 @@ struct BackgroundChampionImage: View {
         masteryScore: 999
     )
     let mockIndex = 40
-    @State var bgColor: Color = Color("BGColor")
     var splashOffset: Offset {
         return splashOffsets[mock[mockIndex].championId] ?? Offset()
     }
