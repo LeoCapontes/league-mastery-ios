@@ -25,12 +25,18 @@ let cardOverlay = LinearGradient(
     startPoint: .trailing,
     endPoint: .leading)
 
+enum UserMetric {
+    case canLevel
+    case topScore
+    case topMilestone
+}
+
 
 struct PinnedUser: View {
     var entries: [MasteryResponse]
     var user: User
     @State var slideShowCounter: Int = 0
-    @State var selectedMetric: userMetric = .canLevel
+    @State var selectedMetric: UserMetric = .canLevel
     
     var maskYOffset: Double {
         switch selectedMetric {
@@ -123,6 +129,7 @@ struct PinnedUser: View {
                             Label("Can Level", systemImage: "")
                                 .onTapGesture {
                                     selectedMetric = .canLevel
+                                    slideShowCounter = 0
                                 }
                                 .foregroundStyle(selectedMetric == .canLevel ? .white : .gray)
                             Divider()
@@ -150,7 +157,10 @@ struct PinnedUser: View {
                                     .scaledToFill()
                                     .foregroundStyle(.white.opacity(0.75))
 //                                    .border(.green)
-                                LevelUpReady(entry: currentArray[(slideShowCounter % currentArray.count)])
+                                GlanceableMetric(
+                                    entry: currentArray[(slideShowCounter % currentArray.count)],
+                                    selectedMetric: $selectedMetric
+                                )
 //                                    .border(.green)
                             }
                             .background{
@@ -188,15 +198,25 @@ struct PinnedUser: View {
             print("incremented")
         }
     }
+}
+
+struct GlanceableMetric: View {
+    var entry: MasteryResponse
+    @Binding var selectedMetric: UserMetric
     
-    enum userMetric {
-        case canLevel
-        case topScore
-        case topMilestone
+    var body: some View {
+        switch selectedMetric {
+        case .canLevel:
+            LevelUpReadyMetric(entry: entry)
+        case .topScore:
+            TopLevelMetric(entry: entry)
+        case .topMilestone:
+            TopMilestonesMetric(entry: entry)
+        }
     }
 }
 
-struct LevelUpReady: View {
+struct LevelUpReadyMetric: View {
     var entry: MasteryResponse
     
     var noChangeInIcon: Bool {
@@ -224,6 +244,40 @@ struct LevelUpReady: View {
         .foregroundStyle(.white)
         .bold()
         .frame(maxWidth: 125)
+    }
+}
+
+struct TopLevelMetric: View {
+    var entry: MasteryResponse
+    
+    var body: some View {
+        HStack {
+            Text("Level \(entry.championLevel)")
+            Text("\(entry.championPoints) pts")
+        }
+//        .frame(maxWidth: 125)
+        .foregroundStyle(.white.opacity(0.9))
+        .font(.subheadline)
+        .padding(.horizontal)
+    }
+}
+
+struct TopMilestonesMetric: View {
+    var entry: MasteryResponse
+    
+    var body: some View {
+        HStack {
+            Text("Milestone \(entry.championSeasonMilestone)")
+            Spacer()
+            Image("mastery-mark")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 28)
+            Text("x\(entry.tokensEarned)")
+        }
+        .foregroundStyle(.white.opacity(0.9))
+        .font(.subheadline)
+        .padding(.horizontal)
     }
 }
 
