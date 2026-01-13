@@ -53,21 +53,23 @@ struct ContentView: View {
                             .frame(height: searchContainerHeight)
                             .opacity(0)
                         
-                        PinnedUser(
-                            entries: mockMasteryResponse,
-                            user: User(
-                                puuid: "d",
-                                name: "Hide on Bush",
-                                tagline: "KR1",
-                                region: "Korea",
-                                server: "Asia",
-                                profileIconId: 1,
-                                summonerLevel: 999,
-                                masteryScore: 999
+                        if (viewModel.pinnedUser != nil) {
+                            PinnedUser(
+                                entries: viewModel.pinnedResponse ?? mockMasteryResponse,
+                                user: viewModel.pinnedUser ?? User(
+                                    puuid: "d",
+                                    name: "Hide on Bush",
+                                    tagline: "KR1",
+                                    region: "Korea",
+                                    server: "Asia",
+                                    profileIconId: 1,
+                                    summonerLevel: 999,
+                                    masteryScore: 999
+                                )
                             )
-                        )
-                        .frame(height: 186)
-                        .padding(.vertical)
+                            .frame(height: 186)
+                            .padding(.vertical)
+                        }
                     }
                     .foregroundColor(.white)
                     .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
@@ -113,16 +115,20 @@ struct ContentView: View {
                     
                 }
                 .containerBackground(.clear, for: .navigation)
+                .onAppear {
+                    viewModel.setupPinnedUser()
+                }
             }
             .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
                 Button("OK") {}
             }
+            
         }
     }
     
     func SearchSummoner(){
         fieldFocused = false
-        viewModel.searchSumm()
+        viewModel.setCurrentSummoner()
     }
     
 }
@@ -223,7 +229,7 @@ struct SummonerSearchContainer: View {
             
             SearchedUsers(
                 sort: SortDescriptor(\User.isFavourite, order: .reverse),
-                searchFunc: viewModel.searchSumm(name:tag:region:server:),
+                searchFunc: viewModel.setCurrentSummoner(name:tag:region:server:),
                 clearSearches: viewModel.deleteAllUsers,
                 fieldFocused: $fieldFocused
             )

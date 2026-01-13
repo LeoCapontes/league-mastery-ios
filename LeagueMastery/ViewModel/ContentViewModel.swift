@@ -15,6 +15,8 @@ extension ContentView {
         var modelContext: ModelContext
         var users = [User]()
         var userToDisplay: User?
+        var pinnedUser: User?
+        var pinnedResponse: [MasteryResponse]?
         var path = [Route]()
         
         var sumName: String = ""
@@ -46,7 +48,7 @@ extension ContentView {
             Settings.shared.UpdateGameVersion()
         }
         
-        func searchSumm() {
+        func setCurrentSummoner() {
 //            print("called")
 //            guard let splitName = splitGameName(sumName) else {
 //                return
@@ -122,7 +124,7 @@ extension ContentView {
             }
         }
         
-        func searchSumm(name: String, tag: String, region: String, server: String){
+        func setCurrentSummoner(name: String, tag: String, region: String, server: String){
             Task {
 #if DEBUG
                 print("Doing search with params:")
@@ -296,6 +298,30 @@ extension ContentView {
                 users = try modelContext.fetch(descriptor)
             } catch {
                 print("Fetch failed")
+            }
+        }
+        
+        func setupPinnedUser() {
+            Task{
+                do {
+                    let descriptor = FetchDescriptor<User>(sortBy: [SortDescriptor(\.isFavourite)])
+                    let favourited = try modelContext.fetch(descriptor)
+                    print(favourited.map({ return $0.name }))
+                    pinnedUser = favourited.last
+                    
+                    let puuidResponse = try await puuidApiCall(
+                        gameName: pinnedUser!.name,
+                        tag: pinnedUser!.tagline,
+                        region: pinnedUser!.region
+                    )
+                    
+                    pinnedResponse = try await masteryApiCall(
+                        puuid:puuidResponse.puuid,
+                        selectedServer: pinnedUser!.server
+                    )
+                } catch {
+                    print("setting pinned failed")
+                }
             }
         }
     }
