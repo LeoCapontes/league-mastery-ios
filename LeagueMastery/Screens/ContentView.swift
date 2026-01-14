@@ -90,7 +90,7 @@ struct ContentView: View {
                     )
                     .frame(maxHeight: fieldFocused ? 550 : searchContainerHeight)
                     .ignoresSafeArea(.container, edges: .bottom)
-                    .offset(y: -110)
+                    .offset(y: viewModel.pinnedUser == nil ? 0 : -110)
                     .animation(.snappy, value: fieldFocused)
                     
                     if(viewModel.showingProgress){
