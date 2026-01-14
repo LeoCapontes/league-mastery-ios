@@ -304,21 +304,26 @@ extension ContentView {
         func setupPinnedUser() {
             Task{
                 do {
-                    let descriptor = FetchDescriptor<User>(sortBy: [SortDescriptor(\.isFavourite)])
+                    let descriptor = FetchDescriptor<User>(
+                        predicate: #Predicate { $0.isFavourite == true },
+                        sortBy: [SortDescriptor(\.isFavourite)]
+                    )
                     let favourited = try modelContext.fetch(descriptor)
                     print(favourited.map({ return $0.name }))
                     pinnedUser = favourited.last
                     
-                    let puuidResponse = try await puuidApiCall(
-                        gameName: pinnedUser!.name,
-                        tag: pinnedUser!.tagline,
-                        region: pinnedUser!.region
-                    )
-                    
-                    pinnedResponse = try await masteryApiCall(
-                        puuid:puuidResponse.puuid,
-                        selectedServer: pinnedUser!.server
-                    )
+                    if pinnedUser != nil {
+                        let puuidResponse = try await puuidApiCall(
+                            gameName: pinnedUser!.name,
+                            tag: pinnedUser!.tagline,
+                            region: pinnedUser!.region
+                        )
+                        
+                        pinnedResponse = try await masteryApiCall(
+                            puuid:puuidResponse.puuid,
+                            selectedServer: pinnedUser!.server
+                        )
+                    }
                 } catch {
                     print("setting pinned failed")
                 }
