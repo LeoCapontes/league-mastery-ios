@@ -5,6 +5,18 @@
 //  Created by Leo Capontes on 06/11/2024.
 //
 
+import OSLog
+import Foundation
+
+// Logger extension idea from https://www.avanderlee.com/debugging/oslog-unified-logging/
+extension Logger {
+    private static var subsystem = Bundle.main.bundleIdentifier!
+    
+    static let viewModel = Logger(subsystem: subsystem, category: "viewmodel")
+    
+    static let apiCalls = Logger(subsystem: subsystem, category: "apicalls")
+}
+
 func GradeRank(_ grade: String) -> Int {
     let gradeRanks: [String: Int] = [
         "S+": 0, "S": 1, "S-": 2,

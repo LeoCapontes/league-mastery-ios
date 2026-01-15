@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import Combine
+import OSLog
 
 extension ContentView {
     @Observable
@@ -49,14 +50,8 @@ extension ContentView {
         }
         
         func setCurrentSummoner() {
-//            print("called")
-//            guard let splitName = splitGameName(sumName) else {
-//                return
-//            }
-//            print(splitName)
-            
             Task {
-                print("Doing summoner search task")
+                Logger.viewModel.log("Doing summoner search task")
                 do {
                     showingProgress = true
                     let puuidResponse = try await puuidApiCall(
@@ -97,14 +92,12 @@ extension ContentView {
                         addUser(newUser: searchedUser)
                         if let newUser = modelContext.model(for: getUserIdentifier(puuid: puuidResponse.puuid)!) as? User {
                             userToDisplay = newUser
-#if DEBUG
-                            print("User is level: ", userToDisplay!.summonerLevel)
-#endif
+                            Logger.viewModel.info("User is level: \(self.userToDisplay!.summonerLevel)")
                             showingProgress = false
                             showingScreen = true
                             path.append(.account)
                         } else {
-                            print("couldnt assign user")
+                            Logger.viewModel.error("couldnt assign user")
                         }
                     }
                 } catch {
@@ -114,11 +107,11 @@ extension ContentView {
                     case ApiError.noDataFound:
                         alertMessage = "Summoner not found"
                     case ApiError.noKey:
-                        print("Something wrong with key")
+                        Logger.viewModel.error("Something wrong with key")
                     default:
                         alertMessage = "Something went wrong"
                     }
-                    print("Error in task \(error)")
+                    Logger.viewModel.error("Error in task \(error)")
                     showingAlert = true
                 }
             }
@@ -126,10 +119,7 @@ extension ContentView {
         
         func setCurrentSummoner(name: String, tag: String, region: String, server: String){
             Task {
-#if DEBUG
-                print("Doing search with params:")
-                print("\(name), \(tag), \(region), \(server)")
-#endif
+                Logger.viewModel.log("Doing search with params:\n\(name), \(tag), \(region), \(server)")
                 do {
                     showingProgress = true
                     let puuidResponse = try await puuidApiCall(
@@ -157,14 +147,12 @@ extension ContentView {
                             selectedUser.masteryScore = masteryScoreResponse
                         }
                         userToDisplay = selectedUser
-#if DEBUG
-                        print("User is level: ", userToDisplay!.summonerLevel)
-#endif
+                        Logger.viewModel.info("User is level: \(self.userToDisplay!.summonerLevel)")
                         showingProgress = false
                         showingScreen = true
                         path.append(.account)
                     } else {
-                        print("couldnt select user")
+                        Logger.viewModel.error("couldnt select user")
                     }
                 } catch {
                     showingProgress = false
@@ -173,11 +161,11 @@ extension ContentView {
                     case ApiError.noDataFound:
                         alertMessage = "Summoner not found"
                     case ApiError.noKey:
-                        print("Something wrong with key")
+                        Logger.viewModel.error("Something wrong with key")
                     default:
                         alertMessage = "Something went wrong"
                     }
-                    print("Error in task \(error)")
+                    Logger.viewModel.error("Error in task \(error)")
                     showingAlert = true
                 }
             }
@@ -216,7 +204,7 @@ extension ContentView {
             do {
                 try modelContext.save()
             } catch {
-                print("couldn't save context")
+                Logger.viewModel.error("couldn't save context")
             }
         }
         
@@ -225,7 +213,7 @@ extension ContentView {
             do{
                 try modelContext.save()
             } catch {
-                print("couldn't save context")
+                Logger.viewModel.error("couldn't save context")
             }
         }
         
@@ -236,12 +224,12 @@ extension ContentView {
                     userToEdit.championWatchlist.append(champId)
                     do {
                         try modelContext.save()
-                        print("saved context, watchlist: \(userToEdit.championWatchlist)")
+                        Logger.viewModel.info("saved context, watchlist: \(userToEdit.championWatchlist)")
                     } catch {
-                        print("couldn't save context")
+                        Logger.viewModel.error("couldn't save context")
                     }
                 } else {
-                    print("Could not add to watch list")
+                    Logger.viewModel.error("Could not add to watch list")
                 }
             }
         }
@@ -253,12 +241,12 @@ extension ContentView {
                     userToEdit.championWatchlist.removeAll(where: { $0 == champId })
                     do {
                         try modelContext.save()
-                        print("saved context, watchlist: \(userToEdit.championWatchlist)")
+                        Logger.viewModel.info("saved context, watchlist: \(userToEdit.championWatchlist)")
                     } catch {
-                        print("couldn't save context")
+                        Logger.viewModel.error("couldn't save context")
                     }
                 } else {
-                    print("Couldn't remove from watch list")
+                    Logger.viewModel.error("Couldn't remove from watch list")
                 }
             }
         }
@@ -272,10 +260,10 @@ extension ContentView {
                 do {
                     try modelContext.save()
                 } catch {
-                    print("couldn't save context")
+                    Logger.viewModel.error("couldn't save context")
                 }
             } catch {
-                print("Failed to delete users")
+                Logger.viewModel.error("Failed to delete users")
             }
         }
         
@@ -297,7 +285,7 @@ extension ContentView {
                 let descriptor = FetchDescriptor<User>(sortBy: [SortDescriptor(\.puuid)])
                 users = try modelContext.fetch(descriptor)
             } catch {
-                print("Fetch failed")
+                Logger.viewModel.error("Fetch failed")
             }
         }
         
@@ -309,7 +297,7 @@ extension ContentView {
                         sortBy: [SortDescriptor(\.isFavourite)]
                     )
                     let favourited = try modelContext.fetch(descriptor)
-                    print(favourited.map({ return $0.name }))
+                    Logger.viewModel.debug("Favouited users: \(favourited.map({ return $0.name }))")
                     pinnedUser = favourited.last
                     
                     if pinnedUser != nil {
@@ -325,7 +313,7 @@ extension ContentView {
                         )
                     }
                 } catch {
-                    print("setting pinned failed")
+                    Logger.viewModel.error("setting pinned failed")
                 }
             }
         }

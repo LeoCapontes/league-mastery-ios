@@ -193,9 +193,7 @@ struct PinnedUser: View {
             } catch {
                 break
             }
-
             slideShowCounter += 1
-            print("incremented")
         }
     }
 }
