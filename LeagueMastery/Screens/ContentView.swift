@@ -122,7 +122,14 @@ struct ContentView: View {
             .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
                 Button("OK") {}
             }
-            
+            .onChange(of: viewModel.path) { oldPath, newPath in
+                // dismiss keyboard when navigating back to this view
+                if newPath.isEmpty && !oldPath.isEmpty {
+                    fieldFocused = false
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+            }
+
         }
     }
     
