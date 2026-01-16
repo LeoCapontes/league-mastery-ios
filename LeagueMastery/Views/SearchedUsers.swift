@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import OSLog
 
 struct SearchedUsers: View {
     @Environment(\.modelContext) var modelContext
@@ -32,7 +33,7 @@ struct SearchedUsers: View {
                         UserRow(user: user, onRowPress: startSearch)
                             .onTapGesture {
                                 fieldFocused = false
-                                print("UNFOCUSING")
+                                Logger.views.debug("Search field unfocused")
                             }
                         Divider()
                     }

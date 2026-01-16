@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import OSLog
 
 func championsApiCall() async throws -> Champions{
     let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/\(Settings.shared.lolVersion)/data/en_US/champion.json")!
-    print(url.absoluteString)
+    Logger.apiCalls.debug("Champions API: \(url.absoluteString)")
     let (data, _) = try await URLSession.shared.data(from: url)
     let response = try JSONDecoder().decode(Champions.self, from: data)
     return response
@@ -24,9 +25,9 @@ func puuidApiCall(
 ) async throws -> PuuidResponse{
     let url = URL(string: "\(Settings.shared.serverUrl)/account/by-riot-id/\(region.lowercased())/\(gameName)/\(tag)")!
     do {
-        print(url.absoluteString)
+        Logger.apiCalls.debug("PUUID API: \(url.absoluteString)")
         let (data, httpResponse) = try await URLSession.shared.data(from: url)
-        print(data.prettyPrintedJSONString)
+        Logger.apiCalls.debug("PUUID response: \(data.prettyPrintedJSONString ?? "nil")")
         guard let httpResponse = httpResponse as? HTTPURLResponse else{
             throw URLError(.badServerResponse)
         }
@@ -34,13 +35,13 @@ func puuidApiCall(
             let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
             return response
         } else {
-            print(httpResponse.statusCode)
+            Logger.apiCalls.warning("PUUID API error status: \(httpResponse.statusCode)")
             if httpResponse.statusCode == 404 {
-                print("Throwing no data found")
+                Logger.apiCalls.debug("Throwing noDataFound")
                 throw ApiError.noDataFound
             }
             if httpResponse.statusCode == 400 {
-                print("Throwing no key")
+                Logger.apiCalls.warning("Throwing noKey - API key issue")
                 throw ApiError.noKey
             }
             throw ApiError.other("Search failed")
@@ -54,7 +55,7 @@ func masteryApiCall(
 ) async throws -> [MasteryResponse]{
     let serverString = selectedServer.raw
     let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
-    print(url.absoluteString)
+    Logger.apiCalls.debug("Mastery API: \(url.absoluteString)")
     do{
         let (data, httpResponse) = try await URLSession.shared.data(from: url)
         guard let httpResponse = httpResponse as? HTTPURLResponse else {
@@ -64,13 +65,13 @@ func masteryApiCall(
             let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
             return response
         } else {
-            print(httpResponse.statusCode)
+            Logger.apiCalls.warning("Mastery API error status: \(httpResponse.statusCode)")
             if httpResponse.statusCode == 404 {
-                print("Throwing no data found")
+                Logger.apiCalls.debug("Throwing noDataFound")
                 throw ApiError.noDataFound
             }
             if httpResponse.statusCode == 400 {
-                print("Throwing no key")
+                Logger.apiCalls.warning("Throwing noKey - API key issue")
                 throw ApiError.noKey
             }
             throw ApiError.other("Search failed")
@@ -84,7 +85,7 @@ func masteryApiCall(
 ) async throws -> [MasteryResponse]{
     let serverString = selectedServer
     let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
-    print(url.absoluteString)
+    Logger.apiCalls.debug("Mastery API: \(url.absoluteString)")
     do{
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
@@ -100,7 +101,7 @@ func summonerInfoApiCall(
 ) async throws -> SummonerResponse{
     let serverString = selectedServer
     let url = URL(string:"\(Settings.shared.serverUrl)/summoner/by-puuid/\(serverString)/\(puuid)")!
-    print(url.absoluteString)
+    Logger.apiCalls.debug("Summoner API: \(url.absoluteString)")
     do{
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(SummonerResponse.self, from: data)
@@ -116,8 +117,8 @@ func masteryScoreApiCall(
 ) async throws -> Int{
     let serverString = selectedServer
     let url = URL(string:"\(Settings.shared.serverUrl)/masteryscore/by-puuid/\(serverString)/\(puuid)")!
-    print(url.absoluteString)
-    
+    Logger.apiCalls.debug("Mastery Score API: \(url.absoluteString)")
+
     do{
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(Int.self, from: data)

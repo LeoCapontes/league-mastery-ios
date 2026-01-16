@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import OSLog
 
 class Settings {
     static let shared = Settings()
@@ -29,10 +30,10 @@ class Settings {
         Task{
             do {
                 self.lolVersion = try await versionApiCall()[0]
-                print("Game version updated to \(self.lolVersion)")
+                Logger.settings.info("Game version updated to \(self.lolVersion)")
                 populateChampions()
             } catch {
-                print("Game version update failed, error: \(error)")
+                Logger.settings.error("Game version update failed: \(error)")
             }
         }
     }

@@ -11,10 +11,12 @@ import Foundation
 // Logger extension idea from https://www.avanderlee.com/debugging/oslog-unified-logging/
 extension Logger {
     private static var subsystem = Bundle.main.bundleIdentifier!
-    
+
     static let viewModel = Logger(subsystem: subsystem, category: "viewmodel")
-    
     static let apiCalls = Logger(subsystem: subsystem, category: "apicalls")
+    static let data = Logger(subsystem: subsystem, category: "data")
+    static let settings = Logger(subsystem: subsystem, category: "settings")
+    static let views = Logger(subsystem: subsystem, category: "views")
 }
 
 func GradeRank(_ grade: String) -> Int {

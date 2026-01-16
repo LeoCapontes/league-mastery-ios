@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Kingfisher
 import CoreMotion
+import OSLog
 
 struct MasteryCrestImage: View {
     var masteryLevel: Int
@@ -58,7 +59,7 @@ struct ChampionImage: View {
                         if let avgUIColor = uiImage.dominantColor() {
                             averageColor = Color(avgUIColor)
                         } else {
-                            print("failed")
+                            Logger.views.debug("Failed to get dominant color")
                         }
                     }
                     .resizable()
@@ -73,9 +74,9 @@ struct ChampionImage: View {
                         let uiImage = result.image
                         if uiImage.averageColor() != nil {
                             //averageColor = Color(avgUIColor)
-                            print(averageColor)
+                            Logger.views.debug("Average color: \(String(describing: averageColor))")
                         } else {
-                            print("failed")
+                            Logger.views.debug("Failed to get average color")
                         }
                     }
                 }

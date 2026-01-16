@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import OSLog
 
 struct AccountScreen: View{
     let gradient = LinearGradient(
@@ -88,11 +89,7 @@ struct AccountScreen: View{
                 watchedChampions.append(toAdd)
             }
         }
-        print("called watched champions")
-        print("retrieved champions: ")
-        for watchedChampion in watchedChampions {
-            print(watchedChampion.championId)
-        }
+        Logger.views.debug("Watched champions retrieved: \(watchedChampions.map { $0.championId })")
         return watchedChampions
     }
     
@@ -115,7 +112,7 @@ struct AccountScreen: View{
         if(champSearchString == "") {
             return selectedSort
         } else {
-            print(champSearchString)
+            Logger.views.debug("Searching for: \(champSearchString)")
             return selectedSort.filter{
                 getNameFromId(id: $0.championId).contains(champSearchString)
             }

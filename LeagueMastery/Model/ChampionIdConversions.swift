@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import OSLog
 
 var champions: Champions?
 
@@ -26,7 +27,7 @@ func populateChampions() {
     Task{
         do{
             champions = try await championsApiCall()
-            print(champions.debugDescription)
+            Logger.data.debug("Champions loaded: \(champions.debugDescription)")
             if let champions = champions {
                 for (_, info) in champions.data{
                     let key = Int(info.key) ?? 1
@@ -34,9 +35,9 @@ func populateChampions() {
                     namesFromChampId[key] = name
                 }
             }
-            print(namesFromChampId)
+            Logger.data.debug("Champion ID map populated: \(namesFromChampId)")
         }catch{
-            print("Error populating champions \(error)")
+            Logger.data.error("Error populating champions: \(error)")
         }
     }
 }
