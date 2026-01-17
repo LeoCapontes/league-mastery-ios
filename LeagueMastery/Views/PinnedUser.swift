@@ -192,9 +192,11 @@ struct PinnedUser: View {
                     //        .border(.green)
                 } else {
                     Text("Favourite a user to see their stats here")
+                        .padding()
+                        .frame(minWidth: nil, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
                 }
             }
-            .background(.ultraThinMaterial.opacity(0.2))
+            .background(.ultraThinMaterial.opacity(entries == nil ? 0.7 : 0.2))
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
     //        .border(.red)
