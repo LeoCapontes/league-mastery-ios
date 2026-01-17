@@ -33,8 +33,8 @@ enum UserMetric {
 
 
 struct PinnedUser: View {
-    var entries: [MasteryResponse]
-    var user: User
+    var entries: [MasteryResponse]?
+    var user: User?
     @State var slideShowCounter: Int = 0
     @State var selectedMetric: UserMetric = .canLevel
     
@@ -49,23 +49,27 @@ struct PinnedUser: View {
         }
     }
     
-    var top3Entries: [MasteryResponse] {
-        return Array(entries.prefix(3))
+    var top3Entries: [MasteryResponse]? {
+        return entries.map { Array($0.prefix(3))}
     }
     
-    var canLevelEntries: [MasteryResponse] {
-        return entries.filter { $0.championPointsUntilNextLevel < 0}
+    var canLevelEntries: [MasteryResponse]? {
+        return entries.map { array in
+            array.filter {$0.championPointsUntilNextLevel < 0}
+        }
     }
     
-    var topMilestoneEntries: [MasteryResponse] {
-        return Array(
-            entries
-                .sorted{ $0.championSeasonMilestone < $1.championSeasonMilestone }
-                .prefix(3)
-        )
+    var topMilestoneEntries: [MasteryResponse]? {
+        return  entries.map { entriesArray in
+            Array(
+                entriesArray
+                    .sorted{ $0.championSeasonMilestone < $1.championSeasonMilestone }
+                    .prefix(3)
+            )
+        }
     }
     
-    var currentArray: [MasteryResponse] {
+    var currentArray: [MasteryResponse]? {
         switch selectedMetric {
         case .canLevel:
             return canLevelEntries
@@ -76,42 +80,52 @@ struct PinnedUser: View {
         }
     }
     
+    var currentEntryIndex: Int {
+        guard let currentArray = currentArray else{
+            return 0
+        }
+        return (slideShowCounter % currentArray.count)
+    }
+    
     var body: some View {
         ZStack{
             VStack(spacing: 0){
-                HStack{
-                    KFImage(URL(string: profileIconUrl(profileIconId: 1)))
-                        .resizable()
-                        .frame(width: 36, height: 36)
-                        .background(.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                    
-                    VStack(alignment:.leading){
-                        HStack(alignment: .top){
-                            Text(user.name)
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(.white)
-                            Text("#\(user.tagline)")
-                                .font(.system(size: 10))
+                if let entries = entries, let user = user {
+                    HStack{
+                        KFImage(URL(string: profileIconUrl(profileIconId: 1)))
+                            .resizable()
+                            .frame(width: 36, height: 36)
+                            .background(.gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                        
+                        VStack(alignment:.leading){
+                            HStack(alignment: .top){
+                                Text(user.name)
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(.white)
+                                Text("#\(user.tagline)")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.gray)
+                            }
+                            Text("Score: \(user.masteryScore)")
+                                .font(.system(size: 14))
                                 .foregroundStyle(.gray)
                         }
-                        Text("Score: \(user.masteryScore)")
-                            .font(.system(size: 14))
-                            .foregroundStyle(.gray)
+                        
                     }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    //            .border(.green)
                     
-                }
-                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-    //            .border(.green)
-
-                ZStack(){
-                    BackgroundChampionImage(championId: currentArray[(slideShowCounter % currentArray.count)].championId)
+                    ZStack(){
+                        BackgroundChampionImage(
+                            championId: currentArray![currentEntryIndex].championId
+                        )
                         .id(slideShowCounter)
                         .transition(.opacity.animation(.easeOut))
                         .padding(-10)
-                    //            .border(.green)
+                        //            .border(.green)
                         .overlay {
                             cardOverlay
                                 .overlay{
@@ -123,59 +137,62 @@ struct PinnedUser: View {
                                 .compositingGroup()
                         }
                         .animation(.snappy.speed(2), value: maskYOffset)
-                    
-                    HStack{
-                        VStack(alignment: .leading, spacing: 18){
-                            Label("Can Level", systemImage: "")
-                                .onTapGesture {
-                                    selectedMetric = .canLevel
-                                    slideShowCounter = 0
-                                }
-                                .foregroundStyle(selectedMetric == .canLevel ? .white : .gray)
-                            Divider()
-                                .frame(width: 100)
-                            Label("Top 3", systemImage: "")
-                                .onTapGesture {
-                                    selectedMetric = .topScore
-                                }
-                                .foregroundStyle(selectedMetric == .topScore ? .white : .gray)
-                            Divider()
-                                .frame(width: 100)
-                            Label("Top Milestones", systemImage: "")
-                                .onTapGesture {
-                                    selectedMetric = .topMilestone
-                                }
-                                .foregroundStyle(selectedMetric == .topMilestone ? .white : .gray)
-                        }
-                        Spacer()
-                        VStack(){
+                        
+                        HStack{
+                            VStack(alignment: .leading, spacing: 18){
+                                Label("Can Level", systemImage: "")
+                                    .onTapGesture {
+                                        selectedMetric = .canLevel
+                                        slideShowCounter = 0
+                                    }
+                                    .foregroundStyle(selectedMetric == .canLevel ? .white : .gray)
+                                Divider()
+                                    .frame(width: 100)
+                                Label("Top 3", systemImage: "")
+                                    .onTapGesture {
+                                        selectedMetric = .topScore
+                                    }
+                                    .foregroundStyle(selectedMetric == .topScore ? .white : .gray)
+                                Divider()
+                                    .frame(width: 100)
+                                Label("Top Milestones", systemImage: "")
+                                    .onTapGesture {
+                                        selectedMetric = .topMilestone
+                                    }
+                                    .foregroundStyle(selectedMetric == .topMilestone ? .white : .gray)
+                            }
                             Spacer()
-                            VStack(spacing: 0){
-                                Text("\(getNameFromId(id: currentArray[(slideShowCounter % currentArray.count)].championId))")
-                                    .bold()
-                                    .font(.title3)
-                                    .scaledToFill()
-                                    .foregroundStyle(.white.opacity(0.75))
-//                                    .border(.green)
-                                GlanceableMetric(
-                                    entry: currentArray[(slideShowCounter % currentArray.count)],
-                                    selectedMetric: $selectedMetric
-                                )
-//                                    .border(.green)
+                            VStack(){
+                                Spacer()
+                                VStack(spacing: 0){
+                                    Text("\(getNameFromId(id: currentArray![currentEntryIndex].championId))")
+                                        .bold()
+                                        .font(.title3)
+                                        .scaledToFill()
+                                        .foregroundStyle(.white.opacity(0.75))
+                                    //                                    .border(.green)
+                                    GlanceableMetric(
+                                        entry: currentArray![currentEntryIndex],
+                                        selectedMetric: $selectedMetric
+                                    )
+                                    //                                    .border(.green)
+                                }
+                                .background{
+                                    Rectangle()
+                                        .foregroundStyle(.black.opacity(0.5))
+                                        .blur(radius: 12)
+                                }
                             }
-                            .background{
-                                Rectangle()
-                                    .foregroundStyle(.black.opacity(0.5))
-                                    .blur(radius: 12)
-                            }
+                            Spacer()
                         }
-                        Spacer()
+                        .padding()
                     }
-                    .padding()
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .frame(minWidth: nil, maxWidth: nil, minHeight: 186, maxHeight: .infinity)
+                    //        .border(.green)
+                } else {
+                    Text("Favourite a user to see their stats here")
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .frame(minWidth: nil, maxWidth: nil, minHeight: 186, maxHeight: .infinity)
-                //        .border(.green)
             }
             .background(.ultraThinMaterial.opacity(0.2))
             .clipShape(RoundedRectangle(cornerRadius: 16))

@@ -53,23 +53,14 @@ struct ContentView: View {
                             .frame(height: searchContainerHeight)
                             .opacity(0)
                         
-                        if (viewModel.pinnedUser != nil) {
-                            PinnedUser(
-                                entries: viewModel.pinnedResponse ?? mockMasteryResponse,
-                                user: viewModel.pinnedUser ?? User(
-                                    puuid: "d",
-                                    name: "Hide on Bush",
-                                    tagline: "KR1",
-                                    region: "Korea",
-                                    server: "Asia",
-                                    profileIconId: 1,
-                                    summonerLevel: 999,
-                                    masteryScore: 999
-                                )
-                            )
-                            .frame(height: 186)
-                            .padding(.vertical)
-                        }
+                        
+                        PinnedUser(
+                            entries: viewModel.pinnedResponse,
+                            user: viewModel.pinnedUser
+                        )
+                        .frame(height: 186)
+                        .padding(.vertical)
+                        
                     }
                     .foregroundColor(.white)
                     .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
