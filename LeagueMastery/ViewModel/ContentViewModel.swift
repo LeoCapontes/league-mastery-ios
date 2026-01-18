@@ -301,7 +301,7 @@ extension ContentView {
                             user.isFavourite = false
                         }
                     }
-                    userToEdit.isFavourite = true
+                    userToEdit.isFavourite.toggle()
                     do {
                         try modelContext.save()
                     } catch {
