@@ -77,7 +77,8 @@ struct ContentView: View {
                     SummonerSearchContainer(
                         viewModel: $viewModel,
                         fieldFocused: $fieldFocused,
-                        searchSummoner: SearchSummoner
+                        searchSummoner: SearchSummoner,
+                        setFavourite: viewModel.setFavouritedUser(_:)
                     )
                     .frame(maxHeight: fieldFocused ? 550 : searchContainerHeight)
                     .ignoresSafeArea(.container, edges: .bottom)
@@ -120,7 +121,6 @@ struct ContentView: View {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }
             }
-
         }
     }
     
@@ -202,6 +202,7 @@ struct SummonerSearchContainer: View {
     @Binding var viewModel: ContentView.ViewModel
     @FocusState.Binding var fieldFocused: Bool
     var searchSummoner: () -> Void
+    var setFavourite: (User) -> Void
     
     
     var body: some View {
@@ -228,6 +229,7 @@ struct SummonerSearchContainer: View {
             SearchedUsers(
                 sort: SortDescriptor(\User.isFavourite, order: .reverse),
                 searchFunc: viewModel.setCurrentSummoner(name:tag:region:server:),
+                setFavourite: setFavourite,
                 clearSearches: viewModel.deleteAllUsers,
                 fieldFocused: $fieldFocused
             )

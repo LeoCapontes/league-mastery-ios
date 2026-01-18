@@ -17,6 +17,7 @@ struct SearchedUsers: View {
     
     var startSearch: (String, String, String, String) -> Void
     var clearSearches: () -> Void
+    var setFavourite: (User) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4){
@@ -30,7 +31,11 @@ struct SearchedUsers: View {
             ScrollView(){
                 VStack(spacing: 0){
                     ForEach(users) { user in
-                        UserRow(user: user, onRowPress: startSearch)
+                        UserRow(
+                            user: user,
+                            onRowPress: startSearch,
+                            setFavourite: setFavourite
+                        )
                             .onTapGesture {
                                 fieldFocused = false
                                 Logger.views.debug("Search field unfocused")
@@ -49,11 +54,13 @@ struct SearchedUsers: View {
     init(
         sort: SortDescriptor<User>,
         searchFunc: @escaping (String, String, String, String) -> Void,
+        setFavourite: @escaping (User) -> Void,
         clearSearches: @escaping () -> Void,
         fieldFocused: FocusState<Bool>.Binding
     ) {
         self.clearSearches = clearSearches
         self.startSearch = searchFunc
+        self.setFavourite = setFavourite
         _users = Query(sort: [sort])
         self._fieldFocused = fieldFocused
     }
@@ -62,6 +69,7 @@ struct SearchedUsers: View {
 struct UserRow: View {
     @Bindable var user: User
     var onRowPress: (String, String, String, String) -> Void
+    var setFavourite: (User) -> Void
     
     var body: some View {
         HStack(){
@@ -69,7 +77,7 @@ struct UserRow: View {
                 Text("\(user.name) #\(user.tagline)")
             }
             Spacer()
-            Button(action: toggleFavourite){
+            Button(action: { setFavourite(user) }){
                 Image(systemName: user.isFavourite ? "star.fill" : "star")
             }
         }

@@ -289,6 +289,29 @@ extension ContentView {
             }
         }
         
+        func setFavouritedUser(_ user: User) {
+            fetchData()
+            Task { @MainActor in
+                if let userToEdit = modelContext.model(for: user.id) as? User {
+                    let currenFavouritedDescriptor = FetchDescriptor<User>(
+                        predicate: #Predicate {user in user.isFavourite == true}
+                    )
+                    if let currentFavourited = try? modelContext.fetch(currenFavouritedDescriptor) {
+                        for user in currentFavourited {
+                            user.isFavourite = false
+                        }
+                    }
+                    userToEdit.isFavourite = true
+                    do {
+                        try modelContext.save()
+                    } catch {
+                        Logger.viewModel.error("Setting favourite: couldn't save context")
+                    }
+                }
+                setupPinnedUser()
+            }
+        }
+        
         func setupPinnedUser() {
             Task{
                 do {
