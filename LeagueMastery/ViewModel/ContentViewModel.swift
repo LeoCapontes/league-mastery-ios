@@ -291,6 +291,7 @@ extension ContentView {
         
         func setFavouritedUser(_ user: User) {
             fetchData()
+            let isAlreadyFavourite = user.isFavourite
             Task { @MainActor in
                 if let userToEdit = modelContext.model(for: user.id) as? User {
                     let currenFavouritedDescriptor = FetchDescriptor<User>(
@@ -301,7 +302,9 @@ extension ContentView {
                             user.isFavourite = false
                         }
                     }
-                    userToEdit.isFavourite.toggle()
+                    if !isAlreadyFavourite {
+                        userToEdit.isFavourite.toggle()
+                    }
                     do {
                         try modelContext.save()
                     } catch {
