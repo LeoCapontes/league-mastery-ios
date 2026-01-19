@@ -59,7 +59,7 @@ struct ContentView: View {
                             user: viewModel.pinnedUser
                         )
                         .frame(height: 186)
-                        .padding(.vertical)
+                        .padding()
                         
                     }
                     .foregroundColor(.white)

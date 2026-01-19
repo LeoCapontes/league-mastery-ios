@@ -38,6 +38,7 @@ struct PinnedUser: View {
     @State var slideShowCounter: Int = 0
     @State var selectedMetric: UserMetric = .canLevel
     
+    
     var maskYOffset: Double {
         switch selectedMetric {
         case .canLevel:
@@ -111,9 +112,10 @@ struct PinnedUser: View {
                                 .font(.system(size: 14))
                                 .foregroundStyle(.gray)
                         }
+                        Spacer()
                         
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    .frame(minWidth: 0, maxWidth: nil, alignment: .leading)
                     .padding(.horizontal)
                     .padding(.vertical, 8)
                     //            .border(.green)
@@ -161,6 +163,7 @@ struct PinnedUser: View {
                                     }
                                     .foregroundStyle(selectedMetric == .topMilestone ? .white : .gray)
                             }
+                            .padding()
                             Spacer()
                             VStack(){
                                 Spacer()
@@ -183,24 +186,38 @@ struct PinnedUser: View {
                                         .blur(radius: 12)
                                 }
                             }
+                            .padding(.bottom, 4)
                             Spacer()
                         }
-                        .padding()
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .frame(minWidth: nil, maxWidth: nil, minHeight: 186, maxHeight: .infinity)
-                    //        .border(.green)
+                    .frame(minHeight: 186, maxHeight: .infinity)
+//                            .border(.green)
                 } else {
                     Text("Favourite a user to see their stats here")
                         .padding()
                         .frame(minWidth: nil, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
                 }
             }
-            .background(.ultraThinMaterial.opacity(entries == nil ? 0.7 : 0.2))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .padding(.horizontal)
-    //        .border(.red)
+            .background(.ultraThinMaterial.opacity(entries == nil ? 0.7 : 0.4))
+            
+//            .border(.red)
+            Rectangle()
+                .background(.clear)
+                .phaseAnimator([0,1,0], trigger: user) { view, phase in
+                    view
+                        .foregroundStyle(.ultraThinMaterial.opacity(phase))
+                } animation: { phase in
+                    switch phase {
+                    case 1: .snappy(duration: 0.05)
+                    case 0: .default.speed(0.5)
+                    default: .easeOut(duration: 0.1)
+                    }
+                }
+                
         }
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+//        .border(.green)
         .task(delayText)
         
     }
@@ -362,5 +379,6 @@ struct BackgroundChampionImage: View {
         BackgroundImage()
         PinnedUser(entries: mock, user: user)
             .frame(height: 200)
+            .padding(.horizontal)
     }
 }
