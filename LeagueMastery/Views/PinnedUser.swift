@@ -58,7 +58,7 @@ struct PinnedUser: View {
     
     var canLevelEntries: [MasteryResponse]? {
         return entries.map { array in
-            array.filter {$0.championPointsUntilNextLevel < 0}
+            array.filter { canLevelUp($0) }
         }
     }
     
@@ -231,6 +231,10 @@ struct PinnedUser: View {
             slideShowCounter += 1
         }
     }
+    
+    func canLevelUp(_ entry: MasteryResponse) -> Bool{
+        return (entry.championPointsUntilNextLevel < 100 && (entry.markRequiredForNextLevel - entry.tokensEarned == 1))
+    }
 }
 
 struct GlanceableMetric: View {
@@ -243,8 +247,10 @@ struct GlanceableMetric: View {
             LevelUpReadyMetric(entry: entry)
         case .topScore:
             TopLevelMetric(entry: entry)
+                .padding(.bottom)
         case .topMilestone:
             TopMilestonesMetric(entry: entry)
+                .padding(.bottom)
         }
     }
 }
