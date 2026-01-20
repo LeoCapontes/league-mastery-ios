@@ -324,20 +324,21 @@ extension ContentView {
                     )
                     let favourited = try modelContext.fetch(descriptor)
                     Logger.viewModel.debug("Favouited users: \(favourited.map({ return $0.name }))")
-                    pinnedUser = favourited.last
+                    let toFavourite = favourited.last
                     
-                    if pinnedUser != nil {
+                    if toFavourite != nil {
                         let puuidResponse = try await puuidApiCall(
-                            gameName: pinnedUser!.name,
-                            tag: pinnedUser!.tagline,
-                            region: pinnedUser!.region
+                            gameName: toFavourite!.name,
+                            tag: toFavourite!.tagline,
+                            region: toFavourite!.region
                         )
                         
                         pinnedResponse = try await masteryApiCall(
                             puuid:puuidResponse.puuid,
-                            selectedServer: pinnedUser!.server
+                            selectedServer: toFavourite!.server
                         )
                     }
+                    pinnedUser = toFavourite
                 } catch {
                     Logger.viewModel.error("setting pinned failed")
                 }

@@ -217,6 +217,9 @@ struct PinnedUser: View {
                 
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .onChange(of: user) {
+            slideShowCounter = 0
+        }
 //        .border(.green)
         .task(delayText)
         
