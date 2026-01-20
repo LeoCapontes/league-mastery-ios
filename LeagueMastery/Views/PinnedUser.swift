@@ -7,6 +7,7 @@
 import SwiftUI
 import Foundation
 import Kingfisher
+import OSLog
 
 let cardMask = LinearGradient(
     stops: [
@@ -35,6 +36,7 @@ enum UserMetric {
 struct PinnedUser: View {
     var entries: [MasteryResponse]?
     var user: User?
+    @Binding var isSettingUp: Bool
     @State var slideShowCounter: Int = 0
     @State var selectedMetric: UserMetric = .canLevel
     
@@ -200,24 +202,18 @@ struct PinnedUser: View {
                 }
             }
             .background(.ultraThinMaterial.opacity(entries == nil ? 0.7 : 0.4))
+            .onChange(of: isSettingUp) {
+                Logger.views.debug("Pinned User: isSettingUp changed to: \(isSettingUp)")
+            }
             
 //            .border(.red)
             Rectangle()
                 .background(.clear)
-                .phaseAnimator([0,1,0], trigger: user) { view, phase in
-                    view
-                        .foregroundStyle(.ultraThinMaterial.opacity(phase))
-                } animation: { phase in
-                    switch phase {
-                    case 1: .snappy(duration: 0.05)
-                    case 0: .default.speed(0.5)
-                    default: .easeOut(duration: 0.1)
-                    }
-                }
-                
+                .foregroundStyle(.ultraThinMaterial.opacity(isSettingUp ? 1 : 0))
+                .animation(.default, value: isSettingUp)
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .onChange(of: user) {
+        .onChange(of: isSettingUp) {
             slideShowCounter = 0
         }
 //        .border(.green)
@@ -363,6 +359,7 @@ struct BackgroundChampionImage: View {
 
 #Preview {
     @Previewable @State var bgColor: Color = Color("BGColor")
+    @Previewable @State var settingUp: Bool = false
     let mock = mockMasteryResponse
     let user = User(
         puuid: "d",
@@ -380,7 +377,7 @@ struct BackgroundChampionImage: View {
     }
     ZStack{
         BackgroundImage()
-        PinnedUser(entries: mock, user: user)
+        PinnedUser(entries: mock, user: user, isSettingUp: $settingUp)
             .frame(height: 200)
             .padding(.horizontal)
     }

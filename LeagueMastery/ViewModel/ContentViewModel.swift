@@ -30,6 +30,7 @@ extension ContentView {
         var showingAlert = false
         var alertMessage = "Something went wrong"
         var showingProgress = false
+        var settingUpPinned = false
         
         var selectedRegion: Region {
             switch selectedServer {
@@ -318,6 +319,7 @@ extension ContentView {
         func setupPinnedUser() {
             Task{
                 do {
+                    settingUpPinned = true
                     let descriptor = FetchDescriptor<User>(
                         predicate: #Predicate { $0.isFavourite == true },
                         sortBy: [SortDescriptor(\.isFavourite)]
@@ -339,8 +341,10 @@ extension ContentView {
                         )
                     }
                     pinnedUser = toFavourite
+                    settingUpPinned = false
                 } catch {
                     Logger.viewModel.error("setting pinned failed")
+                    settingUpPinned = false
                 }
             }
         }

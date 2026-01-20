@@ -56,7 +56,8 @@ struct ContentView: View {
                         
                         PinnedUser(
                             entries: viewModel.pinnedResponse,
-                            user: viewModel.pinnedUser
+                            user: viewModel.pinnedUser,
+                            isSettingUp: $viewModel.settingUpPinned
                         )
                         .frame(height: 186)
                         .padding()
