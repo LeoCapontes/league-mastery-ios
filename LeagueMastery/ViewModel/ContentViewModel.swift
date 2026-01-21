@@ -13,6 +13,8 @@ import OSLog
 extension ContentView {
     @Observable
     class ViewModel{
+        let client: APIClient
+        
         var modelContext: ModelContext
         var users = [User]()
         var userToDisplay: User?
@@ -45,8 +47,9 @@ extension ContentView {
             }
         }
         
-        init(modelContext: ModelContext) {
+        init(modelContext: ModelContext, client: APIClient) {
             self.modelContext = modelContext
+            self.client = client
             Settings.shared.UpdateGameVersion()
         }
         
@@ -55,23 +58,23 @@ extension ContentView {
                 Logger.viewModel.log("Doing summoner search task")
                 do {
                     showingProgress = true
-                    let puuidResponse = try await puuidApiCall(
+                    let puuidResponse = try await client.puuidApiCall(
                         gameName: sumName,
                         tag: sumTag,
                         region: selectedRegion.description
                     )
                     
-                    response = try await masteryApiCall(
+                    response = try await client.masteryApiCall(
                         puuid:puuidResponse.puuid,
                         selectedServer: selectedServer
                     )
                     
-                    let summonerResponse = try await summonerInfoApiCall(
+                    let summonerResponse = try await client.summonerInfoApiCall(
                         puuid: puuidResponse.puuid,
                         selectedServer: selectedServer.raw
                     )
                     
-                    let masteryScoreResponse = try await masteryScoreApiCall(
+                    let masteryScoreResponse = try await client.masteryScoreApiCall(
                         puuid: puuidResponse.puuid,
                         selectedServer: selectedServer.raw
                     )
@@ -123,20 +126,20 @@ extension ContentView {
                 Logger.viewModel.log("Doing search with params:\n\(name), \(tag), \(region), \(server)")
                 do {
                     showingProgress = true
-                    let puuidResponse = try await puuidApiCall(
+                    let puuidResponse = try await client.puuidApiCall(
                         gameName: name,
                         tag: tag,
                         region: region.description)
                     
-                    response = try await masteryApiCall(
+                    response = try await client.masteryApiCall(
                         puuid:puuidResponse.puuid,
                         selectedServer: server)
                     
-                    let summonerResponse = try await summonerInfoApiCall(
+                    let summonerResponse = try await client.summonerInfoApiCall(
                         puuid: puuidResponse.puuid,
                         selectedServer: server
                     )
-                    let masteryScoreResponse = try await masteryScoreApiCall(
+                    let masteryScoreResponse = try await client.masteryScoreApiCall(
                         puuid: puuidResponse.puuid,
                         selectedServer: selectedServer.raw
                     )
@@ -329,13 +332,13 @@ extension ContentView {
                     let toFavourite = favourited.last
                     
                     if toFavourite != nil {
-                        let puuidResponse = try await puuidApiCall(
+                        let puuidResponse = try await client.puuidApiCall(
                             gameName: toFavourite!.name,
                             tag: toFavourite!.tagline,
                             region: toFavourite!.region
                         )
                         
-                        pinnedResponse = try await masteryApiCall(
+                        pinnedResponse = try await client.masteryApiCall(
                             puuid:puuidResponse.puuid,
                             selectedServer: toFavourite!.server
                         )

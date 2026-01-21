@@ -15,8 +15,8 @@ struct ContentView: View {
     
     var searchContainerHeight: Double = 275
     
-    init(modelContext: ModelContext) {
-           let viewModel = ViewModel(modelContext: modelContext)
+    init(modelContext: ModelContext, client: APIClient) {
+           let viewModel = ViewModel(modelContext: modelContext, client: client)
            _viewModel = State(initialValue: viewModel)
     }
     
@@ -272,6 +272,8 @@ struct BackgroundImage: View{
     let container = try! ModelContainer(for: User.self, configurations: config)
     let context = container.mainContext
     
+    let client = APIClient()
+    
     let mockSearchedUsers = [
         User(puuid: "a", name: "Faker", tagline: "KR1", region: "Korea", server: "KR", profileIconId: 1, summonerLevel: 1, masteryScore: 1),
         User(puuid: "b", name: "Chovy", tagline: "KR1", region: "Korea", server: "KR", profileIconId: 1, summonerLevel: 1, masteryScore: 1),
@@ -283,5 +285,5 @@ struct BackgroundImage: View{
         context.insert(user)
     }
     
-    return ContentView(modelContext: container.mainContext).modelContainer(container)
+    return ContentView(modelContext: container.mainContext, client: client).modelContainer(container)
 }

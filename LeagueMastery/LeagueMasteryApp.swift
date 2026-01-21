@@ -11,10 +11,11 @@ import SwiftData
 @main
 struct LeagueMasteryApp: App {
     let container: ModelContainer
+    let client: APIClient
     
     var body: some Scene {
         WindowGroup {
-            ContentView(modelContext: container.mainContext)
+            ContentView(modelContext: container.mainContext, client: client)
         }
         .modelContainer(container)
     }
@@ -22,6 +23,7 @@ struct LeagueMasteryApp: App {
     init() {
         do {
             container = try ModelContainer(for: User.self)
+            client = APIClient()
         } catch {
             fatalError("Failed to create ModelContainer for Users.")
         }
