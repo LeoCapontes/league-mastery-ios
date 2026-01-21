@@ -13,8 +13,8 @@ final class MasteryCacheEntryObject {
 }
 
 enum MasteryCacheEntry {
-    case inProgress(Task<MasteryResponse, Error>)
-    case ready(MasteryResponse)
+    case inProgress(Task<[MasteryResponse], Error>)
+    case ready([MasteryResponse])
 }
 
 extension NSCache where KeyType == NSString, ObjectType == MasteryCacheEntryObject {
