@@ -57,11 +57,9 @@ let rightScrollMask = LinearGradient(
 
 struct ChampionScreen: View {
     var championData: MasteryResponse
-    var metrics: MasteryResponseMetrics
     
     init(championData: MasteryResponse) {
         self.championData = championData
-        self.metrics = GetResponseMetrics(championData)
     }
     
     @State var bgColor: Color = Color("BGColor")
@@ -174,15 +172,15 @@ struct ChampionScreen: View {
                 .frame(width: nil, height: 40)
                 .padding(.bottom, -6)
                 
-                InfoContainer(championData: championData, metrics: metrics)
+                InfoContainer(championData: championData)
                 
                 ProgressBar(
-                    total: metrics.pointsInLevel,
+                    total: championData.pointsInLevel(),
                     progress: championData.championPointsSinceLastLevel)
                     .frame(width: 200, height: 12)
                 GradesContainer(
-                    requiredGrades: metrics.requiredGrades,
-                    achievedGrades: metrics.achievedGrades)
+                    requiredGrades: championData.requiredGrades(),
+                    achievedGrades: championData.achievedGrades())
                 ScrollView(.horizontal){
                     ZStack{
                         HStack{
@@ -218,7 +216,6 @@ struct ChampionScreen: View {
 
 struct InfoContainer: View {
     var championData: MasteryResponse
-    var metrics: MasteryResponseMetrics
     
     var body: some View{
         Text(getNameFromId(id: championData.championId))
@@ -229,7 +226,7 @@ struct InfoContainer: View {
             .foregroundStyle(.white)
             .bold()
             .font(.system(size: 18))
-        Text("\(championData.championPointsSinceLastLevel) / \(metrics.pointsInLevel) pts")
+        Text("\(championData.championPointsSinceLastLevel) / \(championData.pointsInLevel()) pts")
             .foregroundStyle(.white)
 //        Text("Milestone: \(championData.championSeasonMilestone)")
 //            .foregroundStyle(.white)
