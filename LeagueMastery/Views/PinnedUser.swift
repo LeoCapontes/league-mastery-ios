@@ -95,7 +95,7 @@ struct PinnedUser: View {
             VStack(spacing: 0){
                 if let entries = entries, let user = user {
                     HStack{
-                        KFImage(URL(string: profileIconUrl(profileIconId: 1)))
+                        KFImage(URL(string: profileIconUrl(profileIconId: user.profileIconId)))
                             .resizable()
                             .frame(width: 36, height: 36)
                             .background(.gray)
