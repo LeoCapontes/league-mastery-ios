@@ -264,18 +264,15 @@ struct LevelUpReadyMetric: View {
     
     var body: some View {
         HStack{
-            VStack(spacing: 0){
-                if(noChangeInIcon) {
-                    Text("\(entry.championLevel)")
-                        .padding(.bottom, -6)
-                }
-                MasteryCrestImage(masteryLevel: entry.championLevel, mini: false)
-            }
+            GradesContainer(
+                requiredGrades: entry.requiredGrades(),
+                achievedGrades: entry.achievedGrades()
+            )
             Image(systemName: "arrow.right")
             VStack(spacing: 0){
                 if(noChangeInIcon) {
                     Text("\(entry.championLevel + 1)")
-                        .padding(.bottom, -6)
+                        .padding(.bottom, -16)
                 }
                 MasteryCrestImage(masteryLevel: entry.championLevel + 1, mini: false)
             }
