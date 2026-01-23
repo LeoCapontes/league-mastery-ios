@@ -34,8 +34,10 @@ enum UserMetric {
 
 
 struct PinnedUser: View {
+    let expandUser: (String, String, String, String) -> Void
     var entries: [MasteryResponse]?
     var user: User?
+    
     @Binding var isSettingUp: Bool
     @State var slideShowCounter: Int = 0
     @State var selectedMetric: UserMetric = .canLevel
@@ -120,7 +122,10 @@ struct PinnedUser: View {
                     .frame(minWidth: 0, maxWidth: nil, alignment: .leading)
                     .padding(.horizontal)
                     .padding(.vertical, 8)
-                    //            .border(.green)
+                    .onTapGesture {
+                        expandUser(user.name, user.tagline, user.region, user.server)
+                    }
+//                    .border(.green)
                     
                     ZStack(){
                         BackgroundChampionImage(
@@ -220,6 +225,21 @@ struct PinnedUser: View {
         .task(delayText)
         
     }
+    
+//    init(
+//        expandSummoner: @escaping (String, String, String, String) -> Void,
+//        entries: [MasteryResponse]? = nil,
+//        user: User? = nil, isSettingUp: Bool,
+//        slideShowCounter: Int,
+//        selectedMetric: UserMetric)
+//    {
+//        self.expandSummoner = expandSummoner
+//        self.entries = entries
+//        self.user = user
+//        self.isSettingUp = isSettingUp
+//        self.slideShowCounter = slideShowCounter
+//        self.selectedMetric = selectedMetric
+//    }
     
     func delayText() async {
         while !Task.isCancelled {
@@ -378,9 +398,15 @@ struct BackgroundChampionImage: View {
     var splashOffset: Offset {
         return splashOffsets[mock[mockIndex].championId] ?? Offset()
     }
+    
     ZStack{
         BackgroundImage()
-        PinnedUser(entries: mock, user: user, isSettingUp: $settingUp)
+        PinnedUser(
+            expandUser: { _, _, _, _ in },
+            entries: mock,
+            user: user,
+            isSettingUp: $settingUp
+        )
             .frame(height: 200)
             .padding(.horizontal)
     }

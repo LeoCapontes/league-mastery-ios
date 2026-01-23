@@ -55,6 +55,7 @@ struct ContentView: View {
                         
                         
                         PinnedUser(
+                            expandUser: viewModel.setCurrentSummoner(name:tag:region:server:),
                             entries: viewModel.pinnedResponse,
                             user: viewModel.pinnedUser,
                             isSettingUp: $viewModel.settingUpPinned
