@@ -47,10 +47,18 @@ actor APIClient {
         puuid: String,
         selectedServer: Server
     ) async throws -> [MasteryResponse]{
+        return try await masteryApiCall(puuid: puuid, selectedServer: selectedServer.raw)
+    }
+    
+    func masteryApiCall(
+        puuid: String,
+        selectedServer: String
+    ) async throws -> [MasteryResponse]{
         if let cached = masteryResponseCache[puuid] {
             Logger.apiCalls.debug("Mastery API: Result already cached or in progress")
             switch cached {
             case .ready(let response):
+                Logger.apiCalls.debug("MasteryAPI: Returning cached response")
                 return response
             case .inProgress(let task):
                 return try await task.value
@@ -59,8 +67,7 @@ actor APIClient {
         
         let task = Task<[MasteryResponse], Error> {
             Logger.apiCalls.debug("Mastery API: Starting call task")
-            let serverString = selectedServer.raw
-            let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
+            let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(selectedServer)/\(puuid)")!
             Logger.apiCalls.debug("Mastery API: \(url.absoluteString)")
             do{
                 let (data, httpResponse) = try await URLSession.shared.data(from: url)
@@ -82,46 +89,6 @@ actor APIClient {
                     }
                     throw ApiError.other("Search failed")
                 }
-            }
-        }
-        masteryResponseCache[puuid] = .inProgress(task)
-        do {
-            let response = try await task.value
-            masteryResponseCache[puuid] = .ready(response)
-            return response
-        } catch {
-            Logger.apiCalls.error("Mastery API: Failed returning response from task")
-            masteryResponseCache[puuid] = nil
-            throw error
-        }
-    }
-    
-    func masteryApiCall(
-        puuid: String,
-        selectedServer: String
-    ) async throws -> [MasteryResponse]{
-        if let cached = masteryResponseCache[puuid] {
-            Logger.apiCalls.debug("Mastery API: Result already cached or in progress")
-            switch cached {
-            case .ready(let response):
-                Logger.apiCalls.debug("MasteryAPI: Returning cached response")
-                return response
-            case .inProgress(let task):
-                return try await task.value
-            }
-        }
-        
-        let task = Task<[MasteryResponse], Error> {
-            Logger.apiCalls.debug("Mastery API: Starting call task")
-            let serverString = selectedServer
-            let url = URL(string: "\(Settings.shared.serverUrl)/mastery/by-puuid/\(serverString)/\(puuid)")!
-            Logger.apiCalls.debug("Mastery API: \(url.absoluteString)")
-            do{
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let response = try JSONDecoder().decode([MasteryResponse].self, from: data)
-                return response
-            } catch {
-                throw error
             }
         }
         
