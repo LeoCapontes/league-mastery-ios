@@ -41,6 +41,8 @@ struct AccountScreen: View{
         self.user = user
         self.addToWatchlist = addToWatchlist
         self.removeFromWatchlist = removeFromWatchlist
+        
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     @State private var isFavourite = false

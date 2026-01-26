@@ -225,22 +225,7 @@ struct PinnedUser: View {
         .task(delayText)
         
     }
-    
-//    init(
-//        expandSummoner: @escaping (String, String, String, String) -> Void,
-//        entries: [MasteryResponse]? = nil,
-//        user: User? = nil, isSettingUp: Bool,
-//        slideShowCounter: Int,
-//        selectedMetric: UserMetric)
-//    {
-//        self.expandSummoner = expandSummoner
-//        self.entries = entries
-//        self.user = user
-//        self.isSettingUp = isSettingUp
-//        self.slideShowCounter = slideShowCounter
-//        self.selectedMetric = selectedMetric
-//    }
-    
+
     func delayText() async {
         while !Task.isCancelled {
             do {
