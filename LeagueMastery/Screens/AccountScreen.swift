@@ -167,10 +167,13 @@ struct AccountScreen: View{
                 .edgesIgnoringSafeArea(.bottom)
                 .allowsHitTesting(false)
             SortSearchContainer(
-                searchString: $champSearchString, toSortBy: $toSortBy, sortAsc: $sortAsc
+                searchString: $champSearchString,
+                toSortBy: $toSortBy,
+                sortAsc: $sortAsc,
+                isFocused: $champSearchFocus
             )
             .padding(.horizontal)
-            .padding(.vertical, -8)
+            .padding(.vertical, champSearchFocus ? 4 : -8)
             .ignoresSafeArea(edges: .bottom)
         }
         .environmentObject(motionManager)
@@ -203,6 +206,7 @@ struct SortSearchContainer: View {
     @Binding var searchString: String
     @Binding var toSortBy: String
     @Binding var sortAsc: Bool
+    @FocusState.Binding var isFocused: Bool
     
     let sortOptions = ["Score", "Level", "Milestone", "Alphabetical"]
     
@@ -215,6 +219,7 @@ struct SortSearchContainer: View {
                         .padding(.vertical, -2)
                         .clipShape(Capsule())
                         .scrollDismissesKeyboard(.interactively)
+                        .focused($isFocused)
                         .glassEffect()
                     Menu {
                         ForEach(sortOptions, id: \.self){ option in
