@@ -58,6 +58,7 @@ struct ChampionImage: View {
                         let uiImage = result.image
                         if let avgUIColor = uiImage.dominantColor() {
                             averageColor = Color(avgUIColor)
+                            Logger.views.debug("Champion image average color is: \(averageColor.description)")
                         } else {
                             Logger.views.debug("Failed to get dominant color")
                         }
@@ -69,17 +70,6 @@ struct ChampionImage: View {
             }
             
             KFImage(URL(string: splashFromChampId(championId)))
-                .onSuccess { result in
-                    if(withAvgColor){
-                        let uiImage = result.image
-                        if uiImage.averageColor() != nil {
-                            //averageColor = Color(avgUIColor)
-                            Logger.views.debug("Average color: \(String(describing: averageColor))")
-                        } else {
-                            Logger.views.debug("Failed to get average color")
-                        }
-                    }
-                }
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .blur(radius: (blurred ? 2 : 0))
