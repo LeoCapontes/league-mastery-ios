@@ -70,6 +70,7 @@ struct Holographic: ViewModifier {
                     .offset(x: -realOffset*10, y: motion.fy*10)
                 }
                 .glassEffect(in: .rect(cornerRadius: 18))
+                .environment(\.colorScheme, .dark)
                 .clipShape(RoundedRectangle(cornerRadius: 18))
                 .blendMode(.normal)
         } else {
