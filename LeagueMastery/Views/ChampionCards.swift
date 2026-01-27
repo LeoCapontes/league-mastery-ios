@@ -31,29 +31,48 @@ struct MasteryCrestImage: View {
 }
 
 struct ChampionImage: View {
+    let downSampledSize = CGSize(width: 640, height: 360)
+    
     var championId: Int
     var blurred: Bool
     var withAvgColor: Bool
+    var downsampled: Bool
     @Binding var averageColor: Color
     
-    init(championId: Int, averageColor: Binding<Color> = .constant(.clear), withAvgColor: Bool) {
+    init(
+        championId: Int,
+        averageColor: Binding<Color> = .constant(.clear),
+        withAvgColor: Bool,
+        downsampled: Bool = false
+    ) {
         self.championId = championId
         self.blurred = false
         self._averageColor = averageColor
         self.withAvgColor = withAvgColor
+        self.downsampled = downsampled
     }
     
-    init(championId: Int, averageColor: Binding<Color> = .constant(.clear)) {
+    init(
+        championId: Int,
+        averageColor: Binding<Color> = .constant(.clear),
+        downsampled: Bool = false
+    ) {
         self.championId = championId
         self.blurred = false
         self._averageColor = averageColor
         self.withAvgColor = false
+        self.downsampled = downsampled
     }
 
     var body: some View {
         ZStack{
             if(withAvgColor){
                 KFImage(URL(string: loadingScreenFromChampId(championId)))
+                    .setProcessor(downsampled
+                                  ? DownsamplingImageProcessor(size: downSampledSize)
+                                  : DefaultImageProcessor.default
+                    )
+                    .cacheOriginalImage()
                     .onSuccess { result in
                         let uiImage = result.image
                         if let avgUIColor = uiImage.dominantColor() {
@@ -70,6 +89,11 @@ struct ChampionImage: View {
             }
             
             KFImage(URL(string: splashFromChampId(championId)))
+                .setProcessor(downsampled
+                              ? DownsamplingImageProcessor(size: downSampledSize)
+                              : DefaultImageProcessor.default
+                )
+                .cacheOriginalImage()
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .blur(radius: (blurred ? 2 : 0))
@@ -147,7 +171,7 @@ struct LargeChampionCard: View {
             ZStack(){
                 // negative padding removes negative space around edges
                 // caused by blurring
-                ChampionImage(championId: entry.championId)
+                ChampionImage(championId: entry.championId, downsampled: true)
                     .aspectRatio(contentMode: .fill)
                     .padding(-8)
 
@@ -234,7 +258,7 @@ struct LargeChampionRow: View {
         ZStack{
             GeometryReader{ geometry in
                 ZStack{
-                    ChampionImage(championId: entry.championId)
+                    ChampionImage(championId: entry.championId, downsampled: true)
                         .aspectRatio(contentMode: .fill)
                         .mask(rowSplashMask)
                         .offset(x: splashOffset.x, y: splashOffset.y)
