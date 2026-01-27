@@ -10,6 +10,7 @@ import OSLog
 
 actor APIClient {
     private let masteryResponseCache: NSCache<NSString, MasteryCacheEntryObject> = NSCache()
+    private let puuidResponseCache: NSCache<NSString, PuuidCacheEntryObject> = NSCache()
     
     // TODO handle errors more gracefully/granularly
     func puuidApiCall(
@@ -17,30 +18,57 @@ actor APIClient {
         tag: String,
         region: String
     ) async throws -> PuuidResponse{
-        let url = URL(string: "\(Settings.shared.serverUrl)/account/by-riot-id/\(region.lowercased())/\(gameName)/\(tag)")!
-        do {
-            Logger.apiCalls.debug("PUUID API: \(url.absoluteString)")
-            let (data, httpResponse) = try await URLSession.shared.data(from: url)
-            Logger.apiCalls.debug("PUUID response: \(data.prettyPrintedJSONString ?? "nil")")
-            guard let httpResponse = httpResponse as? HTTPURLResponse else{
-                throw URLError(.badServerResponse)
-            }
-            if httpResponse.statusCode == 200 {
-                let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
+        let cacheKey = NameTagServerCombination(gameName, tag, region)
+        if let cached = puuidResponseCache[cacheKey] {
+            Logger.apiCalls.debug("PUUID API: result already cached or in progress")
+            switch cached {
+            case .ready(let response):
+                Logger.apiCalls.debug("PUUID API: Returning cached response")
                 return response
-            } else {
-                Logger.apiCalls.warning("PUUID API error status: \(httpResponse.statusCode)")
-                if httpResponse.statusCode == 404 {
-                    Logger.apiCalls.debug("Throwing noDataFound")
-                    throw ApiError.noDataFound
-                }
-                if httpResponse.statusCode == 400 {
-                    Logger.apiCalls.warning("Throwing noKey - API key issue")
-                    throw ApiError.noKey
-                }
-                throw ApiError.other("Search failed")
+            case .inProgress(let task):
+                return try await task.value
             }
         }
+        
+        let task = Task<PuuidResponse, Error> {
+            let url = URL(string: "\(Settings.shared.serverUrl)/account/by-riot-id/\(region.lowercased())/\(gameName)/\(tag)")!
+            do {
+                Logger.apiCalls.debug("PUUID API: \(url.absoluteString)")
+                let (data, httpResponse) = try await URLSession.shared.data(from: url)
+                Logger.apiCalls.debug("PUUID response: \(data.prettyPrintedJSONString ?? "nil")")
+                guard let httpResponse = httpResponse as? HTTPURLResponse else{
+                    throw URLError(.badServerResponse)
+                }
+                if httpResponse.statusCode == 200 {
+                    let response = try JSONDecoder().decode(PuuidResponse.self, from: data)
+                    return response
+                } else {
+                    Logger.apiCalls.warning("PUUID API error status: \(httpResponse.statusCode)")
+                    if httpResponse.statusCode == 404 {
+                        Logger.apiCalls.debug("Throwing noDataFound")
+                        throw ApiError.noDataFound
+                    }
+                    if httpResponse.statusCode == 400 {
+                        Logger.apiCalls.warning("Throwing noKey - API key issue")
+                        throw ApiError.noKey
+                    }
+                    throw ApiError.other("Search failed")
+                }
+            }
+        }
+        
+        puuidResponseCache[cacheKey] = .inProgress(task)
+        do {
+            let response = try await task.value
+            puuidResponseCache[cacheKey] = .ready(response)
+            return response
+        } catch {
+            Logger.apiCalls.error("PUUID API: Failed returning response from task")
+            puuidResponseCache[cacheKey] = nil
+            throw error
+        }
+        
+        
     }
     
     func masteryApiCall(

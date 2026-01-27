@@ -35,6 +35,7 @@
 		B3C3676A2E71A2DD00F45119 /* leagueMasteryLogo 3.icon in Resources */ = {isa = PBXBuildFile; fileRef = B3C367692E71A2DD00F45119 /* leagueMasteryLogo 3.icon */; };
 		B3C400F22D98C34300A8A21E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B3C400F12D98C34300A8A21E /* Kingfisher */; };
 		B3C400F42D999AF000A8A21E /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */; };
+		B3C494922F292E9E00244797 /* PuuidCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C494912F292E9100244797 /* PuuidCache.swift */; };
 		B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C612712CC489CA00C19B0C /* VideoPlayer.swift */; };
 		B3C612942CC4915900C19B0C /* 1-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128A2CC4915900C19B0C /* 1-loop.mov */; };
 		B3C612952CC4915900C19B0C /* 6-loop.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3C6128F2CC4915900C19B0C /* 6-loop.mov */; };
@@ -102,6 +103,7 @@
 		B3C16EA82E18BC2B00D932BF /* leagueMasteryLogo.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = leagueMasteryLogo.icon; sourceTree = "<group>"; };
 		B3C367692E71A2DD00F45119 /* leagueMasteryLogo 3.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "leagueMasteryLogo 3.icon"; sourceTree = "<group>"; };
 		B3C400F32D999AEB00A8A21E /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
+		B3C494912F292E9100244797 /* PuuidCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuuidCache.swift; sourceTree = "<group>"; };
 		B3C612712CC489CA00C19B0C /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		B3C6128A2CC4915900C19B0C /* 1-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "1-loop.mov"; sourceTree = "<group>"; };
 		B3C6128B2CC4915900C19B0C /* 2-loop.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "2-loop.mov"; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		B36300E52C3D8E4A000E54AA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B3C494912F292E9100244797 /* PuuidCache.swift */,
 				B301005F2F21416B00ACC1A3 /* MasteryResponseCache.swift */,
 				B39E41532D3D76FC0073E406 /* Rewards.swift */,
 				B36300E32C3D8E4A000E54AA /* ChampionIdConversions.swift */,
@@ -472,6 +475,7 @@
 				B3C400F42D999AF000A8A21E /* ImageExtensions.swift in Sources */,
 				B3E6BB022C06D63F0046C4E2 /* LeagueMasteryApp.swift in Sources */,
 				B33EE9422CA9F2DB00E9BA15 /* ChampionScreen.swift in Sources */,
+				B3C494922F292E9E00244797 /* PuuidCache.swift in Sources */,
 				B36300EC2C3D8E8C000E54AA /* Settings.swift in Sources */,
 				B38CA86E2E038A83008EB074 /* ViewExtensions.swift in Sources */,
 				B3C612722CC489D300C19B0C /* VideoPlayer.swift in Sources */,
