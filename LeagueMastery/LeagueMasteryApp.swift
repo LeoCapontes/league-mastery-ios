@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import Kingfisher
 
 @main
 struct LeagueMasteryApp: App {
@@ -21,6 +22,10 @@ struct LeagueMasteryApp: App {
     }
     
     init() {
+        let imageCache = ImageCache.default
+        imageCache.memoryStorage.config.totalCostLimit = 250 * 1024 * 1024
+        imageCache.diskStorage.config.sizeLimit = 300 * 1024 * 1024
+        
         do {
             container = try ModelContainer(for: User.self)
             client = APIClient()
