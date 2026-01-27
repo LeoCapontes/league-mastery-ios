@@ -7,6 +7,7 @@
 // from https://www.hackingwithswift.com/plus/swiftui-special-effects/controlling-views-using-the-accelerometer
 
 import CoreMotion
+import OSLog
 
 
 class MotionManager: ObservableObject {
@@ -21,23 +22,28 @@ class MotionManager: ObservableObject {
     var dz: Double = 0
     
     init() {
-        motionManager.startDeviceMotionUpdates(to: .main) { data, error in
+        motionManager.startDeviceMotionUpdates(to: .main) { [weak self] data, error in
             guard let newData = data?.gravity else { return }
 
-            self.dx = newData.x
-            self.dy = newData.y
-            self.dz = newData.z
+            self?.dx = newData.x
+            self?.dy = newData.y
+            self?.dz = newData.z
 
-            self.fx = CGFloat(newData.x)
-            self.fy = CGFloat(newData.y)
-            self.fz = CGFloat(newData.z)
+            self?.fx = CGFloat(newData.x)
+            self?.fy = CGFloat(newData.y)
+            self?.fz = CGFloat(newData.z)
 
-            self.objectWillChange.send()
+            self?.objectWillChange.send()
         }
     }
     
     func shutdown() {
+        Logger.settings.debug("Motion Manager deallocated")
         motionManager.stopDeviceMotionUpdates()
+    }
+    
+    deinit {
+        shutdown()
     }
     
 }
