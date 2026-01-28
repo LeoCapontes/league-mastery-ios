@@ -75,12 +75,29 @@ var namesFromChampId: [Int:String] =
 
 var displayableChampionNames: [String:String] =
 ["AurelionSol" : "Aurelion Sol",
+ "Belveth" : "Bel'Veth",
+ "Chogath" : "Cho'Gath",
+ "DrMundo" : "Dr. Mundo",
+ "JarvanIV" : "Jarvan IV",
+ "KSante" : "K'Sante",
+ "Khazix" : "Kha'Zix",
+ "Leblanc" : "LeBlanc",
+ "LeeSin" : "Lee Sin",
+ "MasterYi" : "Master Yi",
+ "MissFortune" : "Miss Fortune",
+ "RekSai" : "Rek'Sai",
+ "TahmKench" : "Tahm Kench",
+ "TwistedFate" : "Twisted Fate",
+ "XinZhao" : "Xin Zhao",
+ "Velkoz" : "Vel'Koz",
  "MonkeyKing" : "Wukong",
  "KogMaw" : "Kog'Maw"]
 
 // handles getting user-facing champion names i.e. MonkeyKing to Wukong
 func getNameFromId(id: Int) -> String {
-    let rawName = namesFromChampId[id]!
+    guard let rawName = namesFromChampId[id] else {
+        return ""
+    }
     if let displayName = displayableChampionNames[rawName] {
         return displayName
     }
