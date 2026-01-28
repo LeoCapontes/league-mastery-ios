@@ -92,10 +92,17 @@ struct PinnedUser: View {
         return (slideShowCounter % currentArray.count)
     }
     
+    var currentChampId: Int {
+        guard let currentArray = currentArray else {
+            return 0
+        }
+        return currentArray[currentEntryIndex].championId
+    }
+    
     var body: some View {
         ZStack{
             VStack(spacing: 0){
-                if let entries = entries, let user = user {
+                if let _ = entries, let user = user, let currentArray = currentArray {
                     HStack{
                         KFImage(URL(string: profileIconUrl(profileIconId: user.profileIconId)))
                             .resizable()
@@ -129,7 +136,7 @@ struct PinnedUser: View {
                     
                     ZStack(){
                         BackgroundChampionImage(
-                            championId: currentArray![currentEntryIndex].championId
+                            championId: currentChampId
                         )
                         .id(slideShowCounter)
                         .transition(.opacity.animation(.easeOut))
@@ -175,14 +182,14 @@ struct PinnedUser: View {
                             VStack(){
                                 Spacer()
                                 VStack(spacing: 0){
-                                    Text("\(getNameFromId(id: currentArray![currentEntryIndex].championId))")
+                                    Text("\(getNameFromId(id: currentChampId))")
                                         .bold()
                                         .font(.title3)
                                         .scaledToFill()
                                         .foregroundStyle(.white.opacity(0.75))
                                     //                                    .border(.green)
                                     GlanceableMetric(
-                                        entry: currentArray![currentEntryIndex],
+                                        entry: currentArray[currentEntryIndex],
                                         selectedMetric: $selectedMetric
                                     )
                                     //                                    .border(.green)
