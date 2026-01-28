@@ -320,7 +320,7 @@ extension ContentView {
         }
         
         func setupPinnedUser() {
-            Task{
+            Task{ @MainActor in
                 do {
                     settingUpPinned = true
                     let descriptor = FetchDescriptor<User>(
