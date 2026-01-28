@@ -65,10 +65,10 @@ struct PinnedUser: View {
     }
     
     var topMilestoneEntries: [MasteryResponse]? {
-        return  entries.map { entriesArray in
+        return entries.map { entriesArray in
             Array(
                 entriesArray
-                    .sorted{ $0.championSeasonMilestone < $1.championSeasonMilestone }
+                    .sorted{ $0.championSeasonMilestone > $1.championSeasonMilestone }
                     .prefix(3)
             )
         }
