@@ -372,34 +372,43 @@ struct BackgroundChampionImage: View {
     
 }
 
-#Preview {
-    @Previewable @State var bgColor: Color = Color("BGColor")
-    @Previewable @State var settingUp: Bool = false
-    let mock = mockMasteryResponse
-    let user = User(
-        puuid: "d",
-        name: "Hide on Bush",
-        tagline: "KR1",
-        region: "Korea",
-        server: "Asia",
-        profileIconId: 1,
-        summonerLevel: 999,
-        masteryScore: 999
-    )
-    let mockIndex = 40
-    var splashOffset: Offset {
-        return splashOffsets[mock[mockIndex].championId] ?? Offset()
-    }
-    
-    ZStack{
-        BackgroundImage()
-        PinnedUser(
-            expandUser: { _, _, _, _ in },
-            entries: mock,
-            user: user,
-            isSettingUp: $settingUp
-        )
+struct PinnedUserPreviewWrapper: View {
+    @State private var settingUp: Bool = false
+
+    var body: some View {
+        ZStack {
+            BackgroundImage()
+            PinnedUser(
+                expandUser: { _, _, _, _ in },
+                entries: mockMasteryResponse,
+                user: User(
+                    puuid: "d",
+                    name: "Hide on Bush",
+                    tagline: "KR1",
+                    region: "Korea",
+                    server: "Asia",
+                    profileIconId: 1,
+                    summonerLevel: 999,
+                    masteryScore: 999
+                ),
+                isSettingUp: $settingUp
+            )
             .frame(height: 200)
             .padding(.horizontal)
+        }
+    }
+}
+
+struct PinnedUserPreviews: PreviewProvider {
+    static var previews: some View {
+        PinnedUserPreviewWrapper()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
+            .previewDisplayName("Pinned User: 13 Mini")
+        PinnedUserPreviewWrapper()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 17 Pro"))
+            .previewDisplayName("Pinned User: 17 Pro")
+        PinnedUserPreviewWrapper()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 17 Pro Max"))
+            .previewDisplayName("Pinned User: 17 Pro Max")
     }
 }
