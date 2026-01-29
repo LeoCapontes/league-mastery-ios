@@ -52,7 +52,7 @@ struct ContentView: View {
                         Rectangle()
                             .frame(height: searchContainerHeight)
                             .opacity(0)
-                        
+                            .padding(.vertical)
                         
                         PinnedUser(
                             expandUser: viewModel.setCurrentSummoner(name:tag:region:server:),
@@ -61,8 +61,6 @@ struct ContentView: View {
                             isSettingUp: $viewModel.settingUpPinned
                         )
                         .frame(height: 186)
-                        .padding()
-                        
                     }
                     .foregroundColor(.white)
                     .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
@@ -71,11 +69,7 @@ struct ContentView: View {
                     .offset(y: -50)
                     .opacity(fieldFocused ? 0 : 1)
                     .animation(.snappy, value: fieldFocused)
-                    
-//                    Rectangle()
-//                        .foregroundStyle(.black.opacity(fieldFocused ? 0.95 : 0))
-                    
-                    
+                          
                     SummonerSearchContainer(
                         viewModel: $viewModel,
                         fieldFocused: $fieldFocused,
@@ -93,6 +87,7 @@ struct ContentView: View {
                             .scaleEffect(1.5, anchor: .center)
                     }
                 }
+                .padding(8)
                 .ignoresSafeArea(edges: .all)
                 .navigationDestination(for: Route.self) { route in
                     switch route{
@@ -186,7 +181,6 @@ struct SummonerSearchField: View {
                     }
                 }
                 .frame(minWidth: 86)
-                .padding(0)
 //                .border(.green)
             }
             .position(
@@ -237,7 +231,6 @@ struct SummonerSearchContainer: View {
             )
         }
         .foregroundStyle(.white)
-        .padding()
     }
 }
 
