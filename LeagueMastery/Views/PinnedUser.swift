@@ -318,7 +318,6 @@ struct TopLevelMetric: View {
             Text("Level \(entry.championLevel)")
             Text("\(entry.championPoints) pts")
         }
-//        .frame(maxWidth: 125)
         .foregroundStyle(.white.opacity(0.9))
         .font(.subheadline)
         .padding(.horizontal)
@@ -364,11 +363,6 @@ struct BackgroundChampionImage: View {
         .frame(alignment: .trailing)
         .offset(x: splashOffset.x, y: 0)
         .drawingGroup()
-        //            .overlay(avgGradient(Color(
-        //                red: bgColor.components()[0] * 0.25,
-        //                green: bgColor.components()[1] * 0.25,
-        //                blue: bgColor.components()[2] * 0.25
-        //            )))
         .mask(cardMask)
     }
 }

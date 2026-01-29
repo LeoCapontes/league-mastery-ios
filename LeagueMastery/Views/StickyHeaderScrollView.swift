@@ -79,9 +79,9 @@ struct StickyHeaderScrollView<Content:View>: View {
                             yOffset: $yOffset,
                             headerHeight: $headerHeight
                         )
-                        .if(yOffset){ view in
-                            view.background(.thinMaterial)
-                        }
+//                        .if(yOffset){ view in
+//                            view.background(.thinMaterial)
+//                        }
                     }
                 }
                 .zIndex(yOffset ? 0 : -1)
