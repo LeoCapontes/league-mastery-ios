@@ -132,28 +132,32 @@ struct PinnedUser: View {
                     .onTapGesture {
                         expandUser(user.name, user.tagline, user.region, user.server)
                     }
-//                    .border(.green)
                     
                     ZStack(){
-                        BackgroundChampionImage(
-                            championId: currentChampId
-                        )
-                        .id(slideShowCounter)
-                        .transition(.opacity.animation(.easeOut))
-                        .padding(-10)
-                        //            .border(.green)
-                        .overlay {
-                            cardOverlay
-                                .overlay{
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .frame(width: 360, height: 48)
-                                        .offset(x: 0, y: maskYOffset)
-                                        .blendMode(.destinationOut)
-                                }
-                                .compositingGroup()
+                        Rectangle().foregroundStyle(.clear)
+                        .background(alignment: .trailing) {
+                            ZStack{
+                                BackgroundChampionImage(
+                                    championId: currentChampId
+                                )
+                                .id(slideShowCounter)
+                                .transition(.opacity.animation(.easeOut))
+                                .padding(-10)
+                            }
                         }
-                        .animation(.snappy.speed(2), value: maskYOffset)
-                        
+                        .variableBlur(radius: 40) { geometryProxy, context in
+                            // add a blur to the mask to smooth out where the variable blur begins
+                            context.addFilter(.blur(radius: 0))
+                            
+                            context.fill(
+                                Path(CGRect(origin: .zero, size: geometryProxy.size)),
+                                with: .linearGradient(
+                                    .init(colors: [.clear, .white]),
+                                    startPoint: .init(x: geometryProxy.size.width - (geometryProxy.size.width*0.5), y: 0),
+                                    endPoint: .init(x: geometryProxy.size.width - (geometryProxy.size.width*0.8), y: 0)
+                                )
+                            )
+                        }
                         HStack{
                             VStack(alignment: .leading, spacing: 18){
                                 Label("Can Level", systemImage: "")
@@ -161,22 +165,22 @@ struct PinnedUser: View {
                                         selectedMetric = .canLevel
                                         slideShowCounter = 0
                                     }
-                                    .foregroundStyle(selectedMetric == .canLevel ? .white : .gray)
+                                    
                                 Divider()
                                     .frame(width: 100)
                                 Label("Top 3", systemImage: "")
                                     .onTapGesture {
                                         selectedMetric = .topScore
                                     }
-                                    .foregroundStyle(selectedMetric == .topScore ? .white : .gray)
                                 Divider()
                                     .frame(width: 100)
                                 Label("Top Milestones", systemImage: "")
                                     .onTapGesture {
                                         selectedMetric = .topMilestone
                                     }
-                                    .foregroundStyle(selectedMetric == .topMilestone ? .white : .gray)
+                                    
                             }
+                            .foregroundStyle(.white)
                             .padding()
                             Spacer()
                             VStack(){
@@ -187,12 +191,10 @@ struct PinnedUser: View {
                                         .font(.title3)
                                         .scaledToFill()
                                         .foregroundStyle(.white.opacity(0.75))
-                                    //                                    .border(.green)
                                     GlanceableMetric(
                                         entry: currentArray[currentEntryIndex],
                                         selectedMetric: $selectedMetric
                                     )
-                                    //                                    .border(.green)
                                 }
                                 .background{
                                     Rectangle()
@@ -203,6 +205,19 @@ struct PinnedUser: View {
                             .padding(.bottom, 4)
                             Spacer()
                         }
+                        .overlay {
+                            cardOverlay
+                                .overlay{
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .frame(height: 48)
+                                        .padding(8)
+                                        .offset(x: 0, y: maskYOffset)
+                                        .blendMode(.destinationOut)
+                                }
+                                .compositingGroup()
+                                .allowsHitTesting(false)
+                        }
+                        .animation(.snappy.speed(2), value: maskYOffset)
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .frame(minHeight: 186, maxHeight: .infinity)
@@ -346,30 +361,16 @@ struct BackgroundChampionImage: View {
                 championId: championId)
         }
         .aspectRatio(contentMode: .fill)
+        .frame(alignment: .trailing)
         .offset(x: splashOffset.x, y: 0)
-        .frame(width: 400, alignment: .trailing)
         .drawingGroup()
         //            .overlay(avgGradient(Color(
         //                red: bgColor.components()[0] * 0.25,
         //                green: bgColor.components()[1] * 0.25,
         //                blue: bgColor.components()[2] * 0.25
         //            )))
-        .variableBlur(radius: 10) { geometryProxy, context in
-            // add a blur to the mask to smooth out where the variable blur begins
-            context.addFilter(.blur(radius: 0))
-            
-            context.fill(
-                Path(CGRect(origin: .zero, size: geometryProxy.size)),
-                with: .linearGradient(
-                    .init(colors: [.clear, .white]),
-                    startPoint: .init(x: geometryProxy.size.width - (geometryProxy.size.width*0.5), y: 0),
-                    endPoint: .init(x: geometryProxy.size.width - (geometryProxy.size.width*0.75), y: 0)
-                )
-            )
-        }
         .mask(cardMask)
     }
-    
 }
 
 struct PinnedUserPreviewWrapper: View {
