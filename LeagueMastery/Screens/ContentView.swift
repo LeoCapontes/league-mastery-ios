@@ -171,6 +171,7 @@ struct SummonerSearchField: View {
                         }
                         .tint(.yellow)
                         .fixedSize()
+                        .glassEffect(.regular.interactive())
                     }
                     .focused($fieldFocused)
                     .padding(.horizontal)
