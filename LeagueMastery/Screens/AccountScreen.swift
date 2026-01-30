@@ -222,7 +222,7 @@ struct SortSearchContainer: View {
                         .clipShape(Capsule())
                         .scrollDismissesKeyboard(.interactively)
                         .focused($isFocused)
-                        .glassEffect()
+                        .glassEffect(.regular.interactive())
                     Menu {
                         ForEach(sortOptions, id: \.self){ option in
                             Button(option, action: {toSortBy = option})
@@ -236,13 +236,14 @@ struct SortSearchContainer: View {
                             HStack{
                                 Image(systemName: sortAsc ? "arrow.up" : "arrow.down")
                                 Text("\(toSortBy)")
+                                    .foregroundStyle(.white)
                             }
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.yellow)
                             .padding()
                             .padding(.vertical, -2)
                         }
                     }
-                    .glassEffect()
+                    .glassEffect(.regular.interactive())
                 }
             }
         } else {
