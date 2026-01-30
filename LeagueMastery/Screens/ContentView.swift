@@ -134,63 +134,119 @@ struct SummonerSearchField: View {
     var searchSummoner: () -> Void
     
     var body: some View {
-        GeometryReader { geo in
-            HStack{
+        if #available(iOS 26, *){
+            GlassEffectContainer {
+                HStack {
+                    HStack{
+                        TextField(
+                            "",
+                            text: $viewModel.sumName,
+                            prompt: Text("Name")
+                                .foregroundStyle(Color(
+                                    red: 150/255,
+                                    green: 150/255,
+                                    blue: 150/255
+                                ))
+                        )
+                        
+                        Divider().overlay(Color.white)
+                            .frame(height: 30)
+                        Text("#")
+                        
+                        TextField(
+                            "",
+                            text: $viewModel.sumTag,
+                            prompt: Text("Tag")
+                                .foregroundStyle(Color(
+                                    red: 150/255,
+                                    green: 150/255,
+                                    blue: 150/255
+                                ))
+                        )
+                        
+                        Picker("Region", selection: $viewModel.selectedServer){
+                            ForEach(Server.allCases){ option in
+                                Text(String(describing: option))
+                            }
+                        }
+                        .tint(.yellow)
+                        .fixedSize()
+                    }
+                    .focused($fieldFocused)
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+                    .glassEffect(.regular.interactive())
+                    
+                    Button(action: searchSummoner) {
+                        Image(systemName: "magnifyingglass")
+                            .padding(10)
+                    }
+                    .buttonBorderShape(.circle)
+                    .buttonStyle(.glass)
+                }
+                
+            }
+        } else {
+            GeometryReader { geo in
                 HStack{
-                    TextField(
-                        "",
-                        text: $viewModel.sumName,
-                        prompt: Text("Name")
-                            .foregroundStyle(Color(
-                                red: 150/255,
-                                green: 150/255,
-                                blue: 150/255
-                            ))
-                    )
-                    .frame(width: geo.size.width*0.3)
-//                    .border(.green)
+                    HStack{
+                        TextField(
+                            "",
+                            text: $viewModel.sumName,
+                            prompt: Text("Name")
+                                .foregroundStyle(Color(
+                                    red: 150/255,
+                                    green: 150/255,
+                                    blue: 150/255
+                                ))
+                        )
+                        .frame(width: geo.size.width*0.3)
+                        //                    .border(.green)
+                        
+                        Divider().overlay(Color.white)
+                        Text("#")
+                        
+                        TextField(
+                            "",
+                            text: $viewModel.sumTag,
+                            prompt: Text("Tag")
+                                .foregroundStyle(Color(
+                                    red: 150/255,
+                                    green: 150/255,
+                                    blue: 150/255
+                                ))
+                        )
+                        .frame(width: geo.size.width*0.2)
+                        //                    .border(.green)
+                    }
+                    .frame(height: 24)
+                    .onSubmit {
+                        searchSummoner()
+                    }
+                    //                .padding(.horizontal)
+                    .padding(.vertical, 12)
                     
-                    Divider().overlay(Color.white)
-                    Text("#")
                     
-                    TextField(
-                        "",
-                        text: $viewModel.sumTag,
-                        prompt: Text("Tag")
-                            .foregroundStyle(Color(
-                                red: 150/255,
-                                green: 150/255,
-                                blue: 150/255
-                            ))
-                    )
-                    .frame(width: geo.size.width*0.2)
-//                    .border(.green)
-                }
-                .frame(height: 24)
-                .focused($fieldFocused)
-                .onSubmit {
-                    searchSummoner()
-                }
-//                .padding(.horizontal)
-                .padding(.vertical, 12)
-                
-                
-                Picker("Region", selection: $viewModel.selectedServer){
-                    ForEach(Server.allCases){ option in
-                        Text(String(describing: option))
+                    Picker("Region", selection: $viewModel.selectedServer){
+                        ForEach(Server.allCases){ option in
+                            Text(String(describing: option))
+                        }
+                    }
+                    .tint(.yellow)
+                    .frame(minWidth: 86)
+                    //                .border(.green)
+                    
+                    Button(action: searchSummoner) {
+                        Text("Search")
                     }
                 }
-                .frame(minWidth: 86)
-//                .border(.green)
+                .position(
+                    x: geo.size.width*0.5,
+                    y: geo.size.height*0.5)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
-            .position(
-                x: geo.size.width*0.5,
-                y: geo.size.height*0.5)
-            .background(Color.gray
-                .opacity(0.2))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .frame(height: 64)
         }
-        .frame(height: 64)
     }
 }
 
@@ -216,10 +272,6 @@ struct SummonerSearchContainer: View {
                     fieldFocused: $fieldFocused,
                     searchSummoner: searchSummoner
                 )
-                
-                Button(action: searchSummoner) {
-                    Text("Search")
-                }
             }
             
             SearchedUsers(
@@ -231,6 +283,7 @@ struct SummonerSearchContainer: View {
             )
         }
         .foregroundStyle(.white)
+//        .optionalGlassEffect()
     }
 }
 
