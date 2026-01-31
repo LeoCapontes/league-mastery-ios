@@ -107,6 +107,7 @@ struct PinnedUser: View {
                         KFImage(URL(string: profileIconUrl(profileIconId: user.profileIconId)))
                             .resizable()
                             .frame(width: 36, height: 36)
+                            .aspectRatio(contentMode: .fit)
                             .background(.gray)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                         
@@ -165,7 +166,6 @@ struct PinnedUser: View {
                                         selectedMetric = .canLevel
                                         slideShowCounter = 0
                                     }
-                                    
                                 Divider()
                                     .frame(width: 100)
                                 Label("Top 3", systemImage: "")
@@ -181,7 +181,9 @@ struct PinnedUser: View {
                                     
                             }
                             .foregroundStyle(.white)
-                            .padding()
+                            .padding(.vertical, 20)
+                            .padding(.horizontal)
+//                            .border(.purple)
                             Spacer()
                             VStack(){
                                 Spacer()
@@ -189,7 +191,6 @@ struct PinnedUser: View {
                                     Text("\(getNameFromId(id: currentChampId))")
                                         .bold()
                                         .font(.title3)
-                                        .scaledToFill()
                                         .foregroundStyle(.white.opacity(0.75))
                                     GlanceableMetric(
                                         entry: currentArray[currentEntryIndex],
@@ -203,8 +204,10 @@ struct PinnedUser: View {
                                 }
                             }
                             .padding(.bottom, 4)
+//                            .border(.red)
                             Spacer()
                         }
+//                        .border(.blue)
                         .overlay {
                             cardOverlay
                                 .overlay{
@@ -220,24 +223,27 @@ struct PinnedUser: View {
                         .animation(.snappy.speed(2), value: maskYOffset)
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .frame(minHeight: 186, maxHeight: .infinity)
-//                            .border(.green)
+                    
+//                    .border(.yellow)
                 } else {
                     Text("Favourite a user to see their stats here")
                         .padding()
-                        .frame(minWidth: nil, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
+                        .frame(minWidth: nil, maxWidth: .infinity, minHeight: 200)
                 }
             }
             .background(.ultraThinMaterial.opacity(entries == nil ? 0.7 : 0.4))
             .onChange(of: isSettingUp) {
                 Logger.views.debug("Pinned User: isSettingUp changed to: \(isSettingUp)")
             }
+//            .border(.purple)
             
 //            .border(.red)
             Rectangle()
                 .background(.clear)
                 .foregroundStyle(.ultraThinMaterial.opacity(isSettingUp ? 1 : 0))
                 .animation(.default, value: isSettingUp)
+                
+                
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .onChange(of: isSettingUp) {

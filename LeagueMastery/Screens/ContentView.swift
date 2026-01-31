@@ -26,23 +26,11 @@ struct ContentView: View {
             NavigationStack(path: $viewModel.path){
                 ZStack(){
                     VStack{
-                        Spacer()
-                        HStack{
-                            Spacer()
-                            NavigationLink(destination: PreferencesScreen()) {
-                                Image(systemName: "gearshape.fill")
-                                    .foregroundStyle(.white)
-                                    .font(.system(size: 24))
-                            }
-                        }
-                        .padding(24)
-                    }
-                    VStack{
                         HStack{
                             Image("launch_image")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .padding(.vertical, 12)
+                                .padding(.vertical)
                             Text("LEAGUE\nMASTERY")
                                 .font(.system(size: 36, weight: .heavy, design: .monospaced))
                         }
@@ -50,9 +38,10 @@ struct ContentView: View {
                         
                         // makes space for search field container above it in the ZStack
                         Rectangle()
-                            .frame(height: searchContainerHeight)
+                            .frame(height: fieldFocused ? nil: searchContainerHeight)
                             .opacity(0)
                             .padding(.vertical)
+//                            .border(.orange)
                         
                         PinnedUser(
                             expandUser: viewModel.setCurrentSummoner(name:tag:region:server:),
@@ -60,13 +49,13 @@ struct ContentView: View {
                             user: viewModel.pinnedUser,
                             isSettingUp: $viewModel.settingUpPinned
                         )
-                        .frame(height: 186)
+                        .fixedSize(horizontal: false, vertical: true)
+
                     }
                     .foregroundColor(.white)
                     .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
-                    .ignoresSafeArea(.container, edges: .bottom)
                     .animation(.default, value: viewModel.showingScreen)
-                    .offset(y: -50)
+                    .offset(y: fieldFocused ? 0 : -40)
                     .opacity(fieldFocused ? 0 : 1)
                     .animation(.snappy, value: fieldFocused)
                           
@@ -76,10 +65,22 @@ struct ContentView: View {
                         searchSummoner: SearchSummoner,
                         setFavourite: viewModel.setFavouritedUser(_:)
                     )
-                    .frame(maxHeight: fieldFocused ? 550 : searchContainerHeight)
-                    .ignoresSafeArea(.container, edges: .bottom)
-                    .offset(y: -110)
+                    .frame(maxHeight: fieldFocused ? .infinity : searchContainerHeight)
+                    .offset(y: fieldFocused ? 0 : -110)
                     .animation(.snappy, value: fieldFocused)
+                    
+                    VStack{
+                        Spacer()
+                        HStack{
+                            Spacer()
+                            NavigationLink(destination: PreferencesScreen()) {
+                                Image(systemName: "gearshape.fill")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 24))
+                            }
+                        }
+                    }
+                    .opacity(fieldFocused ? 0 : 1)
                     
                     if(viewModel.showingProgress){
                         ProgressView()
@@ -88,7 +89,6 @@ struct ContentView: View {
                     }
                 }
                 .padding(8)
-                .ignoresSafeArea(edges: .all)
                 .navigationDestination(for: Route.self) { route in
                     switch route{
                     case .account:
@@ -134,7 +134,7 @@ struct SummonerSearchField: View {
     var searchSummoner: () -> Void
     
     var body: some View {
-        if #available(iOS 26, *){
+        if #available(iOS 26, *) {
             GlassEffectContainer {
                 HStack {
                     HStack{

@@ -28,6 +28,7 @@ struct SearchedUsers: View {
                 Spacer()
                 DeleteButton(deleteFunc: clearSearches)
             }
+            .padding(.horizontal, 6)
             ScrollView(){
                 VStack(spacing: 0){
                     ForEach(users) { user in
@@ -46,7 +47,7 @@ struct SearchedUsers: View {
             }
             .scrollContentBackground(.hidden)
             .background(Color.gray.opacity(0.2))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
             .animation(.default, value: users)
         }
     }
@@ -79,6 +80,7 @@ struct UserRow: View {
             Spacer()
             Button(action: { setFavourite(user) }){
                 Image(systemName: user.isFavourite ? "star.fill" : "star")
+                    .foregroundStyle(user.isFavourite ? .yellow : .white)
             }
         }
         .padding(.vertical, 12)
