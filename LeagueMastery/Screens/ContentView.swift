@@ -188,45 +188,34 @@ struct SummonerSearchField: View {
                 
             }
         } else {
-            GeometryReader { geo in
+            HStack{
                 HStack{
-                    HStack{
-                        TextField(
-                            "",
-                            text: $viewModel.sumName,
-                            prompt: Text("Name")
-                                .foregroundStyle(Color(
-                                    red: 150/255,
-                                    green: 150/255,
-                                    blue: 150/255
-                                ))
-                        )
-                        .frame(width: geo.size.width*0.3)
-                        //                    .border(.green)
-                        
-                        Divider().overlay(Color.white)
-                        Text("#")
-                        
-                        TextField(
-                            "",
-                            text: $viewModel.sumTag,
-                            prompt: Text("Tag")
-                                .foregroundStyle(Color(
-                                    red: 150/255,
-                                    green: 150/255,
-                                    blue: 150/255
-                                ))
-                        )
-                        .frame(width: geo.size.width*0.2)
-                        //                    .border(.green)
-                    }
-                    .frame(height: 24)
-                    .onSubmit {
-                        searchSummoner()
-                    }
-                    //                .padding(.horizontal)
-                    .padding(.vertical, 12)
+                    TextField(
+                        "",
+                        text: $viewModel.sumName,
+                        prompt: Text("Name")
+                            .foregroundStyle(Color(
+                                red: 150/255,
+                                green: 150/255,
+                                blue: 150/255
+                            ))
+                    )
+                    //                    .border(.green)
                     
+                    Divider().overlay(Color.white)
+                    Text("#")
+                    
+                    TextField(
+                        "",
+                        text: $viewModel.sumTag,
+                        prompt: Text("Tag")
+                            .foregroundStyle(Color(
+                                red: 150/255,
+                                green: 150/255,
+                                blue: 150/255
+                            ))
+                    )
+                    //                    .border(.green)
                     
                     Picker("Region", selection: $viewModel.selectedServer){
                         ForEach(Server.allCases){ option in
@@ -234,19 +223,25 @@ struct SummonerSearchField: View {
                         }
                     }
                     .tint(.yellow)
-                    .frame(minWidth: 86)
-                    //                .border(.green)
-                    
-                    Button(action: searchSummoner) {
-                        Text("Search")
-                    }
+                    .fixedSize()
                 }
-                .position(
-                    x: geo.size.width*0.5,
-                    y: geo.size.height*0.5)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .focused($fieldFocused)
+                .frame(height: 24)
+                .onSubmit {
+                    searchSummoner()
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 12)
+                .background(Color.gray.opacity(0.2))
+                .clipShape(.capsule)
+                
+                Button(action: searchSummoner) {
+                    Image(systemName: "magnifyingglass")
+                        .padding(10)
+                }
+                .buttonBorderShape(.circle)
+                .buttonStyle(.plain)
             }
-            .frame(height: 64)
         }
     }
 }
