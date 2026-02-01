@@ -26,19 +26,16 @@ struct ContentView: View {
                 .brightness(fieldFocused ? -0.1 : 0)
                 .animation(.default, value: fieldFocused)
             NavigationStack(path: $viewModel.path){
-                ZStack(){
-                    VStack(spacing: 12){
+                GeometryReader{ geo in
+                    ZStack(){
                         Title()
-                        .brightness(fieldFocused ? -0.1 : 0)
-                        .blur(radius: fieldFocused ? 20 : 0)
-                        .scaleEffect(fieldFocused ? 0.9 : 1, anchor: .center)
-                        
-                        // makes space for search field container above it in the ZStack
-                        Rectangle()
-                            .frame(height: fieldFocused ? nil: searchContainerHeight)
-                            .opacity(0)
-                            .padding(.vertical)
-//                            .border(.orange)
+                            .brightness(fieldFocused ? -0.1 : 0)
+                            .blur(radius: fieldFocused ? 20 : 0)
+                            .scaleEffect(fieldFocused ? 0.9 : 1, anchor: .center)
+                            .position(
+                                x: geo.size.width * 0.5,
+                                y: geo.size.height * 0.11
+                            )
                         
                         PinnedUser(
                             expandUser: viewModel.setCurrentSummoner(name:tag:region:server:),
@@ -47,43 +44,48 @@ struct ContentView: View {
                             isSettingUp: $viewModel.settingUpPinned
                         )
                         .fixedSize(horizontal: false, vertical: true)
-                        .opacity(fieldFocused ? 0 : 1)
-
-                    }
-                    .foregroundColor(.white)
-                    .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
-                    .animation(.default, value: viewModel.showingScreen)
-                    .offset(y: fieldFocused ? 0 : -40)
-                    .animation(.default, value: fieldFocused)
-                          
-                    SummonerSearchContainer(
-                        viewModel: $viewModel,
-                        fieldFocused: $fieldFocused,
-                        searchSummoner: SearchSummoner,
-                        setFavourite: viewModel.setFavouritedUser(_:)
-                    )
-                    .frame(maxHeight: fieldFocused ? .infinity : searchContainerHeight)
-                    .offset(y: fieldFocused ? 0 : -110)
-                    .animation(.snappy, value: fieldFocused)
-                    
-                    VStack{
-                        Spacer()
-                        HStack{
+                        .position(
+                            x: geo.size.width * 0.5,
+                            y: geo.size.height * 0.78
+                        )
+                        .brightness(fieldFocused ? -0.1 : 0)
+                        .blur(radius: fieldFocused ? 20 : 0)
+                        .scaleEffect(fieldFocused ? 0.9 : 1, anchor: .center)
+                        
+                        
+                        SummonerSearchContainer(
+                            viewModel: $viewModel,
+                            fieldFocused: $fieldFocused,
+                            searchSummoner: SearchSummoner,
+                            setFavourite: viewModel.setFavouritedUser(_:)
+                        )
+                        .frame(height: fieldFocused ? geo.size.height * 0.62 : 300)
+                        .position(
+                            x: geo.size.width * 0.5,
+                            y: fieldFocused ? geo.size.height * 0.32 : geo.size.height * 0.4
+                        )
+                        
+                        VStack{
                             Spacer()
-                            NavigationLink(destination: PreferencesScreen()) {
-                                Image(systemName: "gearshape.fill")
-                                    .foregroundStyle(.white)
-                                    .font(.system(size: 24))
+                            HStack{
+                                Spacer()
+                                NavigationLink(destination: PreferencesScreen()) {
+                                    Image(systemName: "gearshape.fill")
+                                        .foregroundStyle(.white)
+                                        .font(.system(size: 24))
+                                }
                             }
                         }
+                        .opacity(fieldFocused ? 0 : 1)
+                        
+                        
+                        if(viewModel.showingProgress){
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(1.5, anchor: .center)
+                        }
                     }
-                    .opacity(fieldFocused ? 0 : 1)
-                    
-                    if(viewModel.showingProgress){
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .scaleEffect(1.5, anchor: .center)
-                    }
+                    .animation(.default, value: fieldFocused)
                 }
                 .padding(8)
                 .navigationDestination(for: Route.self) { route in
@@ -104,6 +106,7 @@ struct ContentView: View {
                 .onAppear {
                     viewModel.setupPinnedUser()
                 }
+                .ignoresSafeArea(.keyboard)
             }
             .alert(viewModel.alertMessage, isPresented : $viewModel.showingAlert){
                 Button("OK") {}
@@ -136,6 +139,7 @@ struct Title: View {
             Text("LEAGUE\nMASTERY")
                 .font(.system(size: 36, weight: .heavy, design: .monospaced))
         }
+        .foregroundStyle(.white)
     }
 }
 
