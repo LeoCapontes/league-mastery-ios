@@ -252,6 +252,12 @@ struct SummonerSearchContainer: View {
     var searchSummoner: () -> Void
     var setFavourite: (User) -> Void
     
+    let gradient = LinearGradient(stops: [
+        Gradient.Stop(color: .clear, location: 0),
+        Gradient.Stop(color: .clear, location: 0.8),
+        Gradient.Stop(color: .black.opacity(0.1), location: 1)
+    ], startPoint: .top, endPoint: .bottom)
+    
     
     var body: some View {
         VStack{
@@ -279,6 +285,8 @@ struct SummonerSearchContainer: View {
             )
         }
         .foregroundStyle(.white)
+        .background(gradient)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
 //        .optionalGlassEffect()
     }
 }
