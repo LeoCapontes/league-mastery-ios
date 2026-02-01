@@ -263,6 +263,7 @@ extension ContentView {
                 }
                 do {
                     try modelContext.save()
+                    setupPinnedUser()
                 } catch {
                     Logger.viewModel.error("couldn't save context")
                 }
