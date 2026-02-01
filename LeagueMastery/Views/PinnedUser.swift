@@ -112,7 +112,7 @@ struct PinnedUser: View {
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                         
                         VStack(alignment:.leading){
-                            HStack(alignment: .top){
+                            HStack(alignment: .lastTextBaseline){
                                 Text(user.name)
                                     .font(.system(size: 18, weight: .semibold))
                                     .foregroundStyle(.white)

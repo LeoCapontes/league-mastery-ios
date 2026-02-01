@@ -23,18 +23,23 @@ struct ContentView: View {
     var body: some View {
         ZStack{
             BackgroundImage()
+                .brightness(fieldFocused ? -0.1 : 0)
+                .animation(.snappy, value: fieldFocused)
             NavigationStack(path: $viewModel.path){
                 ZStack(){
-                    VStack{
+                    VStack(spacing: 12){
                         HStack{
                             Image("launch_image")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .padding(.vertical)
+                                .frame(maxHeight: 100)
                             Text("LEAGUE\nMASTERY")
                                 .font(.system(size: 36, weight: .heavy, design: .monospaced))
                         }
-                        .frame(maxHeight: 100)
+                        .brightness(fieldFocused ? -0.1 : 0)
+                        .blur(radius: fieldFocused ? 20 : 0)
+                        .scaleEffect(fieldFocused ? 0.9 : 1, anchor: .center)
                         
                         // makes space for search field container above it in the ZStack
                         Rectangle()
@@ -50,13 +55,13 @@ struct ContentView: View {
                             isSettingUp: $viewModel.settingUpPinned
                         )
                         .fixedSize(horizontal: false, vertical: true)
+                        .opacity(fieldFocused ? 0 : 1)
 
                     }
                     .foregroundColor(.white)
                     .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
                     .animation(.default, value: viewModel.showingScreen)
                     .offset(y: fieldFocused ? 0 : -40)
-                    .opacity(fieldFocused ? 0 : 1)
                     .animation(.snappy, value: fieldFocused)
                           
                     SummonerSearchContainer(
