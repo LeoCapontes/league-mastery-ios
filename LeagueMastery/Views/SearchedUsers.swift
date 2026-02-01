@@ -21,34 +21,64 @@ struct SearchedUsers: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4){
-            HStack{
-                Text("Previously Searched")
-                    .font(.headline)
-                    .padding(.leading, 2)
-                Spacer()
-                DeleteButton(deleteFunc: clearSearches)
-            }
-            .padding(.horizontal, 6)
-            ScrollView(){
-                VStack(spacing: 0){
-                    ForEach(users) { user in
-                        UserRow(
-                            user: user,
-                            onRowPress: startSearch,
-                            setFavourite: setFavourite
-                        )
+            if #available(iOS 26, *){
+                HStack{
+                    Text("Previously Searched")
+                        .font(.headline)
+                        .padding(.leading, 2)
+                    Spacer()
+                    DeleteButton(deleteFunc: clearSearches)
+                }
+                .padding(.horizontal, 6)
+                ScrollView(){
+                    VStack(spacing: 0){
+                        ForEach(users) { user in
+                            UserRow(
+                                user: user,
+                                onRowPress: startSearch,
+                                setFavourite: setFavourite
+                            )
                             .onTapGesture {
                                 fieldFocused = false
                                 Logger.views.debug("Search field unfocused")
                             }
-                        Divider()
+                            Divider()
+                        }
                     }
                 }
+                .scrollContentBackground(.hidden)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .animation(.default, value: users)
+            } else {
+                HStack{
+                    Text("Previously Searched")
+                        .font(.headline)
+                        .padding(.leading, 2)
+                    Spacer()
+                    DeleteButton(deleteFunc: clearSearches)
+                }
+                .padding(.horizontal, 6)
+                ScrollView(){
+                    VStack(spacing: 0){
+                        ForEach(users) { user in
+                            UserRow(
+                                user: user,
+                                onRowPress: startSearch,
+                                setFavourite: setFavourite
+                            )
+                            .onTapGesture {
+                                fieldFocused = false
+                                Logger.views.debug("Search field unfocused")
+                            }
+                            Divider()
+                        }
+                    }
+                }
+                .scrollContentBackground(.hidden)
+                .background(Color.gray.opacity(0.2))
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .animation(.default, value: users)
             }
-            .scrollContentBackground(.hidden)
-            .background(Color.gray.opacity(0.2))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .animation(.default, value: users)
         }
     }
     
