@@ -111,19 +111,7 @@ struct PinnedUser: View {
                             .background(.gray)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                         
-                        VStack(alignment:.leading){
-                            HStack(alignment: .lastTextBaseline){
-                                Text(user.name)
-                                    .font(.system(size: 18, weight: .semibold))
-                                    .foregroundStyle(.white)
-                                Text("#\(user.tagline)")
-                                    .font(.system(size: 10))
-                                    .foregroundStyle(.gray)
-                            }
-                            Text("Score: \(user.masteryScore)")
-                                .font(.system(size: 14))
-                                .foregroundStyle(.gray)
-                        }
+                        UserInfoHeader(user: user)
                         Spacer()
                         
                     }
@@ -242,8 +230,6 @@ struct PinnedUser: View {
                 .background(.clear)
                 .foregroundStyle(.ultraThinMaterial.opacity(isSettingUp ? 1 : 0))
                 .animation(.default, value: isSettingUp)
-                
-                
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .onChange(of: isSettingUp) {
@@ -267,6 +253,26 @@ struct PinnedUser: View {
     
     func canLevelUp(_ entry: MasteryResponse) -> Bool{
         return (entry.championPointsUntilNextLevel < 100 && (entry.markRequiredForNextLevel - entry.tokensEarned == 1))
+    }
+}
+
+struct UserInfoHeader: View {
+    var user: User
+    
+    var body: some View {
+        VStack(alignment:.leading){
+            HStack(alignment: .lastTextBaseline){
+                Text(user.name)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(.white)
+                Text("#\(user.tagline)")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.gray)
+            }
+            Text("Score: \(user.masteryScore)")
+                .font(.system(size: 14))
+                .foregroundStyle(.gray)
+        }
     }
 }
 

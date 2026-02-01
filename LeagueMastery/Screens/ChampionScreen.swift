@@ -321,6 +321,7 @@ struct MasteryMarks: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 Text("x\(earnedMarks)").bold()
+                    .foregroundStyle(.white)
             }
             
         } else {

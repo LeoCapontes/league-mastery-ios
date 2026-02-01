@@ -24,19 +24,11 @@ struct ContentView: View {
         ZStack{
             BackgroundImage()
                 .brightness(fieldFocused ? -0.1 : 0)
-                .animation(.snappy, value: fieldFocused)
+                .animation(.default, value: fieldFocused)
             NavigationStack(path: $viewModel.path){
                 ZStack(){
                     VStack(spacing: 12){
-                        HStack{
-                            Image("launch_image")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .padding(.vertical)
-                                .frame(maxHeight: 100)
-                            Text("LEAGUE\nMASTERY")
-                                .font(.system(size: 36, weight: .heavy, design: .monospaced))
-                        }
+                        Title()
                         .brightness(fieldFocused ? -0.1 : 0)
                         .blur(radius: fieldFocused ? 20 : 0)
                         .scaleEffect(fieldFocused ? 0.9 : 1, anchor: .center)
@@ -62,7 +54,7 @@ struct ContentView: View {
                     .allowsHitTesting( viewModel.showingProgress || fieldFocused ? false : true)
                     .animation(.default, value: viewModel.showingScreen)
                     .offset(y: fieldFocused ? 0 : -40)
-                    .animation(.snappy, value: fieldFocused)
+                    .animation(.default, value: fieldFocused)
                           
                     SummonerSearchContainer(
                         viewModel: $viewModel,
@@ -133,6 +125,20 @@ struct ContentView: View {
     
 }
 
+struct Title: View {
+    var body: some View {
+        HStack{
+            Image("launch_image")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(.vertical)
+                .frame(maxHeight: 100)
+            Text("LEAGUE\nMASTERY")
+                .font(.system(size: 36, weight: .heavy, design: .monospaced))
+        }
+    }
+}
+
 struct SummonerSearchField: View {
     @Binding var viewModel: ContentView.ViewModel
     @FocusState.Binding var fieldFocused: Bool
@@ -153,6 +159,7 @@ struct SummonerSearchField: View {
                                     blue: 150/255
                                 ))
                         )
+                        
                         
                         Divider().overlay(Color.white)
                             .frame(height: 30)
@@ -182,6 +189,9 @@ struct SummonerSearchField: View {
                     .padding(.horizontal)
                     .padding(.vertical, 10)
                     .glassEffect(.regular.interactive())
+                    .onTapGesture {
+                        fieldFocused = true
+                    }
                     
                     Button(action: searchSummoner) {
                         Image(systemName: "magnifyingglass")
