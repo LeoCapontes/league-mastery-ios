@@ -34,7 +34,7 @@ struct ContentView: View {
                             .scaleEffect(fieldFocused ? 0.9 : 1, anchor: .center)
                             .position(
                                 x: geo.size.width * 0.5,
-                                y: geo.size.height * 0.11
+                                y: geo.size.height * 0.12
                             )
                         
                         PinnedUser(
@@ -46,7 +46,7 @@ struct ContentView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .position(
                             x: geo.size.width * 0.5,
-                            y: geo.size.height * 0.78
+                            y: geo.size.height * 0.76
                         )
                         .brightness(fieldFocused ? -0.1 : 0)
                         .blur(radius: fieldFocused ? 20 : 0)
@@ -59,7 +59,7 @@ struct ContentView: View {
                             searchSummoner: SearchSummoner,
                             setFavourite: viewModel.setFavouritedUser(_:)
                         )
-                        .frame(height: fieldFocused ? geo.size.height * 0.62 : 300)
+                        .frame(height: fieldFocused ? geo.size.height * 0.62 : 280)
                         .position(
                             x: geo.size.width * 0.5,
                             y: fieldFocused ? geo.size.height * 0.32 : geo.size.height * 0.4
@@ -69,13 +69,25 @@ struct ContentView: View {
                             Spacer()
                             HStack{
                                 Spacer()
-                                NavigationLink(destination: PreferencesScreen()) {
-                                    Image(systemName: "gearshape.fill")
-                                        .foregroundStyle(.white)
-                                        .font(.system(size: 24))
+                                if #available(iOS 26, *) {
+                                    NavigationLink(destination: PreferencesScreen()) {
+                                        Image(systemName: "gearshape")
+                                            .foregroundStyle(.white)
+                                            .padding(10)
+                                    }
+                                    .buttonBorderShape(.circle)
+                                    .buttonStyle(.glass)
+                                } else {
+                                    NavigationLink(destination: PreferencesScreen()) {
+                                        Image(systemName: "gearshape")
+                                            .foregroundStyle(.white)
+                                            .padding(10)
+                                    }
+                                    .buttonBorderShape(.circle)
                                 }
                             }
                         }
+                        
                         .opacity(fieldFocused ? 0 : 1)
                         
                         
@@ -87,7 +99,7 @@ struct ContentView: View {
                     }
                     .animation(.default, value: fieldFocused)
                 }
-                .padding(8)
+                .padding(10)
                 .navigationDestination(for: Route.self) { route in
                     switch route{
                     case .account:

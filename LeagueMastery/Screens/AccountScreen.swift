@@ -148,7 +148,7 @@ struct AccountScreen: View{
                                 }
                             }
                         }, selectedMetric: $selectedPinnedMetric)
-                        .padding(.horizontal, 6)
+                        .padding(.horizontal, 10)
                     }
                     
                     ForEach(Array(searchResult.enumerated()), id: \.element) { (index, entry) in
@@ -159,7 +159,7 @@ struct AccountScreen: View{
                                 }
                         }
                     }
-                    .padding(.horizontal, 6)
+                    .padding(.horizontal, 10)
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
                 .scrollDismissesKeyboard(.immediately)
