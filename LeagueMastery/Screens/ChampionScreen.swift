@@ -92,13 +92,7 @@ struct ChampionScreen: View {
                     green: bgColor.components()[1] * 0.25,
                     blue: bgColor.components()[2] * 0.25
                 ))
-
-//            Old Background Image
-//            Image("background-mastery")
-//                .resizable()
-//                .aspectRatio(contentMode: .fill)
-//                .frame(minWidth: 0, maxWidth: .infinity)
-//                .edgesIgnoringSafeArea(.all)
+            
             VStack(spacing: 0){
                 ChampionImage(
                     championId: championData.championId, averageColor: $bgColor, withAvgColor: true)
@@ -142,23 +136,6 @@ struct ChampionScreen: View {
                             .offset(x:0 ,y: 15)
                             .shadow(color: .black, radius: 30)
                     }
-//                    The following is for the old animated mastery crest
-//                    Keeping in case a new animated crest is added
-//                    VideoPlayer(url: videoUrl)
-//                        .frame(width: 250*crestScale, height: 250*crestScale)
-//                        // shadow effectively removed if aurora is unlocked
-//                        .shadow(color: .black, radius: auroraUnlocked ? 0 : 40)
-//                    GeometryReader{ geometry in
-//                        if championData.championLevel > 9 {
-//                            Text("\(championData.championLevel)")
-//                                .bold()
-//                                .foregroundStyle(.black)
-//                                .opacity(0.65)
-//                                .position(
-//                                    x:geometry.size.width*0.5,
-//                                    y:geometry.size.height*0.72)
-//                        }
-//                    }
                     MasteryCrestImage(masteryLevel: championData.championLevel, mini: false)
                         
                 }
@@ -174,13 +151,21 @@ struct ChampionScreen: View {
                 
                 InfoContainer(championData: championData)
                 
-                ProgressBar(
-                    total: championData.pointsInLevel(),
-                    progress: championData.championPointsSinceLastLevel)
+                VStack {
+                    ProgressBar(
+                        total: championData.pointsInLevel(),
+                        progress: championData.championPointsSinceLastLevel)
                     .frame(width: 200, height: 12)
+                    if canLevelUp(championData){
+                        LevelUpBadge()
+                            .fixedSize()
+                    }
+                }
+                
                 GradesContainer(
                     requiredGrades: championData.requiredGrades(),
                     achievedGrades: championData.achievedGrades())
+            
                 ScrollView(.horizontal){
                     ZStack{
                         HStack{
@@ -207,10 +192,28 @@ struct ChampionScreen: View {
             .padding()
         }
         .ignoresSafeArea()
-//        .onAppear{
-//            bgColor = ChampionImage(championId: championData.championId, blurred: false).averageColor
-//            print("Set color to: ", bgColor)
-//        }
+    }
+    
+    func canLevelUp(_ entry: MasteryResponse) -> Bool{
+        return (entry.championPointsUntilNextLevel < 100 && (entry.markRequiredForNextLevel - entry.tokensEarned == 1))
+    }
+}
+
+struct LevelUpBadge: View {
+    var body: some View {
+        ZStack{
+            Capsule()
+                .foregroundStyle(.orange)
+                .overlay(
+                    Capsule()
+                        .stroke()
+                )
+            Text("Level up ready!")
+                .foregroundStyle(.white)
+                .font(.caption2)
+                .padding(.vertical, 4)
+                .padding(.horizontal)
+        }
     }
 }
 
