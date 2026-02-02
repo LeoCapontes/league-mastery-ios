@@ -162,6 +162,7 @@ struct AccountScreen: View{
                     .padding(.horizontal, 6)
                     Rectangle().frame(height: 72).foregroundStyle(.clear)
                 }
+                .scrollDismissesKeyboard(.immediately)
             }
             .ignoresSafeArea(.all)
             Rectangle()
@@ -220,7 +221,6 @@ struct SortSearchContainer: View {
                         .padding()
                         .padding(.vertical, -2)
                         .clipShape(Capsule())
-                        .scrollDismissesKeyboard(.interactively)
                         .focused($isFocused)
                         .glassEffect(.regular.interactive())
                     Menu {
