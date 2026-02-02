@@ -65,6 +65,9 @@ struct ChampionScreen: View {
     @State var bgColor: Color = Color("BGColor")
     @State var champImage: ChampionImage? = nil
     
+    // Animation states
+    @State var barFilled: Bool = false
+    
     var videoUrl: String {
         let level: Int
         if championData.championLevel > 10 {
@@ -151,16 +154,23 @@ struct ChampionScreen: View {
                 
                 InfoContainer(championData: championData)
                 
-                VStack {
+                VStack() {
                     ProgressBar(
                         total: championData.pointsInLevel(),
-                        progress: championData.championPointsSinceLastLevel)
+                        progress: championData.championPointsSinceLastLevel,
+                        finishedAnimation: $barFilled
+                    )
                     .frame(width: 200, height: 12)
                     if canLevelUp(championData){
-                        LevelUpBadge()
-                            .fixedSize()
+                        if(barFilled) {
+                            LevelUpBadge()
+                                .fixedSize()
+                        }
                     }
                 }
+                .frame(height: 32)
+                .padding(.bottom)
+                .animation(.snappy, value: barFilled)
                 
                 GradesContainer(
                     requiredGrades: championData.requiredGrades(),
@@ -207,6 +217,7 @@ struct LevelUpBadge: View {
                 .overlay(
                     Capsule()
                         .stroke()
+                        .foregroundStyle(.white)
                 )
             Text("Level up ready!")
                 .foregroundStyle(.white)
@@ -231,8 +242,7 @@ struct InfoContainer: View {
             .font(.system(size: 18))
         Text("\(championData.championPointsSinceLastLevel) / \(championData.pointsInLevel()) pts")
             .foregroundStyle(.white)
-//        Text("Milestone: \(championData.championSeasonMilestone)")
-//            .foregroundStyle(.white)
+
     }
 }
 
@@ -282,6 +292,8 @@ struct GradesContainer: View {
 struct ProgressBar: View {
     var total: Int
     var progress: Int
+    @State var fillBar: Bool = false
+    @Binding var finishedAnimation: Bool
     
     var barPercentage: CGFloat {
         if (progress >= total) {
@@ -298,10 +310,17 @@ struct ProgressBar: View {
                     .foregroundStyle(.gray)
                 Capsule()
                     .frame(
-                        width: (geometry.size.width * barPercentage))
+                        width: fillBar ? (geometry.size.width * barPercentage) : 0)
                     .foregroundStyle(.white)
             }
         }
+        .onAppear (perform: {
+            withAnimation(Animation.timingCurve(0.0, 0.0, 0.0, 0.99, duration: 1.25).delay(0.2)) {
+                fillBar = true
+            } completion: {
+                finishedAnimation = true
+            }
+        })
     }
 }
 
