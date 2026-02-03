@@ -250,18 +250,30 @@ struct GradeBox: View {
     var requiredGrade: String
     var achievedGrade: String
     
+    var gradeAchieved: Bool {
+        GradeRank(achievedGrade) <= GradeRank(requiredGrade)
+    }
+    
     var body: some View {
         ZStack{
             Text(requiredGrade)
-            if(GradeRank(achievedGrade) <= GradeRank(requiredGrade)) {
-                Image(systemName: "checkmark")
+                .foregroundStyle(gradeAchieved ? .white : .white)
+            if(gradeAchieved) {
+                Image("reward-completed")
+                    .resizable()
+                    .tint(.yellow)
+                    .aspectRatio(contentMode: .fit)
+//                    .foregroundStyle(.gray)
+                    .opacity(0.9)
             }
         }
+        .frame(height: 25)
+        .font(.system(size: 20)).bold()
         .padding(.horizontal, 6)
         .padding(.vertical, 2)
         .background(
             (GradeRank(achievedGrade) <= GradeRank(requiredGrade))
-            ? Color.green
+            ? Color(uiColor: UIColor(red: 0.792, green: 0.546, blue: 0.301, alpha: 1.0))
             : Color.clear
         )
     }
@@ -315,7 +327,7 @@ struct ProgressBar: View {
             }
         }
         .onAppear (perform: {
-            withAnimation(Animation.timingCurve(0.0, 0.0, 0.0, 0.99, duration: 1.25).delay(0.2)) {
+            withAnimation(Animation.timingCurve(0.0, 0.0, 0.0, 0.9, duration: 1.25).delay(0.2)) {
                 fillBar = true
             } completion: {
                 finishedAnimation = true
@@ -365,5 +377,5 @@ struct MasteryMarks: View {
 
 #Preview {
     let mock = mockMasteryResponse
-    ChampionScreen(championData: mock[10])
+    ChampionScreen(championData: mock[9])
 }

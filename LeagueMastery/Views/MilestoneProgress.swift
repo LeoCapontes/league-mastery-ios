@@ -14,6 +14,9 @@ import SwiftUI
 // TODO: automate this somehow, move it server-side
 let gradesOneToFour: [String] = ["A-", "A-", "S-", "S-"]
 
+let barColor = Color(uiColor: UIColor(red: 0.792, green: 0.546, blue: 0.301, alpha: 1.0))
+let unfilledColor: Color = Color(uiColor: UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0))
+
 
 struct MilestoneProgress: View {
     // four markers for first four milestones, and one for the final
@@ -28,7 +31,7 @@ struct MilestoneProgress: View {
         GeometryReader{ geometry in
             ZStack(){
                 ForEach(1..<progressMarkers+1, id: \.self) { markerNumber in
-                    Hexagon().foregroundStyle(.gray)
+                    Hexagon().foregroundStyle(unfilledColor)
                         .frame(width: markerWidth, height: markerHeight)
                         .position(
                             x: geometry.size.width * (CGFloat(markerNumber) / CGFloat(progressMarkers)),
@@ -70,7 +73,7 @@ struct MilestoneProgress: View {
                 // Milestone repeat indicator
                 if(currentMilestone > 4){
                     ZStack{
-                        Hexagon().foregroundStyle(.blue).padding(2)
+                        Hexagon().foregroundStyle(barColor).padding(2)
                             .frame(width: markerWidth * 1.1, height: markerHeight * 1.1)
                         Image(systemName: "repeat")
                             .foregroundStyle(.white)
@@ -112,13 +115,13 @@ struct MilestoneBar: View {
                     .frame(
                         width: geometry.size.width,
                         height: geometry.size.height)
-                                        .foregroundStyle(.gray)
+                    .foregroundStyle(unfilledColor)
                 Capsule()
                     .frame(
                         width: geometry.size.width * barPercentage
                     )
                     .padding(3)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(barColor)
             }
         }
     }
@@ -130,7 +133,7 @@ struct ProgressMarker: View {
     
     var body: some View {
         ZStack{
-            if achieved { Hexagon().foregroundStyle(.blue).padding(2) }
+            if achieved { Hexagon().foregroundStyle(barColor).padding(2) }
             Text(String(milestone)).foregroundStyle(.white)
         }
     }
