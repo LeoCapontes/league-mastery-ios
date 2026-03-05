@@ -149,7 +149,7 @@ struct PinnedUser: View {
                         }
                         HStack{
                             VStack(alignment: .leading, spacing: 18){
-                                Label("Can Level", systemImage: "")
+                                Label("Level up ready", systemImage: "")
                                     .onTapGesture {
                                         selectedMetric = .canLevel
                                         slideShowCounter = 0
@@ -169,7 +169,7 @@ struct PinnedUser: View {
                                     
                             }
                             .foregroundStyle(.white)
-                            .padding(.vertical, 20)
+                            .padding(.vertical, 24)
                             .padding(.horizontal)
 //                            .border(.purple)
                             Spacer()
@@ -400,7 +400,7 @@ struct PinnedUserPreviewWrapper: View {
                 ),
                 isSettingUp: $settingUp
             )
-            .frame(height: 200)
+            .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal)
         }
     }

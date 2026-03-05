@@ -14,7 +14,7 @@ import SwiftUI
 // TODO: automate this somehow, move it server-side
 let gradesOneToFour: [String] = ["A-", "A-", "S-", "S-"]
 
-let barColor = Color(uiColor: UIColor(red: 0.792, green: 0.546, blue: 0.301, alpha: 1.0))
+let barColor = Color(uiColor: UIColor(red: 0.792, green: 0.471, blue: 0.154, alpha: 1.0))
 let unfilledColor: Color = Color(uiColor: UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0))
 
 
